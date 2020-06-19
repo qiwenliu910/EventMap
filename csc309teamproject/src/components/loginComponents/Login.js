@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LoginInput from "./LoginInput"
+import PropTypes from 'prop-types';
 import './Login.css'
 
 class Login extends Component {
@@ -24,5 +25,9 @@ class Login extends Component {
   }
 }
 
+// PropTypes
+Login.propTypes = {
+  users: PropTypes.array.isRequired
+}
 
 export default Login;

@@ -9,14 +9,28 @@ class Login extends React.Component {
   }
   render() {
 
-    let checkValidLogin = ([username, password]) =>{
+    // function checkValidLogin(username, password){
+    //   console.log(username)
+    //   console.log(password)
+    //   const user = this.props.users.filter(
+    //     (e) => e.username === username && e.password === password)
+    //   console.log(user)
+    //   if(user.length !== 0){
+    //     this.props.setCurrentUser(user[0])
+    //   }
+    // }
+    const checkValidLogin = ([username, password]) =>{
       console.log(username)
       console.log(password)
-      const user = this.props.users.filter(
+      const user = this.props.state.users.filter(
         (e) => e.username === username && e.password === password)
       console.log(user)
       if(user.length !== 0){
-        this.props.setCurrentUser(user[0])
+        this.props.state.currentUser = user;
+        return true;
+      }
+      else{
+        return false;
       }
     }
     return (
@@ -26,7 +40,7 @@ class Login extends React.Component {
             <Col md={{ span: 6, offset: 3 }}>
               <h3>Sign in</h3>
               <hr></hr>
-              <LoginInput loginInput={this.checkValidLogin} />
+              <LoginInput loginInput= {checkValidLogin}  />
             </Col>
           </Row>
         </main>

@@ -4,3 +4,16 @@
   color: 	#FFF;
   padding: 10px;
 }
+
+.Link{
+  text-align: center;
+  background: #333;
+  color: 	#FFF;
+  padding: 10px;
+}
+
+.AccountBar{
+  display: block;
+  background: #FFF;
+  
+}
