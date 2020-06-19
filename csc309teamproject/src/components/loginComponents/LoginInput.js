@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './Login.css'
 
+import { Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
+
 class LoginInput extends Component {
   state = {
     username: '',
@@ -16,38 +19,25 @@ class LoginInput extends Component {
     this.setState({username: '',password: ''})
   }
 
+
   render() {
     return (
-      <div>
-        <h3> Username </h3>
-        <form>
-          <input
-            type="text"
-            name="username"
-            style={{ flex: '', padding: '5px'}}
-            placeholder="Username"
-            value = {this.state.username}
-            onChange={this.onChangeUsername}
-          />
-        </form>
-        <h3> Password </h3>
-        <form >
-          <input
-            type="text"
-            name="password"
-            style={{ flex: '', padding: '5px'}}
-            placeholder="Password"
-            value = {this.state.password}
-            onChange={this.onChangePassword}
-          />
-        </form>
-        <input
-          type="submit"
-          value="Login"
-          className="loginBtn"
-          onClick={this.onSubmit}
-        />
-      </div>
+              <Form>
+                <Form.Group controlId="fldEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" placeholder="Enter email" value = {this.state.username} onChange={this.onChangeUsername} />
+                </Form.Group>
+                <Form.Group controlId="fldPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" value = {this.state.password} onChange={this.onChangePassword} />
+                  <Form.Text className="text-muted">
+                    <Link to="/resetpassword">Forgot password</Link>
+                  </Form.Text>
+                </Form.Group>
+                <Button variant="primary" type="submit" onClick={this.onSubmit}>
+                  Sign in
+                </Button>
+              </Form>
     );
   }
 }
