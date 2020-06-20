@@ -9,16 +9,6 @@ class Login extends React.Component {
   }
   render() {
 
-    // function checkValidLogin(username, password){
-    //   console.log(username)
-    //   console.log(password)
-    //   const user = this.props.users.filter(
-    //     (e) => e.username === username && e.password === password)
-    //   console.log(user)
-    //   if(user.length !== 0){
-    //     this.props.setCurrentUser(user[0])
-    //   }
-    // }
     const checkValidLogin = ([username, password]) =>{
       console.log(username)
       console.log(password)
@@ -26,7 +16,7 @@ class Login extends React.Component {
         (e) => e.username === username && e.password === password)
       console.log(user)
       if(user.length !== 0){
-        this.props.state.currentUser = user;
+        this.props.changeUser(user);
         return true;
       }
       else{

@@ -4,6 +4,7 @@ import './App.css';
 import Home from './components/view/Home';
 import About from './components/view/About';
 import Login from './components/view/Login';
+import Account from './components/view/Account';
 import CreateAccount from './components/view/CreateAccount';
 import ResetPassword from './components/view/ResetPassword';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
@@ -37,25 +38,28 @@ class App extends React.Component {
         }
       ]
     };
+  }
 
-
+  changeUser = (user) =>{
+    this.setState({currentUser:user,users:this.state.users})
   }
 
   render(){
     console.log(this.state.currentUser)
     return (
         <div>
-
           <BrowserRouter>
-            <Header/>
+            <Header currentUser={this.state.currentUser}/>
             <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }
               { /* Each Route below shows a different component depending on the exact path in the URL  */ }
               <Route exact path='/' render={() =>
                               (<Home state={this.state}/>)}/>
+              <Route path='/account' render={() =>
+                              (<Account state={this.state}/>)}/>
               <Route exact path='/about' render={() =>
                               (<About state={this.state}/>)}/>
               <Route exact path='/login' render={() =>
-                              (<Login state={this.state}/>)}/>
+                              (<Login state={this.state} changeUser={this.changeUser}/>)}/>
               <Route exact path='/resetpassword' render={() =>
                               (<ResetPassword state={this.state}/>)}/>
               <Route exact path='/createaccount' render={() =>
