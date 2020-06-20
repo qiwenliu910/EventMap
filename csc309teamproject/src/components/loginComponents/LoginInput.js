@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import './Login.css'
 
 import { Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class LoginInput extends Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    redirect: false,
+    invalid: false,
   }
 
   onChangeUsername = (e) => this.setState({ username: e.target.value });
@@ -15,12 +17,23 @@ class LoginInput extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.loginInput([this.state.username, this.state.password])
-    this.setState({username: '',password: ''})
+    if(this.props.loginInput([this.state.username, this.state.password])){
+      console.log("meow")
+      this.setState({username: '',password: '', redirect: true, invalid: false})
+    }
+    else{
+      this.setState({username: '',password: '', redirect: false, invalid: true})
+    }
   }
 
 
   render() {
+    if(this.state.redirect){
+      return <Redirect push to="/account"/>;
+    }
+    if(this.state.invalid){
+
+    }
     return (
               <Form>
                 <Form.Group controlId="fldEmail">
@@ -35,7 +48,7 @@ class LoginInput extends Component {
                   </Form.Text>
                 </Form.Group>
                 <Button variant="primary" type="submit" onClick={this.onSubmit}>
-                  Sign in
+                    Sign in
                 </Button>
               </Form>
     );

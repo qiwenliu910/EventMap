@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "USER_ID": 1,
+      "email": "user@user.com",
+      "username": "user",
+      "password": "user",
+      "events":[1]
+    },
+    {
+      "USER_ID": 2,
+      "email": "user2@user2.com",
+      "username": "user2",
+      "password": "user2",
+      "events":[2]
+    },
+    {
+      "USER_ID": 3,
+      "email": "user3@user3.com",
+      "username": "user3",
+      "password": "user3",
+      "events":[3,4]
+    }
+  ]
+}
