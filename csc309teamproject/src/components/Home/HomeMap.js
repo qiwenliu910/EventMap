@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from "react-google-maps";
 import * as crimeData from "../../data/crimeData.json"
+import CrimeDisplay from "./CrimeDisplay.js"
 function Map() {
 
   const [selectedCrime, setSelectedCrime] = useState(null);
@@ -11,7 +12,8 @@ function Map() {
     defaultCenter={{ lat:43.6629, lng: -79.3957}} // location of UofT
     >
     {crimeData.crimeList.map(crime => ( // List of all crimes
-      <Marker 
+      <div>
+        <Marker 
         key={crime.properties.CRIME_ID} 
         position={{
           lat: crime.geometry.coordinates[1],
@@ -21,23 +23,22 @@ function Map() {
           setSelectedCrime(crime);
         }}
         />
+        <CrimeDisplay crimeTitle=""
+                        crimeArthor=""
+                        crimeDate=""
+                        crimeDescription="">
+          </CrimeDisplay>
+      </div>
+      
     ))}
     {selectedCrime && ( //if a crime is selected
-        <InfoWindow
-          position={{
-            lat: selectedCrime.geometry.coordinates[1],
-            lng: selectedCrime.geometry.coordinates[0]
-          }}
-          onCloseClick={() => {
-            setSelectedCrime(null);
-          }}
-        >
-          <div> //display
-            <h2>{selectedCrime.properties.TITLE}</h2>
-            <p> posted by: {selectedCrime.properties.ARTHOR}</p>
-            <h4>{selectedCrime.properties.DESCRIPTION}</h4>
-          </div>
-        </InfoWindow>
+        <div>
+          <CrimeDisplay crimeTitle={selectedCrime.properties.TITLE} 
+                        crimeArthor={selectedCrime.properties.ARTHOR}
+                        crimeDate={selectedCrime.properties.DATE}
+                        crimeDescription={selectedCrime.properties.DESCRIPTION}>
+          </CrimeDisplay>
+        </div>
       )}
   </GoogleMap>
   );
