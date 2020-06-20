@@ -12,9 +12,8 @@ function Map() {
     defaultCenter={{ lat:43.6629, lng: -79.3957}} // location of UofT
     >
     {crimeData.crimeList.map(crime => ( // List of all crimes
-      <div>
+      <div key={crime.properties.CRIME_ID}> 
         <Marker 
-        key={crime.properties.CRIME_ID} 
         position={{
           lat: crime.geometry.coordinates[1],
           lng: crime.geometry.coordinates[0]
@@ -32,7 +31,7 @@ function Map() {
       
     ))}
     {selectedCrime && ( //if a crime is selected
-        <div>
+        <div key={selectedCrime.properties.CRIME_ID}>
           <CrimeDisplay crimeTitle={selectedCrime.properties.TITLE} 
                         crimeArthor={selectedCrime.properties.ARTHOR}
                         crimeDate={selectedCrime.properties.DATE}
