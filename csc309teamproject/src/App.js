@@ -20,23 +20,7 @@ class App extends React.Component {
         username: "default",
         password: "default"
       },
-      users: [
-        {
-          id: 1,
-          username: "user",
-          password: "user"
-        },
-        {
-          id: 2,
-          username: "user2",
-          password: "user2"
-        },
-        {
-          id: 3,
-          username: "user3",
-          password: "user3"
-        }
-      ]
+      users: userData.users
     };
   }
 
