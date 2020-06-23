@@ -7,7 +7,7 @@ import { Route, BrowserRouter, Link } from 'react-router-dom';
 
 class AccountBar extends Component {
   render() {
-    const name = this.props.currentUser[0].username ;
+    const name = this.props.currentUser.username ;
     return (
         <h1 className="AccountBar">
           <img src={pfp} id= "accountPFP"/>

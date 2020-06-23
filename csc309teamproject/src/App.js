@@ -16,7 +16,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentUser: {
-        id: 0,
+        id: -1,
         username: "default",
         password: "default"
       },

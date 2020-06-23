@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 class Header extends Component {
 
   render() {
-    if(this.props.currentUser.username === "default"){
+    if(this.props.currentUser.id === -1){
       return (
         <header>
           <Navbar bg="dark" variant="dark">
