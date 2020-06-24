@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/view/Home';
 import About from './components/view/About';
+import AdminDashboard from './components/view/AdminDashboard';
+import AdminEventManagement from './components/view/AdminEventManagement';
 import Login from './components/view/Login';
 import Account from './components/view/Account';
 import CreateAccount from './components/view/CreateAccount';
@@ -48,6 +50,10 @@ class App extends React.Component {
                               (<Account state={this.state}/>)}/>
               <Route exact path='/about' render={() =>
                               (<About state={this.state}/>)}/>
+              <Route exact path='/admin/dashboard' render={() =>
+                              (<AdminDashboard state={this.state} actions={this.actions} />)}/>
+              <Route exact path='/admin/events' render={() =>
+                              (<AdminEventManagement state={this.state} actions={this.actions} />)}/>
               <Route exact path='/login' render={() =>
                               (<Login state={this.state} changeUser={this.changeUser}/>)}/>
               <Route exact path='/resetpassword' render={() =>
