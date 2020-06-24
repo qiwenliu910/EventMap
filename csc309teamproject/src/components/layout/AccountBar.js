@@ -11,10 +11,9 @@ class AccountBar extends Component {
     return (
         <h1 className="AccountBar">
           <img src={pfp} id= "accountPFP"/>
-          <p1>{ name }
-          </p1>
-          <p2>
-          <Dropdown>
+          <p className="name">{ name }
+          </p>
+          <Dropdown className="dropdown">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               More
             </Dropdown.Toggle>
@@ -22,7 +21,6 @@ class AccountBar extends Component {
               <Dropdown.Item as={Link} to="/account/info">Account Info</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          </p2>
         </h1>
     );
   }

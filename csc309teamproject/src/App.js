@@ -18,7 +18,8 @@ class App extends React.Component {
       currentUser: {
         id: -1,
         username: "default",
-        password: "default"
+        password: "default",
+        events: []
       },
       users: userData.users
     };
@@ -31,7 +32,6 @@ class App extends React.Component {
   render(){
     console.log(this.state.currentUser)
     return (
-        <div>
           <BrowserRouter>
             <Header currentUser={this.state.currentUser}/>
             <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }
@@ -50,7 +50,6 @@ class App extends React.Component {
                               (<CreateAccount state={this.state}/>)}/>
             </Switch>
           </BrowserRouter>
-        </div>
       );
   }
 }

@@ -7,7 +7,7 @@ class Account extends React.Component {
   }
   render() {
     return (
-      <AccountPage />
+      <AccountPage state={this.props.state}/>
     );
   }
 }

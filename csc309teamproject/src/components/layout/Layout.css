@@ -7,13 +7,13 @@
   font-size: 150%;
 }
 
-.AccountBar p1{
+.name{
   float: left;
   margin-top: 15px;
   margin-right: 10px;
 }
 
-.AccountBar p2{
+.dropdown{
   float: left;
   margin-top: 10px;
   margin-right: 10px;

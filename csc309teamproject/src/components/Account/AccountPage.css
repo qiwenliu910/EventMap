@@ -1,0 +1,23 @@
+body{
+  background-color: #e6ecf0;
+	margin: 0;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+#accountDisplay{
+
+}
+
+#eventDisplay{
+
+}
+
+#eventDetails{
+
+}
+
+#eventItem{
+  background-color: white;
+  overflow: auto;
+
+}
