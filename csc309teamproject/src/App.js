@@ -23,6 +23,12 @@ class App extends React.Component {
       },
       users: userData.users
     };
+
+    this.actions = {
+      logout: () => {
+        this.setState({ currentUser: { id: -1, username: "" }});
+      }
+    };
   }
 
   changeUser = (user) =>{
@@ -33,7 +39,7 @@ class App extends React.Component {
     console.log(this.state.currentUser)
     return (
           <BrowserRouter>
-            <Header currentUser={this.state.currentUser}/>
+            <Header currentUser={this.state.currentUser} actions={this.actions}/>
             <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }
               { /* Each Route below shows a different component depending on the exact path in the URL  */ }
               <Route exact path='/' render={() =>
