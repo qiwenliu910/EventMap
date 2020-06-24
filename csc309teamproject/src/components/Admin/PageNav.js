@@ -6,15 +6,16 @@ class PageNav extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
+    const prevDisabled = (this.props.currentPage === 1);
+    const nextDisabled = (this.props.currentPage === this.props.totalPages);
     return (
       <div>
-        <Button value="<<" variant="primary">{'<<'}</Button>{' '}
-        <Button value="<<" variant="primary">{'< '}</Button>{' '}
-        {'1 of 6 '}
-        <Button value="<<" variant="primary">{'>'}</Button>{' '}
-        <Button value="<<" variant="primary">{'>>'}</Button>
+        <Button variant="primary" onClick={() => {this.props.setPage(1)}} disabled={prevDisabled}>{'<<'}</Button>{' '}
+        <Button variant="primary" onClick={() => {this.props.setPage(this.props.currentPage - 1)}} disabled={prevDisabled} >{'< '}</Button>{' '}
+        {this.props.currentPage + ' of ' + this.props.totalPages + ' '}
+        <Button variant="primary" onClick={() => {this.props.setPage(this.props.currentPage + 1)}} disabled={nextDisabled}>{'>'}</Button>{' '}
+        <Button variant="primary" onClick={() => {this.props.setPage(this.props.totalPages)}} disabled={nextDisabled}>{'>>'}</Button>
       </div>
     );
   }

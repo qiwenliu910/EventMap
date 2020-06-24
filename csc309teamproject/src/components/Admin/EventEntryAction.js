@@ -6,9 +6,9 @@ class EventEntryAction extends Component {
   render() {
     return (
       <>
-        <Link>[Edit]</Link>
+        <a>[Edit]</a>
         {'   '}
-        <Link>[Remove]</Link>
+        <a>[Remove]</a>
       </>
     );
   }

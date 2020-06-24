@@ -12,6 +12,7 @@ import ResetPassword from './components/view/ResetPassword';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Header from './components/layout/Header';
 import * as userData from "./data/userData.json"
+import Backend from "./DummyBackend"
 
 class App extends React.Component {
   constructor(props) {
@@ -26,11 +27,7 @@ class App extends React.Component {
       users: userData.users
     };
 
-    this.actions = {
-      logout: () => {
-        this.setState({ currentUser: { id: -1, username: "" }});
-      }
-    };
+    this.actions = new Backend(this);
   }
 
   changeUser = (user) =>{
