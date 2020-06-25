@@ -1,6 +1,7 @@
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
 import CrimeDisplay from "./CrimeDisplay.js"
+import "./styles.css";
 
 class HomeMap extends Component {
     constructor(props) {
@@ -110,13 +111,11 @@ class HomeMap extends Component {
     render() {
     
         return (
-            <div>
+            <div className="mapContainer">
                <Map
               google={this.props.google}
               zoom={15}
-              style={{ width: "100vw", height: "100vh"}}
               initialCenter={{ lat:43.6629, lng: -79.3957}} 
-              
             >
             {this.state.crimeList.map(crime => ( // List of all crimes
             
