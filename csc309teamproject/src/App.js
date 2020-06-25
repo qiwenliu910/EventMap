@@ -22,6 +22,7 @@ class App extends React.Component {
         id: -1,
         username: "default",
         password: "default",
+        admin: false,
         events: []
       }
     };

@@ -5,13 +5,15 @@
       "email": "user@user.com",
       "username": "user",
       "password": "user",
+      "admin": false,
       "events":[1,2,3,4]
     },
     {
       "USER_ID": 2,
-      "email": "user2@user2.com",
-      "username": "user2",
-      "password": "user2",
+      "email": "admin@user2.com",
+      "username": "admin",
+      "password": "admin",
+      "admin": true,
       "events":[2]
     },
     {
@@ -19,6 +21,7 @@
       "email": "user3@user3.com",
       "username": "user3",
       "password": "user3",
+      "admin": false,
       "events":[3,4]
     }
   ]
