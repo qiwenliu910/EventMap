@@ -5,6 +5,7 @@ import Home from './components/view/Home';
 import About from './components/view/About';
 import AdminDashboard from './components/view/AdminDashboard';
 import AdminEventManagement from './components/view/AdminEventManagement';
+import AdminEventDetails from './components/view/AdminEventDetails';
 import Login from './components/view/Login';
 import Account from './components/view/Account';
 import CreateAccount from './components/view/CreateAccount';
@@ -51,6 +52,8 @@ class App extends React.Component {
                               (<AdminDashboard state={this.state} actions={this.actions} />)}/>
               <Route exact path='/admin/events' render={() =>
                               (<AdminEventManagement state={this.state} actions={this.actions} />)}/>
+              <Route exact path='/admin/event/:id' render={(props) =>
+                              (<AdminEventDetails eventId={props.match.params.id} state={this.state} actions={this.actions} />)}/>
               <Route exact path='/login' render={() =>
                               (<Login state={this.state} changeUser={this.changeUser}/>)}/>
               <Route exact path='/resetpassword' render={() =>

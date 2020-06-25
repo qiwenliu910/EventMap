@@ -6,7 +6,7 @@ class EventEntryAction extends Component {
   render() {
     return (
       <>
-        <a>[Edit]</a>
+        <Link to={'/admin/event/' + this.props.eventId}>[Edit]</Link>
         {'   '}
         <a>[Remove]</a>
       </>

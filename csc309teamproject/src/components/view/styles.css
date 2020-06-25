@@ -1,3 +1,9 @@
 main {
   padding: 2rem;
 }
+.right {
+  text-align: right;
+}
+.wide {
+  width: 100%;
+}

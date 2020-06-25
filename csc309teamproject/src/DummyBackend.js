@@ -18,8 +18,20 @@ DummyBackend.prototype = {
           events: events,
           totalEntries: dataEvents.crimeList.length
         });
-      }.bind(this), 1000);
+      }.bind(this), 2);
 
+    });
+  },
+  getEvent: function (eventId) {
+    return new Promise((resolve) => {
+      let events = dataEvents.crimeList;
+      for (let i = 0; i < events.length; i++) {
+        if (parseInt(events[i].properties.CRIME_ID) === parseInt(eventId)) {
+          resolve(events[i]);
+          return;
+        }
+      }
+      resolve(null);
     });
   }
 

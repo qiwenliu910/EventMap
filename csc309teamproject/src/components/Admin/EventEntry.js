@@ -12,7 +12,7 @@ class EventEntry extends Component {
         <td>{eventId}</td>
         <td>{eventName}</td>
         <td>{eventUser}</td>
-        <td><EventEntryAction /></td>
+        <td><EventEntryAction eventId={eventId} /></td>
       </tr>
     );
   }
