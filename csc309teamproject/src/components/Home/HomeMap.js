@@ -16,67 +16,13 @@ class HomeMap extends Component {
             crimeVote: 0,
             selectedCrime: false,
 
-            crimeList: [
-                {
-                  
-                    "CRIME_ID": 1,
-                    "TITLE": "Rabbit is killed",
-                    "ADDRESS": "123 UofT St",
-                    "ARTHOR": "Qiwen",
-                    "DATE":"2020/01/18",
-                    "TYPE": "Assualt",
-                    "VOTE": 0,
-                    "DESCRIPTION": "Qiwen's rabbit is killed.",
-                    "coordinates": [-79.3957, 43.662]
-                  
-                },
-               
-                {
-                 
-                    "CRIME_ID": 2,
-                    "TITLE": "Laptop stolen",
-                    "ADDRESS": "321 MP St",
-                    "ARTHOR": "Qiwen",
-                    "DATE":"2020/01/19",
-                    "TYPE": "Robbery",
-                    "VOTE": 0,
-                    "DESCRIPTION": "Qiwen's laptop is stolen.",   
-                
-                    "coordinates": [-79.3959, 43.665]
-                  
-                },
-               
-                { 
-                  
-                    "CRIME_ID": 3,
-                    "TITLE": "New COVID-19 Case",
-                    "ADDRESS": "123 Bahen St",
-                    "ARTHOR": "Qiwen",
-                    "DATE":"2020/01/20",
-                    "TYPE": "Disease",
-                    "VOTE": 0,
-                    "DESCRIPTION": "A new COVID-19 case is discovered.",
-                  
-                    "coordinates": [-79.396, 43.67]
-                  
-                },
-          
-                { 
-                 
-                    "CRIME_ID": 4,
-                    "TITLE": "A fire in the building",
-                    "ADDRESS": "321 SS Dr",
-                    "ARTHOR": "Qiwen",
-                    "DATE":"2018/01/21",
-                    "TYPE": "Fire",
-                    "VOTE": 0,
-                    "DESCRIPTION": "A student burned himself.", 
-                
-                    "coordinates": [-79.391, 43.669]
-                  
-                }
-              ]
+            crimeList: []
         }
+      }
+      componentDidMount = () => {
+          this.props.actions.getEvents(-1, -1).then((ret) => {
+            this.setState({ crimeList: ret.events });
+          });
       }
       dispalyCrime = (crime) => {
           this.setState({selectedCrime: crime.CRIME_ID,

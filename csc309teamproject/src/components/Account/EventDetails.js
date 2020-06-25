@@ -1,44 +1,39 @@
 import React from 'react';
-import * as eventData from "../../data/crimeData.json"
 
 class EventDetails extends React.Component {
   state = {
-    properties: {
-      CRIME_ID: 0,
+    event: {
+      CRIME_ID: -1,
       TITLE: "",
       ADDRESS: "",
       ARTHOR: "",
-      DATE:"",
+      DATE: "",
       TYPE: "",
       DESCRIPTION: ""
     }
   }
-  changeProperty = (property) => {
-    this.setState({properties: property})
-
+  componentDidMount = () => {
+    this.props.actions.getEvent(this.props.currentEvent).then((event) =>{
+      if (event !== null) {
+        this.setState({ event: event });
+      }
+    });
   }
 
-
   render() {
-    const eventDetails = eventData.crimeList.filter((eventItem)=>(
-      eventItem.properties.CRIME_ID === this.props.currentEvent))
-    if(eventDetails.length != 0){
-      if(this.state.properties.CRIME_ID == 0){
-        this.changeProperty(eventDetails[0].properties)
-      }
-    }
+
     return (
       <div>
         <ul>
-        Title: {this.state.properties.TITLE}
+          Title: {this.state.event.TITLE}
         </ul><ul>
-        Address: {this.state.properties.ADDRESS}
+          Address: {this.state.event.ADDRESS}
         </ul><ul>
-        Date: {this.state.properties.DATE}
+          Date: {this.state.event.DATE}
         </ul><ul>
-        Type: {this.state.properties.TYPE}
+          Type: {this.state.event.TYPE}
         </ul><ul>
-        Description: {this.state.properties.DESCRIPTION}
+          Description: {this.state.event.DESCRIPTION}
         </ul>
       </div>
     );

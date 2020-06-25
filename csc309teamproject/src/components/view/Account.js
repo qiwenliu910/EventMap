@@ -14,7 +14,7 @@ class Account extends React.Component {
       <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }
         { /* Each Route below shows a different component depending on the exact path in the URL  */ }
         <Route exact path='/account/events' render={() =>
-                        (<AccountEvents state={this.props.state}/>)}/>
+                        (<AccountEvents state={this.props.state} actions={this.props.actions}/>)}/>
         <Route exact path='/account/info' render={() =>
                         (<AccountPage state={this.props.state}/>)}/>
         <Route exact path='/account/settings' render={() =>

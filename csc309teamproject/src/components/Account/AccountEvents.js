@@ -4,7 +4,7 @@ import EventDetails from "./EventDetails"
 import "./AccountPage.css"
 class AccountEvents extends React.Component {
   state = {
-    currentEvent: 0,
+    currentEventId: 0,
     event:{
       properties: {
         CRIME_ID: 0,
@@ -24,7 +24,7 @@ class AccountEvents extends React.Component {
   render() {
     const selectEvent = (eventNum) =>{
         console.log(eventNum)
-        this.setState({currentEvent: eventNum})
+        this.setState({currentEventId: eventNum})
       }
 
     return (
@@ -35,12 +35,12 @@ class AccountEvents extends React.Component {
         <table id="eventTable">
           <tbody>
             {this.props.state.currentUser.events.map((eventNum) => (
-              <EventItem key={eventNum} eventNum={eventNum} selectEvent={selectEvent}/>
+              <EventItem key={eventNum} eventNum={eventNum} selectEvent={selectEvent} actions={this.props.actions} />
             ))}
           </tbody>
         </table>
         <div id="eventDetails">
-          <EventDetails key={this.state.currentEvent} currentEvent= {this.state.currentEvent}/>
+          <EventDetails key={this.state.currentEventId} currentEvent= {this.state.currentEventId} actions={this.props.actions} />
         </div>
       </div>
     );

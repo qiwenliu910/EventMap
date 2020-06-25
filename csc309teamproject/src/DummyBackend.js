@@ -3,6 +3,9 @@ import * as dataEvents from "./data/crimeData.json"
 
 function DummyBackend(app) {
   this.app = app;
+  this.data = {
+    events: dataEvents.crimeList
+  };
 }
 
 
@@ -12,11 +15,17 @@ DummyBackend.prototype = {
   },
   getEvents: function (skip, take) {
     return new Promise((resolve) => {
-      let events = dataEvents.crimeList.slice(skip, skip + take);
+      let events = [];
+      if (skip >= 0 && take >= 0) {
+        events = this.data.events.slice(skip, skip + take);
+      }
+      else {
+        events = this.data.events;
+      }
       setTimeout(function () {
         resolve({
           events: events,
-          totalEntries: dataEvents.crimeList.length
+          totalEntries: this.data.events.length
         });
       }.bind(this), 2);
 
@@ -24,9 +33,9 @@ DummyBackend.prototype = {
   },
   getEvent: function (eventId) {
     return new Promise((resolve) => {
-      let events = dataEvents.crimeList;
+      let events = this.data.events;
       for (let i = 0; i < events.length; i++) {
-        if (parseInt(events[i].properties.CRIME_ID) === parseInt(eventId)) {
+        if (parseInt(events[i].CRIME_ID) === parseInt(eventId)) {
           resolve(events[i]);
           return;
         }

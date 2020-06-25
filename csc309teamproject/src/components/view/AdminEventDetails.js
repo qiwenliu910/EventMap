@@ -49,11 +49,11 @@ class AdminEventDetails extends React.Component {
 
       if (event !== null) {
         this.setState({
-          eventName: event.properties.TITLE,
-          eventType: event.properties.TYPE,
-          coordinateX: event.geometry.coordinates[0],
-          coordinateY: event.geometry.coordinates[1],
-          details: event.properties.DESCRIPTION,
+          eventName: event.TITLE,
+          eventType: event.TYPE,
+          coordinateX: event.coordinates[0],
+          coordinateY: event.coordinates[1],
+          details: event.DESCRIPTION,
           special: false
         });
       }

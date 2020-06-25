@@ -43,9 +43,9 @@ class App extends React.Component {
             <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }
               { /* Each Route below shows a different component depending on the exact path in the URL  */ }
               <Route exact path='/' render={() =>
-                              (<Home state={this.state}/>)}/>
+                              (<Home state={this.state} actions={this.actions} />)}/>
               <Route path='/account' render={() =>
-                              (<Account state={this.state}/>)}/>
+                              (<Account state={this.state} actions={this.actions} />)}/>
               <Route exact path='/about' render={() =>
                               (<About state={this.state}/>)}/>
               <Route exact path='/admin/dashboard' render={() =>
