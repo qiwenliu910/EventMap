@@ -12,7 +12,6 @@ import CreateAccount from './components/view/CreateAccount';
 import ResetPassword from './components/view/ResetPassword';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Header from './components/layout/Header';
-import * as userData from "./data/userData.json"
 import Backend from "./DummyBackend"
 
 class App extends React.Component {
@@ -24,16 +23,12 @@ class App extends React.Component {
         username: "default",
         password: "default",
         events: []
-      },
-      users: userData.users
+      }
     };
 
     this.actions = new Backend(this);
   }
 
-  changeUser = (user) =>{
-    this.setState({currentUser:user,users:this.state.users})
-  }
 
   render(){
     console.log(this.state.currentUser)
@@ -55,7 +50,7 @@ class App extends React.Component {
               <Route exact path='/admin/event/:id' render={(props) =>
                               (<AdminEventDetails eventId={props.match.params.id} state={this.state} actions={this.actions} />)}/>
               <Route exact path='/login' render={() =>
-                              (<Login state={this.state} changeUser={this.changeUser}/>)}/>
+                              (<Login state={this.state} actions={this.actions}/>)}/>
               <Route exact path='/resetpassword' render={() =>
                               (<ResetPassword state={this.state}/>)}/>
               <Route exact path='/createaccount' render={() =>

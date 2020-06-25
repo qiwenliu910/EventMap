@@ -1,10 +1,11 @@
 import * as dataEvents from "./data/crimeData.json"
-
+import * as userData from "./data/userData.json"
 
 function DummyBackend(app) {
   this.app = app;
   this.data = {
-    events: dataEvents.crimeList
+    events: dataEvents.crimeList,
+    users: userData.users
   };
 }
 
@@ -42,8 +43,20 @@ DummyBackend.prototype = {
       }
       resolve(null);
     });
+  },
+  authenticateUser: function (username, password) {
+    return new Promise((resolve) => {
+      const user = this.data.users.filter(
+        (e) => e.username === username && e.password === password);
+      if (user.length !== 0) {
+        this.app.setState({ currentUser: user[0] });
+        resolve(true);
+      }
+      else {
+        resolve(false);
+      }
+    });
   }
-
 };
 
 
