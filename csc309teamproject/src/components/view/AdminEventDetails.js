@@ -16,7 +16,8 @@ class AdminEventDetails extends React.Component {
       coordinateY: 0,
       details: "",
       special: true,
-      error: ""
+      eventObj: null,
+      message: ""
     };
   }
 
@@ -42,7 +43,25 @@ class AdminEventDetails extends React.Component {
   onChangeDetails = (e) => {
     this.setState({ details: e.target.value });
   }
-
+  onSubmit = (e) => {
+    e.preventDefault();
+    let event = {
+      ...this.state.eventObj,
+      TITLE: this.state.eventName,
+      TYPE: this.state.eventType,
+      coordinates: [this.state.coordinateX, this.state.coordinateY],
+      DESCRIPTION: this.state.details,
+      SPECIAL: this.state.special
+    };
+    this.props.actions.updateEvent(event).then((success) => {
+      if (success) {
+        this.setState({ message: "This event has been updated successfully" });
+      }
+      else {
+        this.setState({ message: "Failed updating event" });
+      }
+    });
+  }
 
   loadEvent(eventId) {
     this.props.actions.getEvent(eventId).then((event) => {
@@ -54,12 +73,13 @@ class AdminEventDetails extends React.Component {
           coordinateX: event.coordinates[0],
           coordinateY: event.coordinates[1],
           details: event.DESCRIPTION,
-          special: false
+          special: false,
+          eventObj: event
         });
       }
       else {
         this.setState({
-          error: "Fails loading event details"
+          message: "Fails loading event details"
         });
       }
     });
@@ -76,10 +96,10 @@ class AdminEventDetails extends React.Component {
             <Col md={10}>
 
               {
-                this.state.error !== '' ?
+                this.state.message !== '' ?
                   <>
                     <Row>
-                      <Alert className="wide" variant='warning'>{this.state.error}</Alert>
+                      <Alert className="wide" variant='warning'>{this.state.message}</Alert>
                     </Row>
                   </>
                   :
@@ -137,7 +157,7 @@ class AdminEventDetails extends React.Component {
                   </Form.Group>
                   <Form.Row>
                     <Col><Button variant="primary" type="submit">Delete</Button></Col>
-                    <Col className="right"><Button variant="primary" type="submit">Save</Button></Col>
+                    <Col className="right"><Button variant="primary" type="submit" onClick={this.onSubmit}>Save</Button></Col>
                   </Form.Row>
 
 

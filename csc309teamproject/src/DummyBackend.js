@@ -56,6 +56,17 @@ DummyBackend.prototype = {
         resolve(false);
       }
     });
+  },
+  updateEvent: function (event) {
+    return new Promise((resolve) => {
+      for (let i = 0; i < this.data.events.length; i++) {
+        if (parseInt(this.data.events[i].CRIME_ID) === parseInt(event.CRIME_ID)) {
+          this.data.events[i] = event;
+          resolve(true);
+        }
+      }
+      resolve(false);
+    });
   }
 };
 
