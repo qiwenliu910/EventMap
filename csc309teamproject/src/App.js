@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/view/Home';
 import About from './components/view/About';
+import AdminDashboard from './components/view/AdminDashboard';
+import AdminEventManagement from './components/view/AdminEventManagement';
 import Login from './components/view/Login';
 import Account from './components/view/Account';
 import CreateAccount from './components/view/CreateAccount';
@@ -10,34 +12,22 @@ import ResetPassword from './components/view/ResetPassword';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Header from './components/layout/Header';
 import * as userData from "./data/userData.json"
+import Backend from "./DummyBackend"
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: {
-        id: 0,
+        id: -1,
         username: "default",
-        password: "default"
+        password: "default",
+        events: []
       },
-      users: [
-        {
-          id: 1,
-          username: "user",
-          password: "user"
-        },
-        {
-          id: 2,
-          username: "user2",
-          password: "user2"
-        },
-        {
-          id: 3,
-          username: "user3",
-          password: "user3"
-        }
-      ]
+      users: userData.users
     };
+
+    this.actions = new Backend(this);
   }
 
   changeUser = (user) =>{
@@ -47,9 +37,8 @@ class App extends React.Component {
   render(){
     console.log(this.state.currentUser)
     return (
-        <div>
           <BrowserRouter>
-            <Header currentUser={this.state.currentUser}/>
+            <Header currentUser={this.state.currentUser} actions={this.actions}/>
             <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }
               { /* Each Route below shows a different component depending on the exact path in the URL  */ }
               <Route exact path='/' render={() =>
@@ -58,6 +47,10 @@ class App extends React.Component {
                               (<Account state={this.state}/>)}/>
               <Route exact path='/about' render={() =>
                               (<About state={this.state}/>)}/>
+              <Route exact path='/admin/dashboard' render={() =>
+                              (<AdminDashboard state={this.state} actions={this.actions} />)}/>
+              <Route exact path='/admin/events' render={() =>
+                              (<AdminEventManagement state={this.state} actions={this.actions} />)}/>
               <Route exact path='/login' render={() =>
                               (<Login state={this.state} changeUser={this.changeUser}/>)}/>
               <Route exact path='/resetpassword' render={() =>
@@ -66,7 +59,6 @@ class App extends React.Component {
                               (<CreateAccount state={this.state}/>)}/>
             </Switch>
           </BrowserRouter>
-        </div>
       );
   }
 }

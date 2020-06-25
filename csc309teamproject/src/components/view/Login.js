@@ -13,10 +13,9 @@ class Login extends React.Component {
       console.log(username)
       console.log(password)
       const user = this.props.state.users.filter(
-        (e) => e.username === username && e.password === password)
-      console.log(user)
+        (e) => e.username === username && e.password === password);
       if(user.length !== 0){
-        this.props.changeUser(user);
+        this.props.changeUser(user[0]);
         return true;
       }
       else{

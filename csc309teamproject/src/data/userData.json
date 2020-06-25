@@ -5,7 +5,7 @@
       "email": "user@user.com",
       "username": "user",
       "password": "user",
-      "events":[1]
+      "events":[1,2,3,4]
     },
     {
       "USER_ID": 2,

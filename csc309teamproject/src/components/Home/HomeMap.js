@@ -88,18 +88,20 @@ class HomeMap extends Component {
         
       }
       myCallback = (dataFromChild) => {
+          const crimeNum = this.state.selectedCrime - 1;
+          const voteNum = this.state.crimeVote;
+          const newArr = [...this.state.crimeList];
           if (dataFromChild) {
-            this.setState({crimeVote: this.state.crimeVote + 1});
-            const crimeNum = this.state.selectedCrime - 1;
-            const voteNum = this.state.crimeVote;
-            let newArr = [...this.state.crimeList];
-            
-            newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
-            this.setState({crimeList:newArr});
-            }
+              this.setState({crimeVote: this.state.crimeVote + 1});
+              newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
+              this.setState({crimeList:newArr});
+              }
             
           else {
               this.setState({crimeVote: this.state.crimeVote - 1});
+              newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum - 1};
+              this.setState({crimeList:newArr});
+              
           }
       }
 
