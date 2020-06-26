@@ -15,7 +15,7 @@ class HomeMap extends Component {
             crimeDescription:"",
             crimeVote: 0,
             selectedCrime: false,
-
+            alreadyVote: false,
             crimeList: []
         }
       }
@@ -30,7 +30,8 @@ class HomeMap extends Component {
                         crimeArthor: crime.ARTHOR,
                         crimeDate: crime.DATE,
                         crimeDescription:crime.DESCRIPTION,
-                        crimeVote:crime.VOTE
+                        crimeVote:crime.VOTE,
+                        alreadyVote: false
         }); 
         
       }
@@ -38,6 +39,7 @@ class HomeMap extends Component {
           const crimeNum = this.state.selectedCrime - 1;
           const voteNum = this.state.crimeVote;
           const newArr = [...this.state.crimeList];
+          this.setState({alreadyVote: true});
           if (dataFromChild) {
               this.setState({crimeVote: this.state.crimeVote + 1});
               newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
@@ -82,6 +84,7 @@ class HomeMap extends Component {
                             crimeDate={this.state.crimeDate}
                             crimeDescription={this.state.crimeDescription}
                             crimeVote={this.state.crimeVote}
+                            alreadyVote={this.state.alreadyVote}
                             callbackFromParent = {this.myCallback}
                             >
                             

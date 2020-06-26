@@ -18,8 +18,8 @@ class CrimeDisplay extends Component {
                <Card.Text> Votes: {this.props.crimeVote} </Card.Text>
                </Card.Body>
                <Card.Footer className="text-muted">Posted on {this.props.crimeDate}</Card.Footer>
-               <Button variant="outline-primary" onClick={() => this.sendData(1)} size="sm">Upvote</Button>
-               <Button variant="outline-primary" onClick={() => this.sendData(0)} size="sm">Downvote</Button>
+               <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(1)} size="sm">Upvote</Button>
+               <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(0)} size="sm">Downvote</Button>
                </Card>
            </div>
         );
