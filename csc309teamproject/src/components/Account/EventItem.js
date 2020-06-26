@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap'
+import "./AccountPage.css"
 
 class EventItem extends React.Component {
   constructor(props) {
@@ -11,12 +12,19 @@ class EventItem extends React.Component {
     };
   }
 
-  onSubmit = (e) => {
+  onSubmitDetails = (e) => {
     e.preventDefault();
-    console.log("potp")
     this.props.selectEvent(this.props.eventNum)
-    
   }
+  onSubmitEdit = (e) => {
+    e.preventDefault();
+    this.props.selectEvent(this.props.eventNum)
+  }
+  onSubmitDelete = (e) => {
+    e.preventDefault();
+    this.props.selectEvent(this.props.eventNum)
+  }
+
   componentDidMount = () => {
     this.props.actions.getEvent(this.props.eventNum).then((event) => {
       if (event !== null)
@@ -25,13 +33,20 @@ class EventItem extends React.Component {
   }
   render() {
     return (
-      <tr>
-        <th>
+      <tr className="tableRow">
+        <th className="tableTitle">
             <p> {this.state.event.TITLE} </p>
         </th>
         <th>
-          <Button variant="primary" type="submit" onClick={this.onSubmit}>
-              Details
+          <Button className="tableButtonDetail" variant="primary" type="submit" onClick={this.onSubmitDetails}>
+          </Button>
+        </th>
+        <th>
+          <Button className="tableButtonEdit" variant="primary" type="submit" onClick={this.onSubmitEdit}>
+          </Button>
+        </th>
+        <th>
+          <Button className="tableButtonDelete" variant="primary" type="submit" onClick={this.onSubmitDelete}>
           </Button>
         </th>
       </tr>

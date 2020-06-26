@@ -9,15 +9,79 @@ body{
 }
 
 #eventDisplay{
+  margin-top: 50px;
+  margin-left: 100px;
+  margin-right: 100px;
+  background-color: #5F9EA0;
+  padding:20px;
+  border-radius: 25px;
+}
+
+#eventHeader{
+  margin-top: 20px;
+  font-size: 150%;
+  font-weight: bold;
 
 }
 
-#eventDetails{
+#eventTable{
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  min: 500px;
+  padding: 10px;
+  border-radius: 25px;
+  background-color: #F0FFFF;
+}
 
+#eventDetails{
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 100px;
+  background-color: #E0FFFF;
+  padding:20px;
+  border-radius: 25px;
 }
 
 #eventItem{
   background-color: white;
   overflow: auto;
 
+}
+
+.tableTitleHeader{
+  width: 80%;
+  font-size: 120%;
+  text-align: center;
+}
+
+.tableButtonHeader{
+  font-size: 120%;
+  width: 100px;
+  text-align: center;
+}
+
+.tableTitle{
+  width: 80%;
+}
+
+.tableButtonDetail{
+  width: 100px;
+  background-color: #00CED1;
+}
+.tableButtonEdit{
+  width: 100px;
+  background-color: #B8860B;
+}
+.tableButtonDelete{
+  width: 100px;
+  background-color: #DC143C;
+}
+
+.descriptionList div, ul{
+  font-weight: bold;
+}
+
+table, td, th {
+	border-collapse:separate;
 }
