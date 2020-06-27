@@ -7,7 +7,7 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <HomeMap actions={this.props.actions} />
+      <HomeMap state={this.props.state} actions={this.props.actions} />
     );
   }
 }

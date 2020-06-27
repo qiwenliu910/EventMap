@@ -16,7 +16,9 @@ class HomeMap extends Component {
             crimeVote: 0,
             selectedCrime: false,
             alreadyVote: false,
-            crimeList: []
+            crimeList: [],
+            currentUser: this.props.state.currentUser,
+            
         }
       }
       componentDidMount = () => {
@@ -32,7 +34,14 @@ class HomeMap extends Component {
                         crimeDescription:crime.DESCRIPTION,
                         crimeVote:crime.VOTE,
                         alreadyVote: false
-        }); 
+        })
+        if (this.state.currentUser.upvote.some(item => crime.CRIME_ID === item.CRIME_ID)) {
+          this.setState({alreadyVote: true});
+        }
+        if (this.state.currentUser.downvote.some(item => crime.CRIME_ID === item.CRIME_ID)) {
+          this.setState({alreadyVote: true});
+        }
+        ; 
         
       }
       myCallback = (dataFromChild) => {
@@ -40,24 +49,29 @@ class HomeMap extends Component {
           const voteNum = this.state.crimeVote;
           const newArr = [...this.state.crimeList];
           this.setState({alreadyVote: true});
+          
+          const votedCrime = {
+            "CRIME_ID": crimeNum + 1
+          }
+          
           if (dataFromChild) {
               this.setState({crimeVote: this.state.crimeVote + 1});
               newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
               this.setState({crimeList:newArr});
+              this.state.currentUser.upvote.push(votedCrime);
               }
             
           else {
               this.setState({crimeVote: this.state.crimeVote - 1});
               newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum - 1};
               this.setState({crimeList:newArr});
-              
-          }
+              this.state.currentUser.downvote.push(votedCrime);
+              }
       }
 
      
     
     render() {
-    
         return (
             <div className="mapContainer">
                <Map
@@ -86,6 +100,7 @@ class HomeMap extends Component {
                             crimeVote={this.state.crimeVote}
                             alreadyVote={this.state.alreadyVote}
                             callbackFromParent = {this.myCallback}
+                            currentUserId = {this.state.currentUser.id}
                             >
                             
                 </CrimeDisplay>

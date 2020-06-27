@@ -1,28 +1,34 @@
 {
   "users": [
     {
-      "USER_ID": 1,
+      "id": 1,
       "email": "user@user.com",
       "username": "user",
       "password": "user",
       "admin": false,
-      "events":[1,2,3,4]
+      "events":[{"CRIME_ID":1},{"CRIME_ID":2},{"CRIME_ID":3},{"CRIME_ID":4}],
+      "upvote": [],
+      "downvote": []
     },
     {
-      "USER_ID": 2,
+      "id": 2,
       "email": "admin@user2.com",
       "username": "admin",
       "password": "admin",
       "admin": true,
-      "events":[2]
+      "events":[2],
+      "upvote": [],
+      "downvote": []
     },
     {
-      "USER_ID": 3,
+      "id": 3,
       "email": "user3@user3.com",
       "username": "user3",
       "password": "user3",
       "admin": false,
-      "events":[3,4]
+      "events":[3,4],
+      "upvote": [],
+      "downvote": []
     }
   ]
 }
