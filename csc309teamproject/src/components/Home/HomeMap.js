@@ -3,24 +3,32 @@ import React, { Component } from 'react';
 import CrimeDisplay from "./CrimeDisplay.js"
 import "./styles.css";
 
+import diseaseGreen from "../../images/disease-green.png"
+import diseaseYellow from "../../images/disease-yellow.png"
+import diseaseOrange from "../../images/disease-orange.png"
+import diseaseRed from "../../images/disease-red.png"
+
+import healthGreen from "../../images/health-green.png"
+
 class HomeMap extends Component {
     constructor(props) {
         super(props);
         this.dispalyCrime = this.dispalyCrime.bind(this);
-    
+        this.diseaseLevel = [diseaseGreen, diseaseYellow, diseaseOrange, diseaseRed];
         this.state = {
             crimeTitle:"",
             crimeArthor:"",
             crimeDate:"",
             crimeDescription:"",
             crimeVote: 0,
+            severity: 0,
             selectedCrime: false,
             alreadyVote: true,
             alreadyUpVote: false,
             alreadyDownVote: false,
             crimeList: [],
             currentUser: this.props.state.currentUser,
-            
+
         }
       }
       static getDerivedStateFromProps(props, state) {
@@ -43,6 +51,7 @@ class HomeMap extends Component {
                         crimeDate: crime.DATE,
                         crimeDescription:crime.DESCRIPTION,
                         crimeVote:crime.VOTE,
+                        severity:crime.SEVERITY,
                         alreadyVote: false,
                         alreadyUpVote: false,
                         alreadyDownVote: false
@@ -56,24 +65,24 @@ class HomeMap extends Component {
             this.setState({alreadyDownVote: true});
             this.setState({alreadyVote: true});
           }
-        }; 
-        
+        };
+
       }
       myCallback = (dataFromChild) => {
           const crimeNum = this.state.selectedCrime - 1;
           const voteNum = this.state.crimeVote;
           const newArr = [...this.state.crimeList];
-          
+
           const votedCrime = {
             "CRIME_ID": crimeNum + 1
           }
-          
+
           if (dataFromChild > 0) {
               this.setState({crimeVote: this.state.crimeVote + 1});
               newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
               this.setState({crimeList:newArr}, function () {
                 console.log(this.state.crimeList);
-               
+
               });
               this.state.currentUser.upvote.push(votedCrime);
               this.setState({alreadyUpVote: true});
@@ -109,7 +118,7 @@ class HomeMap extends Component {
               this.setState({alreadyVote: false});
 
             }
-          } 
+          }
           else {
               this.setState({crimeVote: this.state.crimeVote - 1});
               newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum - 1};
@@ -121,45 +130,46 @@ class HomeMap extends Component {
           console.log(this.state.currentUser);
       }
 
-     
-    
-    render() { 
+
+    render() {
         return (
             <div className="mapContainer">
                <Map
               google={this.props.google}
               zoom={15}
-              initialCenter={{ lat:43.6629, lng: -79.3957}} 
+              initialCenter={{ lat:43.6629, lng: -79.3957}}
             >
             {this.state.crimeList.map(crime => ( // List of all crimes
-            
+
             <Marker key={crime.CRIME_ID}
             position={{
             lat: crime.coordinates[1],
             lng: crime.coordinates[0]
             }}
+            icon={this.diseaseLevel[crime.SEVERITY]}
             onClick={() => this.dispalyCrime(crime)}
             />
-        
-        
-      
+
+
+
     ))}
-             
+
                 <CrimeDisplay crimeTitle={this.state.crimeTitle}
                             crimeArthor={this.state.crimeArthor}
                             crimeDate={this.state.crimeDate}
                             crimeDescription={this.state.crimeDescription}
                             crimeVote={this.state.crimeVote}
+                            severity={this.state.severity}
                             alreadyVote={this.state.alreadyVote}
                             callbackFromParent = {this.myCallback}
                             currentUserId = {this.state.currentUser.id}
                             >
-                            
+
                 </CrimeDisplay>
-         
-            </Map>  
-            
-            </div>        
+
+            </Map>
+
+            </div>
         );
       }
 }

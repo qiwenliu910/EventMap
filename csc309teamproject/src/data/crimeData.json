@@ -8,6 +8,7 @@
       "DATE": "2020/01/18",
       "TYPE": "Assualt",
       "VOTE": 0,
+      "SEVERITY": 0,
       "DESCRIPTION": "Qiwen's rabbit is killed.",
       "coordinates": [
         -79.3957,
@@ -22,6 +23,7 @@
       "DATE": "2020/01/19",
       "TYPE": "Robbery",
       "VOTE": 0,
+      "SEVERITY": 1,
       "DESCRIPTION": "Qiwen's laptop is stolen.",
       "coordinates": [
         -79.3959,
@@ -36,6 +38,7 @@
       "DATE": "2020/01/20",
       "TYPE": "Disease",
       "VOTE": 0,
+      "SEVERITY": 2,
       "DESCRIPTION": "A new COVID-19 case is discovered.",
       "coordinates": [
         -79.396,
@@ -50,6 +53,7 @@
       "DATE": "2018/01/21",
       "TYPE": "Fire",
       "VOTE": 0,
+      "SEVERITY": 3,
       "DESCRIPTION": "A student burned himself.",
       "coordinates": [
         -79.391,
