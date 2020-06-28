@@ -6,7 +6,7 @@
       "username": "user",
       "password": "user",
       "admin": false,
-      "events":[{"CRIME_ID":1},{"CRIME_ID":2},{"CRIME_ID":3},{"CRIME_ID":4}],
+      "events":[1,2,3,4],
       "upvote": [],
       "downvote": []
     },

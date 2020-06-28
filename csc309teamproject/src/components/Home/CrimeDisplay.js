@@ -16,9 +16,11 @@ class CrimeDisplay extends Component {
     render() {
         let upvote;
         let downvote;
+        let cancel;
         if (this.state.currentUserId > -1 ) {
             upvote = <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(1)} size="sm">Upvote</Button>
             downvote = <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(0)} size="sm">Downvote</Button>
+            cancel = <Button variant="outline-primary" disabled={!(this.props.alreadyVote)} onClick={() => this.sendData(-1)} size="sm">Cancel</Button>
             
         }
         return (
@@ -34,6 +36,7 @@ class CrimeDisplay extends Component {
                <Card.Footer className="text-muted">Posted on {this.props.crimeDate}</Card.Footer>
                {upvote}
                {downvote}
+               {cancel}
                </Card>
            </div>
         );
