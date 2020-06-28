@@ -23,7 +23,9 @@ class App extends React.Component {
         username: "default",
         password: "default",
         admin: false,
-        events: []
+        events: [],
+        upvote: [],
+        downvote: []
       }
     };
 
