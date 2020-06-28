@@ -23,6 +23,14 @@ class HomeMap extends Component {
             
         }
       }
+      static getDerivedStateFromProps(props, state) {
+        if (props.state.currentUser !== state.currentUser) {
+          return {
+            currentUser: props.state.currentUser,
+          };
+        }
+        return null;
+      }
       componentDidMount = () => {
           this.props.actions.getEvents(-1, -1).then((ret) => {
             this.setState({ crimeList: ret.events });
@@ -63,7 +71,10 @@ class HomeMap extends Component {
           if (dataFromChild > 0) {
               this.setState({crimeVote: this.state.crimeVote + 1});
               newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
-              this.setState({crimeList:newArr});
+              this.setState({crimeList:newArr}, function () {
+                console.log(this.state.crimeList);
+               
+              });
               this.state.currentUser.upvote.push(votedCrime);
               this.setState({alreadyUpVote: true});
               this.setState({alreadyVote: true});
