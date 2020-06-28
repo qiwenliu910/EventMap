@@ -24,7 +24,7 @@ class HomeMap extends Component {
         }
       }
       static getDerivedStateFromProps(props, state) {
-        if (props.state.currentUser !== state.currentUser) {
+        if (props.state.currentUser.id !== state.currentUser.id) {
           return {
             currentUser: props.state.currentUser,
           };
