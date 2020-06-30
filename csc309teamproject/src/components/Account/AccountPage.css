@@ -135,3 +135,30 @@ body{
 table, td, th {
 	border-collapse:separate;
 }
+
+#settings{
+  font-weight: bold;
+  margin-left: 100px;
+  margin-top: 50px;
+}
+.settingsTitle{
+  margin-bottom: 50px;
+}
+#settingsBody{
+  background-color: #87CEFA;
+  margin-left:300px;
+  width:70%;
+  min-height: 400px;
+  border-radius: 25px;
+}
+
+.sidebar{
+  background-color: #E0FFFF;
+  padding:20px;
+  width:225px;
+  border-radius: 25px;
+  float:left;
+}
+.ppButon{
+  margin-top: 20px;
+}
