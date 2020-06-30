@@ -165,7 +165,7 @@ class HomeMap extends Component {
             lat: crime.coordinates[1],
             lng: crime.coordinates[0]
             }}
-            icon={this.eventType[crime.TYPE][crime.SEVERITY]}
+            icon={{url: this.eventType[crime.TYPE][crime.SEVERITY],  scaledSize: new this.props.google.maps.Size(40, 35)}}
             onClick={() => this.dispalyCrime(crime)}
             />
 
