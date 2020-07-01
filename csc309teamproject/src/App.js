@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/view/Home';
 import About from './components/view/About';
+import Events from './components/view/Events';
 import AdminDashboard from './components/view/AdminDashboard';
 import AdminEventManagement from './components/view/AdminEventManagement';
 import AdminEventDetails from './components/view/AdminEventDetails';
@@ -46,6 +47,8 @@ class App extends React.Component {
                               (<Account state={this.state} actions={this.actions} />)}/>
               <Route exact path='/about' render={() =>
                               (<About state={this.state}/>)}/>
+              <Route exact path='/events' render={() =>
+                              (<Events state={this.state} actions={this.actions}/>)}/>
               <Route exact path='/admin/dashboard' render={() =>
                               (<AdminDashboard state={this.state} actions={this.actions} />)}/>
               <Route exact path='/admin/events' render={() =>

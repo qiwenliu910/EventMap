@@ -17,6 +17,7 @@ class Header extends Component {
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/about">About</Nav.Link>
+            <Nav.Link as={Link} to="/events">Quick View</Nav.Link>
           </Nav>
           {isLoggedIn
             ?

@@ -4,12 +4,12 @@
       "CRIME_ID": 1,
       "TITLE": "Rabbit is killed",
       "ADDRESS": "123 UofT St",
-      "ARTHOR": "Qiwen",
+      "ARTHOR": "user",
       "DATE": "2020/01/18",
       "TYPE": 3,
-      "VOTE": 0,
+      "VOTE": 10,
       "SEVERITY": 0,
-      "DESCRIPTION": "Qiwen's rabbit is killed.",
+      "DESCRIPTION": "A student's rabbit was killed.",
       "coordinates": [
         -79.3957,
         43.662
@@ -19,12 +19,12 @@
       "CRIME_ID": 2,
       "TITLE": "Laptop stolen",
       "ADDRESS": "321 MP St",
-      "ARTHOR": "Qiwen",
-      "DATE": "2020/01/19",
+      "ARTHOR": "user2",
+      "DATE": "2020/01/31",
       "TYPE": 1,
-      "VOTE": 0,
+      "VOTE": 60,
       "SEVERITY": 1,
-      "DESCRIPTION": "Qiwen's laptop is stolen.",
+      "DESCRIPTION": "A student's laptop was stolen.",
       "coordinates": [
         -79.3959,
         43.665
@@ -32,12 +32,12 @@
     },
     {
       "CRIME_ID": 3,
-      "TITLE": "New COVID-19 Case",
+      "TITLE": "COVID-19 case",
       "ADDRESS": "123 Bahen St",
       "ARTHOR": "Qiwen",
       "DATE": "2020/01/20",
       "TYPE": 0,
-      "VOTE": 0,
+      "VOTE": 200,
       "SEVERITY": 2,
       "DESCRIPTION": "A new COVID-19 case is discovered.",
       "coordinates": [
@@ -49,15 +49,105 @@
       "CRIME_ID": 4,
       "TITLE": "A fire in the building",
       "ADDRESS": "321 SS Dr",
-      "ARTHOR": "Qiwen",
+      "ARTHOR": "user3",
       "DATE": "2018/01/21",
       "TYPE": 2,
-      "VOTE": 0,
+      "VOTE": 300,
       "SEVERITY": 3,
-      "DESCRIPTION": "A student burned himself.",
+      "DESCRIPTION": "A student burned themselves.",
       "coordinates": [
         -79.391,
         43.669
+      ]
+    },
+    {
+      "CRIME_ID": 5,
+      "TITLE": "Fire at Queen's Park Subway Station",
+      "ADDRESS": "Intersetion of College St and University Ave",
+      "ARTHOR": "user",
+      "DATE": "2020/04/05",
+      "TYPE": 2,
+      "VOTE": 210,
+      "SEVERITY": 2,
+      "DESCRIPTION": "A fire started in the subway station at Queen's Park. The cause is unknown.",
+      "coordinates": [
+        -79.3876,
+        43.6559
+      ]
+    },
+    {
+      "CRIME_ID": 6,
+      "TITLE": "COVID-19 case in store",
+      "ADDRESS": "220 Yonge St",
+      "ARTHOR": "user3",
+      "DATE": "2020/03/19",
+      "TYPE": 0,
+      "VOTE": 70,
+      "SEVERITY": 1,
+      "DESCRIPTION": "COVID-19 case comfirmed at the Eaton Center.",
+      "coordinates": [
+        -79.3807,
+        43.6544
+      ]
+    },
+    {
+      "CRIME_ID": 7,
+      "TITLE": "Fire started at the Cube",
+      "ADDRESS": "40 St George St",
+      "ARTHOR": "user2",
+      "DATE": "2019/10/13",
+      "TYPE": 2,
+      "VOTE": 100,
+      "SEVERITY": 1,
+      "DESCRIPTION": "At the Bahen Centre for Information Technology, the cafe named The Cube had a fire. No one was injured.",
+      "coordinates": [
+        -79.3977,
+        43.6596
+      ]
+    },
+    {
+      "CRIME_ID": 8,
+      "TITLE": "Student was attacked",
+      "ADDRESS": "130 St George St",
+      "ARTHOR": "user",
+      "DATE": "2020/02/10",
+      "TYPE": 3,
+      "VOTE": 350,
+      "SEVERITY": 3,
+      "DESCRIPTION": "A student was attacked and a bucket of fecal matter was dumped on them in Robarts Library.",
+      "coordinates": [
+        -79.3997,
+        43.6645
+      ]
+    },
+    {
+      "CRIME_ID": 9,
+      "TITLE": "A backpack was stolen",
+      "ADDRESS": "255 Huron St",
+      "ARTHOR": "user2",
+      "DATE": "2019/11/23",
+      "TYPE": 1,
+      "VOTE": 70,
+      "SEVERITY": 1,
+      "DESCRIPTION": "A student's backpack was stolen in the McLennan building.",
+      "coordinates": [
+        -79.3984,
+        43.6609
+      ]
+    },
+    {
+      "CRIME_ID": 10,
+      "TITLE": "COVID-19 case at Sidney",
+      "ADDRESS": "100 St George St",
+      "ARTHOR": "user3",
+      "DATE": "2020/02/02",
+      "TYPE": 0,
+      "VOTE": 400,
+      "SEVERITY": 3,
+      "DESCRIPTION": "A student was found to have COVID-19 at Sidney Smith Hall.",
+      "coordinates": [
+        -79.3985,
+        43.6625
       ]
     }
   ]

@@ -18,12 +18,12 @@ class CrimeDisplay extends Component {
             upvote = <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(1)} size="sm">Upvote</Button>
             downvote = <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(0)} size="sm">Downvote</Button>
             cancel = <Button variant="outline-primary" disabled={!(this.props.alreadyVote)} onClick={() => this.sendData(-1)} size="sm">Cancel</Button>
-            
+
         }
         return (
            <div>
                <Card style={{ width: '25rem', position: "absolute", top: 90, right: 0, height: "70vh"}}>
-               <Card.Header as="h3">Crime Info</Card.Header>
+               <Card.Header as="h3">Event Info</Card.Header>
                <Card.Body>
                <Card.Title as="h4"> Title: {this.props.crimeTitle}</Card.Title>
                <Card.Subtitle className="mb-2 text-muted">Posted by: {this.props.crimeArthor}</Card.Subtitle>
