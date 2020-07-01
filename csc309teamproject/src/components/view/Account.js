@@ -4,6 +4,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import AccountPage from '../Account/AccountPage'
 import AccountEvents from '../Account/AccountEvents'
 import AccountSettings from '../Account/AccountSettings'
+import CreateEvent from '../Account/CreateEvent'
 
 class Account extends React.Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class Account extends React.Component {
                         (<AccountEvents state={this.props.state} actions={this.props.actions}/>)}/>
         <Route exact path='/account/info' render={() =>
                         (<AccountPage state={this.props.state}/>)}/>
+        <Route exact path='/account/eventcreate' render={() =>
+                        (<CreateEvent state={this.props.state}/>)}/>
         <Route path='/account/settings' render={() =>
                         (<AccountSettings state={this.props.state}/>)}/>
       </Switch>

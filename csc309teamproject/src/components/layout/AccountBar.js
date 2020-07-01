@@ -33,6 +33,7 @@ class AccountBar extends Component {
                 null
             }
             <Dropdown.Item as={Link} to="/account/events">My Events</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/account/eventcreate">Create An Event</Dropdown.Item>
             <Dropdown.Item as={Link} to="/account/settings">Profile Settings</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item as={Link} to="/" onClick={this.onLogout}>Sign out</Dropdown.Item>

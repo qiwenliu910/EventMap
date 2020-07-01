@@ -34,7 +34,7 @@
       "CRIME_ID": 3,
       "TITLE": "COVID-19 case",
       "ADDRESS": "123 Bahen St",
-      "ARTHOR": "Qiwen",
+      "ARTHOR": "user",
       "DATE": "2020/01/20",
       "TYPE": 0,
       "VOTE": 200,
@@ -71,8 +71,8 @@
       "SEVERITY": 2,
       "DESCRIPTION": "A fire started in the subway station at Queen's Park. The cause is unknown.",
       "coordinates": [
-        -79.3876,
-        43.6559
+        -79.3903,
+        43.6599
       ]
     },
     {
