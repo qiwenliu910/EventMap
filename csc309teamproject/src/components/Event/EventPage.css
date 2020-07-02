@@ -1,0 +1,36 @@
+#eventPage{
+  margin-left: 100px;
+  margin-top: 50px;
+}
+
+#eventPage h3{
+  margin-left: 100px;
+}
+.tableSortBy{
+  margin-left:20px;
+}
+
+.eventPageTable{
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 50px;
+  max-width: 750px;
+  padding: 10px;
+  border-radius: 25px;
+  background-color: #F0FFFF;
+}
+.tablePageButton{
+  margin-left: 250px;
+}
+.tablePrev{
+  margin-left: 25px;
+}
+.tableNext{
+  margin-left: 50px;
+}
+
+table, th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}

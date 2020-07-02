@@ -28,20 +28,11 @@ class EventTableItem extends React.Component {
     this.fireLevel = [fireGreen, fireYellow, fireOrange, fireRed];
     this.assualtLevel = [assualtGreen, assualtYellow, assualtOrange, assualtRed];
     this.eventType = [this.diseaseLevel, this.robberyLevel, this.fireLevel, this.assualtLevel]
-    //d=0,r=1,f=2,a=3
-    // this.state = {
-    //     eventTitle:"",
-    //     eventDate:"",
-    //     eventVote: 0,
-    //     severity: 0,
-    //     type:0,
-    //     alreadyVote: true,
-    //     alreadyUpVote: false,
-    //     alreadyDownVote: false,
-    //     currentUser: this.props.state.currentUser,
-    // }
   }
-
+  onSubmitDetails = (e) => {
+    e.preventDefault();
+    this.props.selectEvent(this.props.event.CRIME_ID)
+  }
 
   render() {
     return (
@@ -55,7 +46,7 @@ class EventTableItem extends React.Component {
           </th><th>
             {this.props.event.VOTE}
           </th><th>
-            <Button className="tableDetails" variant="primary" type="submit">
+            <Button className="tableDetails" variant="primary" type="submit" onClick={this.onSubmitDetails}>
             </Button>
           </th>
         </tr>
