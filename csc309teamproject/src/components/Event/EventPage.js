@@ -54,7 +54,10 @@ class EventPage extends React.Component {
           </span>
         </h3>
         <EventTable state={this.props.state} actions={this.props.actions} sort={this.state.sort} selectEvent={this.selectEvent}/>
-        <EventDetails key={this.state.currentEvent} currentEvent= {this.state.currentEvent} actions={this.props.actions}/>
+        <h3>Details</h3>
+        <div className="eventDetails">
+          <EventDetails key={this.state.currentEvent} currentEvent= {this.state.currentEvent} actions={this.props.actions}/>
+        </div>
       </div>
     );
   }

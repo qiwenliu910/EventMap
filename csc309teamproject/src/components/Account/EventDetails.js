@@ -31,7 +31,10 @@ class EventDetails extends React.Component {
         </ul><ul>
           Date: {this.state.event.DATE}
         </ul><ul>
-          Type: {this.state.event.TYPE}
+          Type: {this.state.event.TYPE === 0? "Disease":null}
+          {this.state.event.TYPE === 1? "Robbery":null}
+          {this.state.event.TYPE === 2? "Fire":null}
+          {this.state.event.TYPE === 3? "Assualt":null}
         </ul><ul>
           Description: {this.state.event.DESCRIPTION}
         </ul>

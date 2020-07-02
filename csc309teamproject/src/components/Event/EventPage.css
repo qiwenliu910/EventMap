@@ -14,19 +14,32 @@
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 50px;
-  max-width: 750px;
+  width: 650px;
+  height:690px;
   padding: 10px;
   border-radius: 25px;
   background-color: #F0FFFF;
+  float: left;
 }
 .tablePageButton{
-  margin-left: 250px;
+  margin-left: 220px;
 }
 .tablePrev{
-  margin-left: 25px;
+  margin-left: 10px;
 }
 .tableNext{
   margin-left: 50px;
+}
+
+.eventDetails{
+  margin-left: 700px;
+  margin-top: 20px;
+  margin-right: 50px;
+  min-width: 400px;
+  min-height: 400px;
+  padding: 30px;
+  border-radius: 25px;
+  background-color: #F0FFFF;
 }
 
 table, th, td {
