@@ -15,7 +15,8 @@ class AdminDashboard extends React.Component {
               <Sidebar />
             </Col>
             <Col md={10}>
-              DashBoard
+              <h3>DashBoard</h3>
+              <p>Please select an option on the left side</p>
             </Col>
           </Row>
         </main>
