@@ -87,6 +87,15 @@ DummyBackend.prototype = {
       }
     });
   },
+  createUser: function (user) {
+    return new Promise((resolve) => {
+      this.notImplemented();
+      resolve({
+        success: false,
+        message: "Function not implemented"
+      });
+    });
+  },
   updateEvent: function (event) {
     return new Promise((resolve) => {
       this.notImplemented();
@@ -99,25 +108,25 @@ DummyBackend.prototype = {
       resolve(false);
     });
   },
-  deleteEvent: function(eventId) {
+  deleteEvent: function (eventId) {
     return new Promise((resolve) => {
       this.notImplemented();
       resolve(false);
     });
   },
-  updateUser: function(user){
+  updateUser: function (user) {
     return new Promise((resolve) => {
       this.notImplemented();
       resolve(false);
     });
   },
-  deleteUser: function(userId) {
+  deleteUser: function (userId) {
     return new Promise((resolve) => {
       this.notImplemented();
       resolve(false);
     });
   },
-  notImplemented: function (){
+  notImplemented: function () {
     const msg = "This function involves data update and is not implemented in phase 1";
     console.log(msg);
   }
