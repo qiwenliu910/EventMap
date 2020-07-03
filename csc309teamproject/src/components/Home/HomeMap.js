@@ -46,6 +46,7 @@ class HomeMap extends Component {
             alreadyDownVote: false,
             crimeList: [],
             currentUser: this.props.state.currentUser,
+            filter:this.props.state.filter
 
         }
       }
@@ -158,20 +159,21 @@ class HomeMap extends Component {
               zoom={15}
               initialCenter={{ lat:43.6629, lng: -79.3957}}
             >
-            {this.state.crimeList.map(crime => ( // List of all crimes
+            {this.state.crimeList.map((crime) => { // List of all crimes
+              if((this.state.filter === crime.TYPE) || (this.state.filter === null)) {
+                return <Marker key={crime.CRIME_ID}
+                        position={{
+                        lat: crime.coordinates[1],
+                        lng: crime.coordinates[0]
+                        }}
+                        icon={{url: this.eventType[crime.TYPE][crime.SEVERITY],  scaledSize: new this.props.google.maps.Size(40, 35)}}
+                        onClick={() => this.dispalyCrime(crime)}
+                        />
+              }
 
-            <Marker key={crime.CRIME_ID}
-            position={{
-            lat: crime.coordinates[1],
-            lng: crime.coordinates[0]
-            }}
-            icon={{url: this.eventType[crime.TYPE][crime.SEVERITY],  scaledSize: new this.props.google.maps.Size(40, 35)}}
-            onClick={() => this.dispalyCrime(crime)}
-            />
+             })
 
-
-
-    ))}
+    }
 
                 <CrimeDisplay crimeTitle={this.state.crimeTitle}
                             crimeArthor={this.state.crimeArthor}

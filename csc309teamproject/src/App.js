@@ -27,18 +27,21 @@ class App extends React.Component {
         events: [],
         upvote: [],
         downvote: []
-      }
+      },
+      filter:null
     };
 
     this.actions = new Backend(this);
   }
 
-
+  myCallback = (dataFromChild) => {
+    this.setState({filter: dataFromChild});
+  }
   render(){
-    console.log(this.state.currentUser)
+    console.log(this.state.currentUser);
     return (
-          <BrowserRouter>
-            <Header currentUser={this.state.currentUser} actions={this.actions}/>
+          <BrowserRouter key={this.state.filter}>
+            <Header currentUser={this.state.currentUser} actions={this.actions} callbackFromParent = {this.myCallback}/>
             <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }
               { /* Each Route below shows a different component depending on the exact path in the URL  */ }
               <Route exact path='/' render={() =>
