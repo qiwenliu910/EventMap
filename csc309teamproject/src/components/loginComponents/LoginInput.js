@@ -6,30 +6,30 @@ import { Link, Redirect } from 'react-router-dom';
 
 class LoginInput extends Component {
   state = {
-    username: '',
+    email: '',
     password: '',
     redirect: false,
     invalid: false,
     message: ""
   }
 
-  onChangeUsername = (e) => this.setState({ username: e.target.value });
+  onChangeEmail = (e) => this.setState({ email: e.target.value });
   onChangePassword = (e) => this.setState({ password: e.target.value });
 
   onSubmit = (e) => {
     e.preventDefault();
-    
-    if (this.state.username.trim() === '' || this.state.password.trim() === '') {
-      this.setState({invalid: true, message: "Please enter username and password"});
+
+    if (this.state.email.trim() === '' || this.state.password.trim() === '') {
+      this.setState({invalid: true, message: "Please enter an email and password"});
       return;
     }
 
-    this.props.actions.authenticateUser(this.state.username, this.state.password).then((success) => {
+    this.props.actions.authenticateUser(this.state.email, this.state.password).then((success) => {
       if (success === true) {
-        this.setState({ username: '', password: '', redirect: true, invalid: false });
+        this.setState({ email: '', password: '', redirect: true, invalid: false });
       }
       else {
-        this.setState({ username: '', password: '', redirect: false, invalid: true, message: "Invalid username or password. Please try again." });
+        this.setState({ email: '', password: '', redirect: false, invalid: true, message: "Invalid email or password. Please try again." });
       }
     });
   }
@@ -49,7 +49,7 @@ class LoginInput extends Component {
         <Form>
           <Form.Group controlId="fldEmail">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" value={this.state.username} onChange={this.onChangeUsername} />
+            <Form.Control type="email" placeholder="Enter email" value={this.state.email} onChange={this.onChangeEmail} />
           </Form.Group>
           <Form.Group controlId="fldPassword">
             <Form.Label>Password</Form.Label>

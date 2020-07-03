@@ -44,10 +44,10 @@ DummyBackend.prototype = {
       resolve(null);
     });
   },
-  authenticateUser: function (username, password) {
+  authenticateUser: function (email, password) {
     return new Promise((resolve) => {
       const user = this.data.users.filter(
-        (e) => e.username === username && e.password === password);
+        (e) => e.email === email && e.password === password);
       if (user.length !== 0) {
         this.app.setState({ currentUser: user[0] });
         resolve(true);
