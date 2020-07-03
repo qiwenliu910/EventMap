@@ -6,21 +6,44 @@ import { Route, BrowserRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class Header extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {     
+        currFilter: this.props.state.filter
+    }
+  }
   sendData = (data) => {
     this.props.callbackFromParent(data);
   }
 
   render() {
-    const isLoggedIn = (this.props.currentUser.id !== -1);
+    const isLoggedIn = (this.props.state.currentUser.id !== -1);
 
-  let filter = <NavDropdown className="headerDropdown" title="Filter" id="basic-nav-dropdown" >
+    let filterStr;
+    { if(this.state.currFilter === 0){
+      filterStr = "Disease";
+      }
+      else if(this.state.currFilter === 1) {
+        filterStr = "Robbery";
+      }
+      else if(this.state.currFilter === 2) {
+        filterStr = "Fire";
+      }
+      else if(this.state.currFilter === 3) {
+        filterStr = "Assault";
+      }
+      else  {
+        filterStr = "Filter";
+       }
+  }
+
+  let filter = <NavDropdown className="headerDropdown" title={filterStr} id="basic-nav-dropdown" >
   <NavDropdown.Item  as="button" value='Disease' onClick={() => this.sendData(0)} >Disease</NavDropdown.Item>
   <NavDropdown.Item  as="button" value='Robbery' onClick={() => this.sendData(1)} >Robbery</NavDropdown.Item>
   <NavDropdown.Item  as="button" value='Fire' onClick={() => this.sendData(2)} >Fire</NavDropdown.Item>
-  <NavDropdown.Item  as="button" value='Assualt' onClick={() => this.sendData(3)} >Assualt</NavDropdown.Item>
+  <NavDropdown.Item  as="button" value='Assault' onClick={() => this.sendData(3)} >Assault</NavDropdown.Item>
   <NavDropdown.Item  as="button" value='Clear' onClick={() => this.sendData(null)} >Clear</NavDropdown.Item>
-</NavDropdown>
+  </NavDropdown>
 
     return (
       <header>
@@ -34,7 +57,7 @@ class Header extends Component {
           </Nav>
           {isLoggedIn
             ?
-            <AccountBar currentUser={this.props.currentUser} actions={this.props.actions} />
+            <AccountBar currentUser={this.props.state.currentUser} actions={this.props.actions} />
             :
             <Nav>
               <Button as={Link} to="/login" variant="dark" className="mr-sm-2">Sign in</Button>
