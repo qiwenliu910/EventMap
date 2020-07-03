@@ -32,7 +32,7 @@ class AdminEventDetails extends React.Component {
     this.setState({ eventType: e.target.value });
   }
   onChangeSpecial = (e) => {
-    this.setState({ special: e.target.value === 'true' });
+    this.setState({ special: e.target.checked === true });
   }
   onChangeCoordinateX = (e) => {
     this.setState({ coordinateX: e.target.value });
