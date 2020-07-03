@@ -30,13 +30,13 @@ class Header extends Component {
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/about">About</Nav.Link>
             <Nav.Link as={Link} to="/events">Quick View</Nav.Link>
+            {filter}
           </Nav>
           {isLoggedIn
             ?
             <AccountBar currentUser={this.props.currentUser} actions={this.props.actions} />
             :
             <Nav>
-              {filter}
               <Button as={Link} to="/login" variant="dark" className="mr-sm-2">Sign in</Button>
               <Button as={Link} to="/createaccount" variant="outline-light">Sign up</Button>
             </Nav>
