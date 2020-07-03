@@ -67,7 +67,7 @@ class App extends React.Component {
               <Route exact path='/login' render={() =>
                               (<Login state={this.state} actions={this.actions}/>)}/>
               <Route exact path='/resetpassword' render={() =>
-                              (<ResetPassword state={this.state}/>)}/>
+                              (<ResetPassword state={this.state} actions={this.actions}/>)}/>
               <Route exact path='/createaccount' render={() =>
                               (<CreateAccount state={this.state} actions={this.actions}/>)}/>
             </Switch>

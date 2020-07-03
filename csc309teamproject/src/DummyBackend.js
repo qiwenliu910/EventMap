@@ -96,6 +96,15 @@ DummyBackend.prototype = {
       });
     });
   },
+  resetPassword: function(email) {
+    return new Promise((resolve) => {
+      this.notImplemented();
+      resolve({
+        success: false,
+        message: "Function not implemented"
+      });
+    });
+  },
   updateEvent: function (event) {
     return new Promise((resolve) => {
       this.notImplemented();
