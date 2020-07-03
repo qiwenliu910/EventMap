@@ -22,6 +22,7 @@ class AdminEventManagement extends React.Component {
     const skip = (pageNum - 1) * this.state.entryPerPage;
     const take = this.state.entryPerPage;
     this.setState({ currentPage: 0 });
+    // [*] Exchanging data with external source
     this.props.actions.getEvents(skip, take).then((ret) => {
       let pages = parseInt(ret.totalEntries / this.state.entryPerPage);
       if (ret.totalEntries % this.state.entryPerPage !== 0)

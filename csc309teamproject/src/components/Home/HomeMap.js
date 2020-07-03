@@ -59,6 +59,7 @@ class HomeMap extends Component {
         return null;
       }
       componentDidMount = () => {
+        // [*] Exchanging data with external source
           this.props.actions.getEvents(-1, -1).then((ret) => {
             this.setState({ crimeList: ret.events });
           });

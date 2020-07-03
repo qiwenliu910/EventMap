@@ -14,6 +14,7 @@ class EventTable extends React.Component {
       }
     }
     componentDidMount = () => {
+      // [*] Exchanging data with external source
         this.props.actions.getEvents(-1, -1).then((ret) => {
           this.setState({
             maxEventDisplay: 5,

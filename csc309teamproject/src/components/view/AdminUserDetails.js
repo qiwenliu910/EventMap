@@ -45,6 +45,7 @@ class AdminUserDetails extends React.Component {
     let user = {
       ...this.state.userObj
     };
+    // [*] Exchanging data with external source
     this.props.actions.updateUser(user).then((success) => {
       if (success) {
         this.setState({ message: "This user has been updated successfully" });
@@ -57,6 +58,7 @@ class AdminUserDetails extends React.Component {
 
   onDelete = (e) => {
     e.preventDefault();
+    // [*] Exchanging data with external source
     this.props.actions.deleteUser(this.props.userId).then((success) => {
       if (success) {
         this.setState({ userDeleted: true });
@@ -68,6 +70,7 @@ class AdminUserDetails extends React.Component {
   }
 
   loadUser(userId) {
+    // [*] Exchanging data with external source
     this.props.actions.getUser(userId).then((user) => {
 
       if (user !== null) {

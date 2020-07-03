@@ -53,6 +53,7 @@ class AdminEventDetails extends React.Component {
       DESCRIPTION: this.state.details,
       SPECIAL: this.state.special
     };
+    // [*] Exchanging data with external source
     this.props.actions.updateEvent(event).then((success) => {
       if (success) {
         this.setState({ message: "This event has been updated successfully" });
@@ -64,6 +65,7 @@ class AdminEventDetails extends React.Component {
   }
 
   loadEvent(eventId) {
+    // [*] Exchanging data with external source
     this.props.actions.getEvent(eventId).then((event) => {
 
       if (event !== null) {

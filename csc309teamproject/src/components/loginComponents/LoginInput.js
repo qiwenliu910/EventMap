@@ -23,7 +23,7 @@ class LoginInput extends Component {
       this.setState({invalid: true, message: "Please enter an email and password"});
       return;
     }
-
+    // [*] Exchanging data with external source
     this.props.actions.authenticateUser(this.state.email, this.state.password).then((success) => {
       if (success === true) {
         this.setState({ email: '', password: '', redirect: true, invalid: false });
