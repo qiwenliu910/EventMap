@@ -44,6 +44,36 @@ DummyBackend.prototype = {
       resolve(null);
     });
   },
+  getUsers: function (skip, take) {
+    return new Promise((resolve) => {
+      let users = [];
+      if (skip >= 0 && take >= 0) {
+        users = this.data.users.slice(skip, skip + take);
+      }
+      else {
+        users = this.data.users;
+      }
+      setTimeout(function () {
+        resolve({
+          users: users,
+          totalEntries: this.data.users.length
+        });
+      }.bind(this), 2);
+
+    });
+  },
+  getUser: function (userId) {
+    return new Promise((resolve) => {
+      let users = this.data.users;
+      for (let i = 0; i < users.length; i++) {
+        if (parseInt(users[i].id) === parseInt(userId)) {
+          resolve(users[i]);
+          return;
+        }
+      }
+      resolve(null);
+    });
+  },
   authenticateUser: function (email, password) {
     return new Promise((resolve) => {
       const user = this.data.users.filter(
@@ -59,6 +89,7 @@ DummyBackend.prototype = {
   },
   updateEvent: function (event) {
     return new Promise((resolve) => {
+      this.notImplemented();
       for (let i = 0; i < this.data.events.length; i++) {
         if (parseInt(this.data.events[i].CRIME_ID) === parseInt(event.CRIME_ID)) {
           this.data.events[i] = event;
@@ -67,6 +98,28 @@ DummyBackend.prototype = {
       }
       resolve(false);
     });
+  },
+  deleteEvent: function(eventId) {
+    return new Promise((resolve) => {
+      this.notImplemented();
+      resolve(false);
+    });
+  },
+  updateUser: function(user){
+    return new Promise((resolve) => {
+      this.notImplemented();
+      resolve(false);
+    });
+  },
+  deleteUser: function(userId) {
+    return new Promise((resolve) => {
+      this.notImplemented();
+      resolve(false);
+    });
+  },
+  notImplemented: function (){
+    const msg = "This function involves data update and is not implemented in phase 1";
+    console.log(msg);
   }
 };
 
