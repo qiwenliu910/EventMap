@@ -3,3 +3,11 @@
   width: 100vw;
   height: calc(100vh - 99px);
 }
+
+.eventCard {
+  width: 25rem;
+  position: absolute; 
+  top: 90; 
+  right: 0;
+  height: 70vh;
+}

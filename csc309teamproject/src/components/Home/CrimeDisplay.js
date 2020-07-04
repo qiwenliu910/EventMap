@@ -1,6 +1,7 @@
 import React, {Component } from 'react';
 import {Card, Button} from 'react-bootstrap'
 import { Route } from 'react-router-dom';
+import "./styles.css";
 class CrimeDisplay extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ class CrimeDisplay extends Component {
         }
         return (
            <div>
-               <Card style={{ width: '25rem', position: "absolute", top: 90, right: 0, height: "70vh"}}>
+               <Card className="eventCard">
                <Card.Header as="h3">Event Info</Card.Header>
                <Card.Body>
                <Card.Title as="h4"> Title: {this.props.crimeTitle}</Card.Title>
