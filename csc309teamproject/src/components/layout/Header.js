@@ -69,39 +69,6 @@ class Header extends Component {
     );
   }
 }
-// function Header(user) {
-//   const [currentUser, setCurrentUser] = useState(user)
-//   if(currentUser.username === "default"){
-//     return (
-//       <header>
-//         <Navbar bg="dark" variant="dark">
-//         <Navbar.Brand as={Link} to="/">Project</Navbar.Brand>
-//         <Nav className="mr-auto">
-//           <Nav.Link as={Link} to="/">Home</Nav.Link>
-//           <Nav.Link as={Link} to="/about">About</Nav.Link>
-//         </Nav>
-//         <Nav>
-//           <Button as={Link} to="/login" variant="dark" className="mr-sm-2">Sign in</Button>
-//           <Button as={Link} to="/createaccount" variant="outline-light">Sign up</Button>
-//         </Nav>
-//         </Navbar>
-//       </header>
-//     )
-//   }
-//     else{
-//       return (
-//       <header>
-//       <Navbar bg="dark" variant="dark">
-//         <Navbar.Brand as={Link} to="/">Project</Navbar.Brand>
-//         <Nav className="mr-auto">
-//           <Nav.Link as={Link} to="/">Home</Nav.Link>
-//           <Nav.Link as={Link} to="/about">About</Nav.Link>
-//         </Nav>
-//         <Account />
-//         </Navbar>
-//       </header>
-//     )
-//   }
-// }
+
 
 export default Header
