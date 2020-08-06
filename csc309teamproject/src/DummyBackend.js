@@ -1,6 +1,7 @@
 import * as dataEvents from "./data/crimeData.json"
 import * as userData from "./data/userData.json"
 
+
 function DummyBackend(app) {
   this.app = app;
   this.data = {
@@ -11,6 +12,7 @@ function DummyBackend(app) {
 
 
 DummyBackend.prototype = {
+  API_VERSION: 'v1',
   logout: function () {
     this.app.setState({ currentUser: { id: -1, username: "" } });
   },
@@ -75,16 +77,41 @@ DummyBackend.prototype = {
     });
   },
   authenticateUser: function (email, password) {
+    
     return new Promise((resolve) => {
-      const user = this.data.users.filter(
-        (e) => e.email === email && e.password === password);
-      if (user.length !== 0) {
-        this.app.setState({ currentUser: user[0] });
-        resolve(true);
-      }
-      else {
+      fetch(`/api/${this.API_VERSION}/login`, 
+      { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: email,
+          password: password
+        })
+      })
+      .then((res) => { 
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json();
+        } else {
+          alert('Could not call login');
+          resolve(false);
+        }                
+      })
+      .then((json) => {
+        console.log(json);
+        if (json.result === true) {
+        this.app.setState({ currentUser: json.user });
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
         resolve(false);
-      }
+      });
     });
   },
   createUser: function (user) {

@@ -226,6 +226,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //     );
 // });
 
+const API_VERSION = "v1";
+
+app.post(`/api/${API_VERSION}/login`, (req, res) => {
+    if (req.body.user === "sam" && req.body.password === "123456") {
+        res.json({
+            result: true,
+            token: "random_123456789",
+            user: {
+                id: 1,
+                email: "sam@email.com",
+                username: "sam",
+                displayName: "fox",
+                admin: true,
+                "upvote": [],
+                "downvote": []
+            }
+        });
+    }
+    else {
+        res.json({
+            result: false
+        });
+    }
+});
+
 /*** Webpage routes below **********************************/
 // Serve the build
 app.use(express.static(__dirname + "/csc309teamproject/build"));
