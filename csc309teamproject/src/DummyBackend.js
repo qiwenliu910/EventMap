@@ -36,14 +36,27 @@ DummyBackend.prototype = {
   },
   getEvent: function (eventId) {
     return new Promise((resolve) => {
-      let events = this.data.events;
-      for (let i = 0; i < events.length; i++) {
-        if (parseInt(events[i].CRIME_ID) === parseInt(eventId)) {
-          resolve(events[i]);
-          return;
+      console.log(eventId)
+      fetch(`/api/${this.API_VERSION}/events/`+eventId,
+      {
+        method: 'GET'
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json();
+        } else {
+          alert('Could not call login');
+          resolve(false);
         }
-      }
-      resolve(null);
+      })
+      .then((json) => {
+        console.log(json);
+        resolve(json.event);
+      }).catch((error) => {
+        console.log(error);
+        resolve(null);
+      });
     });
   },
   getUsers: function (skip, take) {
@@ -66,21 +79,33 @@ DummyBackend.prototype = {
   },
   getUser: function (userId) {
     return new Promise((resolve) => {
-      let users = this.data.users;
-      for (let i = 0; i < users.length; i++) {
-        if (parseInt(users[i].id) === parseInt(userId)) {
-          resolve(users[i]);
-          return;
+      fetch(`/api/${this.API_VERSION}/users/`+userId,
+      {
+        method: 'GET',
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json().user;
+        } else {
+          alert('Could not call login');
+          resolve(false);
         }
-      }
-      resolve(null);
+      })
+      .then((json) => {
+        console.log(json);
+        resolve(json.event);
+      }).catch((error) => {
+        console.log(error);
+        resolve(null);
+      });
     });
   },
   authenticateUser: function (email, password) {
-    
+
     return new Promise((resolve) => {
-      fetch(`/api/${this.API_VERSION}/login`, 
-      { 
+      fetch(`/api/${this.API_VERSION}/login`,
+      {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -90,14 +115,15 @@ DummyBackend.prototype = {
           password: password
         })
       })
-      .then((res) => { 
+      .then((res) => {
         if (res.status === 200) {
           // return a promise that resolves with the JSON body
-          return res.json();
+          return res.json()
+          // resolve(res.json());
         } else {
           alert('Could not call login');
           resolve(false);
-        }                
+        }
       })
       .then((json) => {
         console.log(json);

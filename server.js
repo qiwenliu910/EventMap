@@ -1,5 +1,6 @@
 /* server.js for react-express-authentication */
 "use strict";
+
 const log = console.log;
 
 const express = require("express");
@@ -11,7 +12,7 @@ const { mongoose } = require("./db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
 // import the mongoose models
-const { Student } = require("./models/event");
+const { Event } = require("./models/event");
 const { User } = require("./models/user");
 
 // to validate object IDs
@@ -84,7 +85,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // /*********************************************************/
 
 // /*** API Routes below ************************************/
-// // NOTE: The JSON routes (/students) are not protected in this react server (no authentication required). 
+// // NOTE: The JSON routes (/students) are not protected in this react server (no authentication required).
 // //       You can (and should!) add this using similar middleware techniques we used in lecture.
 
 // /** Student resource routes **/
@@ -229,7 +230,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const API_VERSION = "v1";
 
 app.post(`/api/${API_VERSION}/login`, (req, res) => {
-    if (req.body.user === "sam" && req.body.password === "123456") {
+    if (req.body.user === "sam" && parseInt(req.body.password) === 123456) {
         res.json({
             result: true,
             token: "random_123456789",
@@ -239,8 +240,9 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
                 username: "sam",
                 displayName: "fox",
                 admin: true,
-                "upvote": [],
-                "downvote": []
+                events:[1],
+                upvote: [],
+                downvote: []
             }
         });
     }
@@ -249,6 +251,105 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
             result: false
         });
     }
+});
+
+app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
+  const eventId = req.params.id
+  const data = {
+    crimeList: [
+      {
+        CRIME_ID: 1,
+        TITLE: "Rabbit is killed",
+        ADDRESS: "123 UofT St",
+        AUTHOR: "user",
+        DATE: "2020/01/18",
+        TYPE: 3,
+        VOTE: 10,
+        SEVERITY: 0,
+        DESCRIPTION: "A student's rabbit was killed.",
+        coordinates: [
+          -79.3957,
+          43.662
+        ]
+      },
+      {
+        CRIME_ID: 2,
+        TITLE: "Laptop stolen",
+        ADDRESS: "321 MP St",
+        AUTHOR: "user2",
+        DATE: "2020/01/31",
+        TYPE: 1,
+        VOTE: 60,
+        SEVERITY: 1,
+        DESCRIPTION: "A student's laptop was stolen.",
+        coordinates: [
+          -79.3959,
+          43.665
+        ]
+      }]
+  }
+
+  for (let i = 0; i < data.crimeList.length; i++) {
+    if (parseInt(data.crimeList[i].CRIME_ID) === parseInt(eventId)) {
+        res.json({
+          result: true,
+          token: "random_123456789",
+          event: data.crimeList[i]
+        });
+        return;
+    }
+  }
+  res.json({
+    result: false,
+    token: "random_123456789",
+    event: null
+  });
+});
+
+app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
+  const eventId = req.params.id
+  const data = {
+    users: [
+      {
+        id: 1,
+        email: "user@user.com",
+        username: "user",
+        displayName: "fox",
+        password: "user",
+        admin: false,
+        events:[1,3,5,8],
+        upvote: [],
+        downvote: []
+      },
+      {
+        id: 2,
+        email: "user2@user2.com",
+        username: "user2",
+        displayName: "bunny",
+        password: "user2",
+        admin: false,
+        events:[2,7,9],
+        upvote: [],
+        downvote: []
+      }
+    ]
+  }
+
+  for (let i = 0; i < data.users.length; i++) {
+    if (parseInt(data.users[i].id) === parseInt(eventId)) {
+        res.json({
+          result: true,
+          token: "random_123456789",
+          user: data.users[i]
+        });
+        return;
+    }
+  }
+  res.json({
+    result: false,
+    token: "random_123456789",
+    event: null
+  });
 });
 
 /*** Webpage routes below **********************************/
