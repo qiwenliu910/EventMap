@@ -14,7 +14,28 @@ function DummyBackend(app) {
 DummyBackend.prototype = {
   API_VERSION: 'v1',
   logout: function () {
-    this.app.setState({ currentUser: { id: -1, username: "" } });
+    
+    return new Promise((resolve) => {
+      fetch(`/api/${this.API_VERSION}/logout`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          this.app.setState({ currentUser: { id: -1, username: "" } });
+          resolve();
+        } else {
+          resolve();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        resolve();
+      });
+    });
   },
   getEvents: function (skip, take) {
     return new Promise((resolve) => {

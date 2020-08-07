@@ -38,21 +38,47 @@ function isMongoError(error) { // checks for first error returned by promise rej
 
 const API_VERSION = "v1";
 
+/*** Session handling **************************************/
+// Create a session cookie
+app.use(session({
+    secret: '3v3nt@p1S3crEt',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 60000,
+        httpOnly: true
+    }
+}));
+
 app.post(`/api/${API_VERSION}/login`, (req, res) => {
   const data = TEST_USER_DATA;
   for(let i = 0; i < data.users.length; i++){
     if (req.body.user === data.users[i].email && req.body.password === data.users[i].password){
-      res.json({
+        req.session.user = data.users[i].id;
+        req.session.email = data.users[i].email;
+        res.json({
           result: true,
-          token: "random_123456789",
           user: data.users[i]
       });
+      
       return;
     }
   }
   res.json({
     result: false
   });
+});
+
+app.get(`/api/${API_VERSION}/logout`, (req, res) => {
+    req.session.destroy((error) => {
+        log(error);
+        if (error) {
+            res.status(500).send('Internal Server Error');
+        }
+        else{
+            res.redirect("/");
+        }
+    });
 });
 
 
@@ -63,7 +89,6 @@ app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
     if (parseInt(data.crimeList[i].CRIME_ID) === parseInt(eventId)) {
         res.json({
           result: true,
-          token: "random_123456789",
           event: data.crimeList[i]
         });
         return;
@@ -71,7 +96,6 @@ app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
   }
   res.json({
     result: false,
-    token: "random_123456789",
     event: null
   });
 });
@@ -103,13 +127,16 @@ app.get(`/api/${API_VERSION}/events`, (req, res) => {
 });
 
 app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
+  if (!req.session.user) {
+    res.status(500).send('Internal Server Error');
+    return;
+  }
   const eventId = req.params.id
   const data = TEST_USER_DATA;
   for (let i = 0; i < data.users.length; i++) {
     if (parseInt(data.users[i].id) === parseInt(eventId)) {
         res.json({
           result: true,
-          token: "random_123456789",
           user: data.users[i]
         });
         return;
@@ -117,12 +144,15 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
   }
   res.json({
     result: false,
-    token: "random_123456789",
     event: null
   });
 });
 
 app.get(`/api/${API_VERSION}/users`, (req, res) => {
+  if (!req.session.user) {
+    res.status(500).send('Internal Server Error');
+    return;
+  }
   const eventId = req.params.id
   const data = TEST_USER_DATA;
   let users = [];
