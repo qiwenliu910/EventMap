@@ -18,30 +18,27 @@ DummyBackend.prototype = {
   },
   getEvents: function (skip, take) {
     return new Promise((resolve) => {
-      fetch(`/api/${this.API_VERSION}/events`,
+      fetch(`/api/${this.API_VERSION}/events?skip=${skip}&take=${take}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          skip: skip,
-          take: take
-        })
+        }
       })
       .then((res) => {
         if (res.status === 200) {
           // return a promise that resolves with the JSON body
-          return resolve(res.json());
+          return res.json();
         } else {
           alert('Could not call get events');
           resolve(false);
         }
       })
       .then((json) => {
-        console.log(json);
-        return json;
-        // resolve(json.events);
+        resolve({
+          events: json.events,
+          totalEntries: json.totalEntries
+        });
       }).catch((error) => {
         console.log(error);
         resolve(null);
@@ -75,16 +72,12 @@ DummyBackend.prototype = {
   },
   getUsers: function (skip, take) {
     return new Promise((resolve) => {
-      fetch(`/api/${this.API_VERSION}/users`,
+      fetch(`/api/${this.API_VERSION}/users?skip=${skip}&take=${take}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          skip: skip,
-          take: take
-        })
+        }
       })
       .then((res) => {
         if (res.status === 200) {
@@ -96,8 +89,10 @@ DummyBackend.prototype = {
         }
       })
       .then((json) => {
-        console.log(json);
-        resolve(json.users);
+        resolve({
+          users: json.users,
+          totalEntries: json.totalEntries
+        });
       }).catch((error) => {
         console.log(error);
         resolve(null);

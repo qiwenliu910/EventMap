@@ -40,12 +40,12 @@ const API_VERSION = "v1";
 
 app.post(`/api/${API_VERSION}/login`, (req, res) => {
   const data = TEST_USER_DATA;
-  for(let i = 0; i < data.usersList.length; i++){
-    if (req.body.user === data.usersList[i].email && req.body.password === data.usersList[i].password){
+  for(let i = 0; i < data.users.length; i++){
+    if (req.body.user === data.users[i].email && req.body.password === data.users[i].password){
       res.json({
           result: true,
           token: "random_123456789",
-          user: data.usersList[i]
+          user: data.users[i]
       });
       return;
     }
@@ -78,17 +78,27 @@ app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
 app.get(`/api/${API_VERSION}/events`, (req, res) => {
   const eventId = req.params.id
   const data = TEST_EVENT_DATA
-  log(TEST_EVENT_DATA)
+  let skip = 0;
+  let take = 0;
+  try {
+      skip = parseInt(req.query.skip);
+      take = parseInt(req.query.take);
+  }
+  catch {
+      skip = 0;
+      take = 0;
+  }
   let events = [];
-  if (req.body.skip >= 0 && req.body.take >= 0) {
-    events = data.crimeList.slice(req.body.skip, req.body.skip + req.body.take);
+  let totalEntries = data.crimeList.length;
+  if (skip >= 0 && take >= 0) {
+    events = data.crimeList.slice(skip, skip + take);
   }
   else {
     events = data.crimeList;
   }
   res.json({
     events: events,
-    totalEntries: events.length
+    totalEntries: totalEntries
   });
 });
 
@@ -116,13 +126,24 @@ app.get(`/api/${API_VERSION}/users`, (req, res) => {
   const eventId = req.params.id
   const data = TEST_USER_DATA;
   let users = [];
-  if (req.body.skip >= 0 && req.body.take >= 0) {
-    users = data.users.slice(req.body.skip, req.body.skip + req.body.take);
+  let skip = 0;
+  let take = 0;
+  try {
+      skip = parseInt(req.query.skip);
+      take = parseInt(req.query.take);
+  }
+  catch {
+      skip = 0;
+      take = 0;
+  }
+  const totalEntries = data.users.length;
+  if (skip >= 0 && take >= 0) {
+    users = data.users.slice(skip, skip + take);
   }
   else {
     users = data.users;
   }
-  res.json({users: users});
+  res.json({users: users, totalEntries: totalEntries});
 });
 
 // Create user account
