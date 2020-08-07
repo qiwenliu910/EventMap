@@ -18,20 +18,34 @@ DummyBackend.prototype = {
   },
   getEvents: function (skip, take) {
     return new Promise((resolve) => {
-      let events = [];
-      if (skip >= 0 && take >= 0) {
-        events = this.data.events.slice(skip, skip + take);
-      }
-      else {
-        events = this.data.events;
-      }
-      setTimeout(function () {
-        resolve({
-          events: events,
-          totalEntries: this.data.events.length
-        });
-      }.bind(this), 2);
-
+      fetch(`/api/${this.API_VERSION}/events`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          skip: skip,
+          take: take
+        })
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return resolve(res.json());
+        } else {
+          alert('Could not call get events');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        return json;
+        // resolve(json.events);
+      }).catch((error) => {
+        console.log(error);
+        resolve(null);
+      });
     });
   },
   getEvent: function (eventId) {
@@ -46,7 +60,7 @@ DummyBackend.prototype = {
           // return a promise that resolves with the JSON body
           return res.json();
         } else {
-          alert('Could not call login');
+          alert('Could not call get event');
           resolve(false);
         }
       })
@@ -61,20 +75,33 @@ DummyBackend.prototype = {
   },
   getUsers: function (skip, take) {
     return new Promise((resolve) => {
-      let users = [];
-      if (skip >= 0 && take >= 0) {
-        users = this.data.users.slice(skip, skip + take);
-      }
-      else {
-        users = this.data.users;
-      }
-      setTimeout(function () {
-        resolve({
-          users: users,
-          totalEntries: this.data.users.length
-        });
-      }.bind(this), 2);
-
+      fetch(`/api/${this.API_VERSION}/users`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          skip: skip,
+          take: take
+        })
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json();
+        } else {
+          alert('Could not call get events');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        resolve(json.users);
+      }).catch((error) => {
+        console.log(error);
+        resolve(null);
+      });
     });
   },
   getUser: function (userId) {

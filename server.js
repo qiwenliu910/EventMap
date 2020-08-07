@@ -26,275 +26,239 @@ app.use(bodyParser.json());
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// /*** Session handling **************************************/
-// // Create a session cookie
-// app.use(
-//     session({
-//         secret: "oursecret",
-//         resave: false,
-//         saveUninitialized: false,
-//         cookie: {
-//             expires: 60000,
-//             httpOnly: true
-//         }
-//     })
-// );
-
-// // A route to login and create a session
-// app.post("/users/login", (req, res) => {
-//     const email = req.body.email;
-//     const password = req.body.password;
-
-//     log(email, password);
-//     // Use the static method on the User model to find a user
-//     // by their email and password
-//     User.findByEmailPassword(email, password)
-//         .then(user => {
-//             // Add the user's id to the session cookie.
-//             // We can check later if this exists to ensure we are logged in.
-//             req.session.user = user._id;
-//             req.session.email = user.email;
-//             res.send({ currentUser: user.email });
-//         })
-//         .catch(error => {
-//             res.status(400).send()
-//         });
-// });
-
-// // A route to logout a user
-// app.get("/users/logout", (req, res) => {
-//     // Remove the session
-//     req.session.destroy(error => {
-//         if (error) {
-//             res.status(500).send(error);
-//         } else {
-//             res.send()
-//         }
-//     });
-// });
-
-// // A route to check if a use is logged in on the session cookie
-// app.get("/users/check-session", (req, res) => {
-//     if (req.session.user) {
-//         res.send({ currentUser: req.session.email });
-//     } else {
-//         res.status(401).send();
-//     }
-// });
-
-// /*********************************************************/
-
-// /*** API Routes below ************************************/
-// // NOTE: The JSON routes (/students) are not protected in this react server (no authentication required).
-// //       You can (and should!) add this using similar middleware techniques we used in lecture.
-
-// /** Student resource routes **/
-// // a POST route to *create* a student
-// app.post("/students", (req, res) => {
-//     // log(req.body)
-
-//     // Create a new student using the Student mongoose model
-//     const student = new Student({
-//         name: req.body.name,
-//         year: req.body.year
-//     });
-
-//     // Save student to the database
-//     student.save().then(
-//         result => {
-//             res.send(result);
-//         },
-//         error => {
-//             res.status(400).send(error); // 400 for bad request
-//         }
-//     );
-// });
-
-// // a GET route to get all students
-// app.get("/students", (req, res) => {
-//     Student.find().then(
-//         students => {
-//             log();
-//             res.send({ students }); // can wrap in object if want to add more properties
-//         },
-//         error => {
-//             res.status(500).send(error); // server error
-//         }
-//     );
-// });
-
-// /// a GET route to get a student by their id.
-// // id is treated as a wildcard parameter, which is why there is a colon : beside it.
-// // (in this case, the database id, but you can make your own id system for your project)
-// app.get("/students/:id", (req, res) => {
-//     /// req.params has the wildcard parameters in the url, in this case, id.
-//     // log(req.params.id)
-//     const id = req.params.id;
-
-//     // Good practise: Validate id immediately.
-//     if (!ObjectID.isValid(id)) {
-//         res.status(404).send(); // if invalid id, definitely can't find resource, 404.
-//         return;
-//     }
-
-//     // Otherwise, findById
-//     Student.findById(id)
-//         .then(student => {
-//             if (!student) {
-//                 res.status(404).send(); // could not find this student
-//             } else {
-//                 /// sometimes we wrap returned object in another object:
-//                 //res.send({student})
-//                 res.send(student);
-//             }
-//         })
-//         .catch(error => {
-//             res.status(500).send(); // server error
-//         });
-// });
-
-// /// a DELETE route to remove a student by their id.
-// app.delete("/students/:id", (req, res) => {
-//     const id = req.params.id;
-
-//     // Validate id
-//     if (!ObjectID.isValid(id)) {
-//         res.status(404).send();
-//         return;
-//     }
-
-//     // Delete a student by their id
-//     Student.findByIdAndRemove(id)
-//         .then(student => {
-//             if (!student) {
-//                 res.status(404).send();
-//             } else {
-//                 res.send(student);
-//             }
-//         })
-//         .catch(error => {
-//             res.status(500).send(); // server error, could not delete.
-//         });
-// });
-
-// // a PATCH route for changing properties of a resource.
-// // (alternatively, a PUT is used more often for replacing entire resources).
-// app.patch("/students/:id", (req, res) => {
-//     const id = req.params.id;
-
-//     // get the updated name and year only from the request body.
-//     const { name, year } = req.body;
-//     const body = { name, year };
-
-//     if (!ObjectID.isValid(id)) {
-//         res.status(404).send();
-//         return;
-//     }
-
-//     // Update the student by their id.
-//     Student.findByIdAndUpdate(id, { $set: body }, { new: true })
-//         .then(student => {
-//             if (!student) {
-//                 res.status(404).send();
-//             } else {
-//                 res.send(student);
-//             }
-//         })
-//         .catch(error => {
-//             res.status(400).send(); // bad request for changing the student.
-//         });
-// });
-
-// /** User routes below **/
-// // Set up a POST route to *create* a user of your web app (*not* a student).
-// app.post("/users", (req, res) => {
-//     log(req.body);
-
-//     // Create a new user
-//     const user = new User({
-//         email: req.body.email,
-//         password: req.body.password
-//     });
-
-//     // Save the user
-//     user.save().then(
-//         user => {
-//             res.send(user);
-//         },
-//         error => {
-//             res.status(400).send(error); // 400 for bad request
-//         }
-//     );
-// });
+//DB place holders for testing
+const eventData = {
+  eventList: [
+    {
+      CRIME_ID: 1,
+      TITLE: "Rabbit is killed",
+      ADDRESS: "123 UofT St",
+      AUTHOR: "user",
+      DATE: "2020/01/18",
+      TYPE: 3,
+      VOTE: 10,
+      SEVERITY: 0,
+      DESCRIPTION: "A student's rabbit was killed.",
+      coordinates: [
+        -79.3957,
+        43.662
+      ]
+    },
+    {
+      CRIME_ID: 2,
+      TITLE: "Laptop stolen",
+      ADDRESS: "321 MP St",
+      AUTHOR: "user2",
+      DATE: "2020/01/31",
+      TYPE: 1,
+      VOTE: 60,
+      SEVERITY: 1,
+      DESCRIPTION: "A student's laptop was stolen.",
+      coordinates: [
+        -79.3959,
+        43.665
+      ]
+    },
+    {
+        CRIME_ID: 3,
+        TITLE: "COVID-19 case",
+        ADDRESS: "123 Bahen St",
+        ARTHOR: "user",
+        DATE: "2020/01/20",
+        TYPE: 0,
+        VOTE: 200,
+        SEVERITY: 2,
+        DESCRIPTION: "A new COVID-19 case is discovered.",
+        coordinates: [
+          -79.396,
+          43.67
+        ]
+      },
+    {
+        CRIME_ID: 4,
+        TITLE: "A fire in the building",
+        ADDRESS: "321 SS Dr",
+        ARTHOR: "user3",
+        DATE: "2018/01/21",
+        TYPE: 2,
+        VOTE: 300,
+        SEVERITY: 3,
+        DESCRIPTION: "A student burned themselves.",
+        coordinates: [
+          -79.391,
+          43.669
+        ]
+      },
+    {
+        CRIME_ID: 5,
+        TITLE: "Fire at Queen's Park Subway Station",
+        ADDRESS: "Intersetion of College St and University Ave",
+        ARTHOR: "user",
+        DATE: "2020/04/05",
+        TYPE: 2,
+        VOTE: 210,
+        SEVERITY: 2,
+        DESCRIPTION: "A fire started in the subway station at Queen's Park. The cause is unknown.",
+        coordinates: [
+          -79.3903,
+          43.6599
+        ]
+      },
+    {
+        CRIME_ID: 6,
+        TITLE: "COVID-19 case in store",
+        ADDRESS: "220 Yonge St",
+        ARTHOR: "user3",
+        DATE: "2020/03/19",
+        TYPE: 0,
+        VOTE: 70,
+        SEVERITY: 1,
+        DESCRIPTION: "COVID-19 case comfirmed at the Eaton Center.",
+        coordinates: [
+          -79.3807,
+          43.6544
+        ]
+      },
+    {
+        CRIME_ID: 7,
+        TITLE: "Fire started at the Cube",
+        ADDRESS: "40 St George St",
+        ARTHOR: "user2",
+        DATE: "2019/10/13",
+        TYPE: 2,
+        VOTE: 100,
+        SEVERITY: 1,
+        DESCRIPTION: "At the Bahen Centre for Information Technology, the cafe named The Cube had a fire. No one was injured.",
+        coordinates: [
+          -79.3977,
+          43.6596
+        ]
+      },
+    {
+        CRIME_ID: 8,
+        TITLE: "Student was attacked",
+        ADDRESS: "130 St George St",
+        ARTHOR: "user",
+        DATE: "2020/02/10",
+        TYPE: 3,
+        VOTE: 350,
+        SEVERITY: 3,
+        DESCRIPTION: "A student was attacked and a bucket of fecal matter was dumped on them in Robarts Library.",
+        coordinates: [
+          -79.3997,
+          43.6645
+        ]
+      },
+    {
+        CRIME_ID: 9,
+        TITLE: "A backpack was stolen",
+        ADDRESS: "255 Huron St",
+        ARTHOR: "user2",
+        DATE: "2019/11/23",
+        TYPE: 1,
+        VOTE: 70,
+        SEVERITY: 1,
+        DESCRIPTION: "A student's backpack was stolen in the McLennan building.",
+        coordinates: [
+          -79.3984,
+          43.6609
+        ]
+      },
+    {
+        CRIME_ID: 10,
+        TITLE: "COVID-19 case at Sidney",
+        ADDRESS: "100 St George St",
+        ARTHOR: "user3",
+        DATE: "2020/02/02",
+        TYPE: 0,
+        VOTE: 400,
+        SEVERITY: 3,
+        DESCRIPTION: "A student was found to have COVID-19 at Sidney Smith Hall.",
+        coordinates: [
+          -79.3985,
+          43.6625
+        ]
+      }
+    ]
+}
+const userData = {
+  usersList: [
+    {
+      id: 1,
+      email: "user@user.com",
+      username: "user",
+      displayName: "fox",
+      password: "user",
+      admin: false,
+      events:[1,3,5,8],
+      upvote: [],
+      downvote: []
+    },
+    {
+      id: 2,
+      email: "user2@user2.com",
+      username: "user2",
+      displayName: "bunny",
+      password: "user2",
+      admin: false,
+      events:[2,7,9],
+      upvote: [],
+      downvote: []
+    },
+    {
+      id: 3,
+      email: "user3@user3.com",
+      username: "user3",
+      displayName: "bear",
+      password: "user3",
+      admin: false,
+      events:[4,6,10],
+      upvote: [],
+      downvote: []
+    },
+    {
+      id: 4,
+      email: "admin@admin.com",
+      username: "admin",
+      displayName: "raccoon",
+      password: "admin",
+      admin: true,
+      events:[],
+      upvote: [],
+      downvote: []
+    }
+  ]
+}
 
 const API_VERSION = "v1";
 
 app.post(`/api/${API_VERSION}/login`, (req, res) => {
-    if (req.body.user === "sam" && parseInt(req.body.password) === 123456) {
-        res.json({
-            result: true,
-            token: "random_123456789",
-            user: {
-                id: 1,
-                email: "sam@email.com",
-                username: "sam",
-                displayName: "fox",
-                admin: true,
-                events:[1],
-                upvote: [],
-                downvote: []
-            }
-        });
+  const data = userData
+  for(let i = 0; i < data.usersList.length; i++){
+    if (req.body.user === data.usersList[i].email && req.body.password === data.usersList[i].password){
+      res.json({
+          result: true,
+          token: "random_123456789",
+          user: data.usersList[i]
+      });
+      return;
     }
-    else {
-        res.json({
-            result: false
-        });
-    }
+  }
+  res.json({
+    result: false
+  });
 });
+
 
 app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
   const eventId = req.params.id
-  const data = {
-    crimeList: [
-      {
-        CRIME_ID: 1,
-        TITLE: "Rabbit is killed",
-        ADDRESS: "123 UofT St",
-        AUTHOR: "user",
-        DATE: "2020/01/18",
-        TYPE: 3,
-        VOTE: 10,
-        SEVERITY: 0,
-        DESCRIPTION: "A student's rabbit was killed.",
-        coordinates: [
-          -79.3957,
-          43.662
-        ]
-      },
-      {
-        CRIME_ID: 2,
-        TITLE: "Laptop stolen",
-        ADDRESS: "321 MP St",
-        AUTHOR: "user2",
-        DATE: "2020/01/31",
-        TYPE: 1,
-        VOTE: 60,
-        SEVERITY: 1,
-        DESCRIPTION: "A student's laptop was stolen.",
-        coordinates: [
-          -79.3959,
-          43.665
-        ]
-      }]
-  }
-
-  for (let i = 0; i < data.crimeList.length; i++) {
-    if (parseInt(data.crimeList[i].CRIME_ID) === parseInt(eventId)) {
+  const data = eventData
+  for (let i = 0; i < data.eventList.length; i++) {
+    if (parseInt(data.eventList[i].CRIME_ID) === parseInt(eventId)) {
         res.json({
           result: true,
           token: "random_123456789",
-          event: data.crimeList[i]
+          event: data.eventList[i]
         });
         return;
     }
@@ -303,44 +267,33 @@ app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
     result: false,
     token: "random_123456789",
     event: null
+  });
+});
+app.post(`/api/${API_VERSION}/events`, (req, res) => {
+  const eventId = req.params.id
+  const data = eventData
+  let events = [];
+  if (req.body.skip >= 0 && req.body.take >= 0) {
+    events = data.eventList.slice(req.body.skip, req.body.skip + req.body.take);
+  }
+  else {
+    events = data.eventList;
+  }
+  res.json({
+    events: events,
+    totalEntries: events.length
   });
 });
 
 app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
   const eventId = req.params.id
-  const data = {
-    users: [
-      {
-        id: 1,
-        email: "user@user.com",
-        username: "user",
-        displayName: "fox",
-        password: "user",
-        admin: false,
-        events:[1,3,5,8],
-        upvote: [],
-        downvote: []
-      },
-      {
-        id: 2,
-        email: "user2@user2.com",
-        username: "user2",
-        displayName: "bunny",
-        password: "user2",
-        admin: false,
-        events:[2,7,9],
-        upvote: [],
-        downvote: []
-      }
-    ]
-  }
-
-  for (let i = 0; i < data.users.length; i++) {
-    if (parseInt(data.users[i].id) === parseInt(eventId)) {
+  const data = userData
+  for (let i = 0; i < data.usersList.length; i++) {
+    if (parseInt(data.usersList[i].id) === parseInt(eventId)) {
         res.json({
           result: true,
           token: "random_123456789",
-          user: data.users[i]
+          user: data.usersList[i]
         });
         return;
     }
@@ -350,6 +303,18 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
     token: "random_123456789",
     event: null
   });
+});
+app.post(`/api/${API_VERSION}/users`, (req, res) => {
+  const eventId = req.params.id
+  const data = userData
+  let users = [];
+  if (req.body.skip >= 0 && req.body.take >= 0) {
+    users = data.usersList.slice(req.body.skip, req.body.skip + req.body.take);
+  }
+  else {
+    users = data.usersList;
+  }
+  res.json({users: users});
 });
 
 /*** Webpage routes below **********************************/
