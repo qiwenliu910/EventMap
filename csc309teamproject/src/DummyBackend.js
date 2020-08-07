@@ -108,15 +108,15 @@ DummyBackend.prototype = {
       .then((res) => {
         if (res.status === 200) {
           // return a promise that resolves with the JSON body
-          return res.json().user;
+          return res.json();
         } else {
           alert('Could not call login');
-          resolve(false);
+          resolve(null);
         }
       })
       .then((json) => {
         console.log(json);
-        resolve(json.event);
+        resolve(json.user);
       }).catch((error) => {
         console.log(error);
         resolve(null);

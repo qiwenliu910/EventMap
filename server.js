@@ -59,12 +59,12 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
 app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
   const eventId = req.params.id
   const data = TEST_EVENT_DATA
-  for (let i = 0; i < data.eventList.length; i++) {
-    if (parseInt(data.eventList[i].CRIME_ID) === parseInt(eventId)) {
+  for (let i = 0; i < data.crimeList.length; i++) {
+    if (parseInt(data.crimeList[i].CRIME_ID) === parseInt(eventId)) {
         res.json({
           result: true,
           token: "random_123456789",
-          event: data.eventList[i]
+          event: data.crimeList[i]
         });
         return;
     }
