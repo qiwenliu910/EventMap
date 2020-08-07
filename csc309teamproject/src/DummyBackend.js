@@ -20,7 +20,7 @@ DummyBackend.prototype = {
     return new Promise((resolve) => {
       fetch(`/api/${this.API_VERSION}/events`,
       {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -77,7 +77,7 @@ DummyBackend.prototype = {
     return new Promise((resolve) => {
       fetch(`/api/${this.API_VERSION}/users`,
       {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         },

@@ -26,6 +26,12 @@ app.use(bodyParser.json());
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+// Helper functions
+function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
+	return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
+}
+
 //DB place holders for testing
 const eventData = {
   eventList: [
@@ -269,7 +275,7 @@ app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
     event: null
   });
 });
-app.post(`/api/${API_VERSION}/events`, (req, res) => {
+app.get(`/api/${API_VERSION}/events`, (req, res) => {
   const eventId = req.params.id
   const data = eventData
   let events = [];
@@ -304,7 +310,8 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
     event: null
   });
 });
-app.post(`/api/${API_VERSION}/users`, (req, res) => {
+
+app.get(`/api/${API_VERSION}/users`, (req, res) => {
   const eventId = req.params.id
   const data = userData
   let users = [];
