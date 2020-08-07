@@ -324,6 +324,30 @@ app.get(`/api/${API_VERSION}/users`, (req, res) => {
   res.json({users: users});
 });
 
+// Create user account
+app.post(`/api/${API_VERSION}/users`, (req, res) => {
+    const user = new User({
+        email: req.body.email,
+        displayName: req.body.displayName,
+        password: req.body.password
+    });
+    user.save().then((result) => {
+        res.send({
+            success: true
+        });
+    })
+    .catch((e) => {
+        log(e);
+        if (isMongoError(e)) {
+            res.status(500).send('Internal Server Error');
+        }
+        else {
+            res.status(400).send('Bad Request');
+        }
+        
+    });
+});
+
 /*** Webpage routes below **********************************/
 // Serve the build
 app.use(express.static(__dirname + "/csc309teamproject/build"));
