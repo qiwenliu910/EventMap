@@ -184,13 +184,52 @@ DummyBackend.prototype = {
     });
   },
   createUser: function (user) {
+    // return new Promise((resolve) => {
+    //   this.notImplemented();
+    //   resolve({
+    //     success: false,
+    //     message: "Function not implemented"
+    //   });
+    // });
     return new Promise((resolve) => {
-      this.notImplemented();
-      resolve({
-        success: false,
-        message: "Function not implemented"
+      fetch(`/api/${this.API_VERSION}/createUser`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: user.email,
+          displayName: user.displayName,
+          password: user.password
+        })
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json()
+          // resolve(res.json());
+        } else {
+          alert('Could not call login');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        console.log(userData)
+        if (json.result === true) {
+        this.app.setState({ currentUser: json.user });
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
+        resolve(false);
       });
     });
+
   },
   resetPassword: function(email) {
     return new Promise((resolve) => {

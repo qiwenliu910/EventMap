@@ -68,7 +68,27 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
     result: false
   });
 });
-
+app.post(`/api/${API_VERSION}/createUser`, (req, res) => {
+  const data = TEST_USER_DATA;
+  const newId = data.users.length + 1
+  const newUser = {
+    id: newId,
+    email: req.body.email,
+    username:"",
+    displayName: req.body.displayName,
+    password:req.body.password,
+    admin:false,
+    events:[],
+    upvote:[],
+    downvote:[]
+  }
+  res.json({
+    result: true,
+    user: newUser
+  });
+  return;
+  
+});
 app.get(`/api/${API_VERSION}/logout`, (req, res) => {
     req.session.destroy((error) => {
         log(error);

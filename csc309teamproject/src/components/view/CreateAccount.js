@@ -63,7 +63,9 @@ class CreateAccount extends React.Component {
     if (valid === false)
       return;
     let user = {
-
+      email: this.state.email,
+      displayName: this.state.displayName,
+      password: this.state.password
     };
     // [*] Exchanging data with external source
     this.props.actions.createUser(user).then((ret) => {
