@@ -8,6 +8,11 @@ const bcrypt = require('bcryptjs')
 // Making a Mongoose model a little differently: a Mongoose Schema
 // Allows us to add additional functionality.
 const UserSchema = new mongoose.Schema({
+	id:{
+		type: Number,
+		required: true,
+		unique: true,
+	},
 	email: {
 		type: String,
 		required: true,
@@ -18,20 +23,35 @@ const UserSchema = new mongoose.Schema({
 			validator: validator.isEmail,   // custom validator
 			message: 'Not valid email'
 		}
-	}, 
-	displayName: {
+	},
+	displayName:{
 		type: String,
 		required: true,
 		trim: true,
 		unique: true
 	},
-	password: {
+	password:{
 		type: String,
 		required: true,
-		minlength: 6
+		minlength: 4
+	},
+	admin:{
+		type: Boolean,
+		required: true
+	},
+	events:{
+		type: Array,
+		required: true
+	},
+	upvote:{
+		type: Array,
+		required: true
+	},
+	downvote:{
+		type: Array,
+		required: true
 	}
 })
-
 // An example of Mongoose middleware.
 // This function will run immediately prior to saving the document
 // in the database.
@@ -61,7 +81,7 @@ UserSchema.statics.findByEmailPassword = function(email, password) {
 	// First find the user by their email
 	return User.findOne({ email: email }).then((user) => {
 		if (!user) {
-			return Promise.reject()  // a rejected promise
+			return Promise.reject("No match")  // a rejected promise
 		}
 		// if the user exists, make sure their password is correct
 		return new Promise((resolve, reject) => {
@@ -79,4 +99,3 @@ UserSchema.statics.findByEmailPassword = function(email, password) {
 // make a model using the User schema
 const User = mongoose.model('User', UserSchema)
 module.exports = { User }
-

@@ -51,44 +51,91 @@ app.use(session({
 }));
 
 app.post(`/api/${API_VERSION}/login`, (req, res) => {
-  const data = TEST_USER_DATA;
-  for(let i = 0; i < data.users.length; i++){
-    if (req.body.user === data.users[i].email && req.body.password === data.users[i].password){
-        req.session.user = data.users[i].id;
-        req.session.email = data.users[i].email;
-        res.json({
-          result: true,
-          user: data.users[i]
-      });
-      
-      return;
-    }
-  }
-  res.json({
-    result: false
-  });
+	const email = req.body.email
+	const password = req.body.password
+  // const data = TEST_USER_DATA;
+	User.findByEmailPassword(email, password).then((user)=>{
+		if(!user){
+			res.json({
+		  	result: false
+		  });
+		}
+		else{
+			req.session.user = user.user;
+			req.session.email = user.email;
+			res.json({
+				result: true,
+				user: user
+			});
+		}
+	}).catch((error) => {
+		if (isMongoError(error)) {
+			res.status(500).send(error);
+		} else {
+			log(error)
+			res.status(400).send(error);
+		}
+	})
 });
+
 app.post(`/api/${API_VERSION}/createUser`, (req, res) => {
-  const data = TEST_USER_DATA;
-  const newId = data.users.length + 1
-  const newUser = {
-    id: newId,
-    email: req.body.email,
-    username:"",
-    displayName: req.body.displayName,
-    password:req.body.password,
-    admin:false,
-    events:[],
-    upvote:[],
-    downvote:[]
-  }
-  res.json({
-    result: true,
-    user: newUser
-  });
-  return;
-  
+	User.estimatedDocumentCount().then((userCount) => {
+		const newUser = new User({
+			id: userCount,
+	    email: req.body.email,
+	    displayName: req.body.displayName,
+	    password:req.body.password,
+	    admin:false,
+	    events:[],
+	    upvote:[],
+	    downvote:[],
+	  })
+		newUser.save().then((result)=>{
+			res.json({
+				result: result,
+				status: true,
+		    user: newUser
+			})
+		}).catch((error) => {
+				log(error) // log server error to the console, not to the client.
+				res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+		})
+  }).catch(err => {
+		log(error) // log server error to the console, not to the client.
+		res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+  })
 });
+
+app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
+	Event.estimatedDocumentCount().then((eventCount) => {
+		const newEvent = new Event({
+			eventId: eventCount,
+			title: req.body.title,
+			address: req.body.address,
+			author: req.body.author,
+			date: req.body.date,
+			type: req.body.type,
+			vote: req.body.vote,
+			severity: req.body.severity,
+			description: req.body.description,
+			coordinates: req.body.coordinates
+	  })
+		newEvent.save().then((result)=>{
+			res.json({
+				result: result,
+				status: true,
+		    event: newEvent
+			})
+		}).catch((error) => {
+				log(error) // log server error to the console, not to the client.
+				res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+		})
+  }).catch(err => {
+		log(error) // log server error to the console, not to the client.
+		res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+  })
+});
+
 app.get(`/api/${API_VERSION}/logout`, (req, res) => {
     req.session.destroy((error) => {
         log(error);
@@ -216,7 +263,7 @@ app.post(`/api/${API_VERSION}/users`, (req, res) => {
         else {
             res.status(400).send('Bad Request');
         }
-        
+
     });
 });
 
