@@ -96,6 +96,21 @@ UserSchema.statics.findByEmailPassword = function(email, password) {
 	})
 }
 
+UserSchema.statics.findByUserId = function(userId) {
+	const User = this // binds this to the Event model
+
+	// First find the event by their eventId
+	return User.findOne({ id: userId }).then((u) => {
+		if (!u) {
+			return Promise.reject("No match")  // a rejected promise
+		}
+		// if the user exists, make sure their password is correct
+		return new Promise((resolve, reject) => {
+			resolve(u)
+		})
+	})
+}
+
 // make a model using the User schema
 const User = mongoose.model('User', UserSchema)
 module.exports = { User }

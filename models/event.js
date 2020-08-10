@@ -55,6 +55,21 @@ const EventSchema = new mongoose.Schema({
 		required: true,
 	}
 })
+EventSchema.statics.findByEventId = function(eventId) {
+	const Event = this // binds this to the Event model
+
+	// First find the event by their eventId
+	return Event.findOne({ eventId: eventId }).then((e) => {
+		if (!e) {
+			return Promise.reject("No match")  // a rejected promise
+		}
+		// if the user exists, make sure their password is correct
+		return new Promise((resolve, reject) => {
+			resolve(e)
+		})
+	})
+}
+
 const Event = mongoose.model('Event', EventSchema)
 
 module.exports = { Event }

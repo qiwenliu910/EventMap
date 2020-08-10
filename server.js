@@ -53,7 +53,6 @@ app.use(session({
 app.post(`/api/${API_VERSION}/login`, (req, res) => {
 	const email = req.body.email
 	const password = req.body.password
-  // const data = TEST_USER_DATA;
 	User.findByEmailPassword(email, password).then((user)=>{
 		if(!user){
 			res.json({
@@ -151,46 +150,46 @@ app.get(`/api/${API_VERSION}/logout`, (req, res) => {
 
 app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
   const eventId = req.params.id
-  const data = TEST_EVENT_DATA
-  for (let i = 0; i < data.crimeList.length; i++) {
-    if (parseInt(data.crimeList[i].CRIME_ID) === parseInt(eventId)) {
-        res.json({
-          result: true,
-          event: data.crimeList[i]
-        });
-        return;
-    }
-  }
-  res.json({
-    result: false,
-    event: null
-  });
+	Event.findByEventId(eventId).then((e) => {
+		res.json({
+			result: true,
+			event: e
+		})
+	})
+	.catch((error) => {
+		if (isMongoError(error)) {
+			res.status(500).send('Internal Server Error');
+		} else {
+			log(error)
+			res.status(400).send(error);
+		}
+	})
 });
 app.get(`/api/${API_VERSION}/events`, (req, res) => {
   const eventId = req.params.id
-  const data = TEST_EVENT_DATA
-  let skip = 0;
+	let skip = 0;
   let take = 0;
   try {
-      skip = parseInt(req.query.skip);
-      take = parseInt(req.query.take);
+      skip = parseInt(req.body.skip);
+      take = parseInt(req.body.take);
   }
   catch {
       skip = 0;
       take = 0;
   }
-  let events = [];
-  let totalEntries = data.crimeList.length;
-  if (skip >= 0 && take >= 0) {
-    events = data.crimeList.slice(skip, skip + take);
-  }
-  else {
-    events = data.crimeList;
-  }
-  res.json({
-    events: events,
-    totalEntries: totalEntries
-  });
+	Event.find().then((events)=>{
+		let eventSlice = [];
+		if (skip >= 0 && take >= 0) {
+	    eventSlice = events.slice(skip, skip + take);
+	  }
+		else {
+	    eventSlice = events;
+	  }
+		res.json({
+	    events: eventSlice,
+	    totalEntries: eventSlice.length
+	  });
+	})
 });
 
 app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
@@ -198,21 +197,21 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
     res.status(500).send('Internal Server Error');
     return;
   }
-  const eventId = req.params.id
-  const data = TEST_USER_DATA;
-  for (let i = 0; i < data.users.length; i++) {
-    if (parseInt(data.users[i].id) === parseInt(eventId)) {
-        res.json({
-          result: true,
-          user: data.users[i]
-        });
-        return;
-    }
-  }
-  res.json({
-    result: false,
-    event: null
-  });
+  const userId = req.params.id
+	User.findByUserId(userId).then((u) => {
+		res.json({
+			result: true,
+			event: u
+		})
+	})
+	.catch((error) => {
+		if (isMongoError(error)) {
+			res.status(500).send('Internal Server Error');
+		} else {
+			log(error)
+			res.status(400).send(error);
+		}
+	})
 });
 
 app.get(`/api/${API_VERSION}/users`, (req, res) => {
@@ -220,27 +219,30 @@ app.get(`/api/${API_VERSION}/users`, (req, res) => {
     res.status(500).send('Internal Server Error');
     return;
   }
-  const eventId = req.params.id
-  const data = TEST_USER_DATA;
-  let users = [];
-  let skip = 0;
-  let take = 0;
-  try {
-      skip = parseInt(req.query.skip);
-      take = parseInt(req.query.take);
-  }
-  catch {
-      skip = 0;
-      take = 0;
-  }
-  const totalEntries = data.users.length;
-  if (skip >= 0 && take >= 0) {
-    users = data.users.slice(skip, skip + take);
-  }
-  else {
-    users = data.users;
-  }
-  res.json({users: users, totalEntries: totalEntries});
+	const userId = req.params.id
+	let skip = 0;
+	let take = 0;
+	try {
+			skip = parseInt(req.body.skip);
+			take = parseInt(req.body.take);
+	}
+	catch {
+			skip = 0;
+			take = 0;
+	}
+	User.find().then((users)=>{
+		let usersSlice = [];
+		if (skip >= 0 && take >= 0) {
+			usersSlice = users.slice(skip, skip + take);
+		}
+		else {
+			usersSlice = events;
+		}
+		res.json({
+			events: usersSlice,
+			totalEntries: usersSlice.length
+		});
+	})
 });
 
 // Create user account
