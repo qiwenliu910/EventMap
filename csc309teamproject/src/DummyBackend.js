@@ -183,7 +183,7 @@ DummyBackend.prototype = {
       });
     });
   },
-  changeVote : function (crime, dataFromChild) {
+  changeVote : function (crime, dataFromChild, currentUser, flag) {
     return new Promise((resolve) => {
       fetch(`/api/${this.API_VERSION}/changeVote`,
       {
@@ -194,7 +194,9 @@ DummyBackend.prototype = {
         body: JSON.stringify({
           crime: crime,
           vote: crime.vote,
-          dataFromChild:dataFromChild
+          dataFromChild:dataFromChild,
+          currentUser:currentUser,
+          flag: flag
         })
       })
       .then((res) => {

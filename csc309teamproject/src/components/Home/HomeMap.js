@@ -101,12 +101,7 @@ class HomeMap extends Component {
           const votedCrime = {
             "eventId": crimeNum + 1
           }
-          console.log(this.state.crimeItself)
-          this.props.actions.changeVote(this.state.crimeItself, dataFromChild).then((success)=> {
-            if (success === true) {
-              this.componentDidMount()
-          }
-          })
+          let flag = null 
           if (dataFromChild > 0) {
               this.setState({crimeVote: this.state.crimeVote + 1});
               // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
@@ -119,35 +114,37 @@ class HomeMap extends Component {
               this.setState({alreadyVote: true});
               }
           else if (dataFromChild < 0) {
-            // if (this.state.alreadyUpVote) {
-            //   const filteredUpvote = this.state.currentUser.upvote.filter(s => {
-            //     return s.CRIME_ID !== crimeNum + 1;
-            //   });
-            //   this.setState({currentUser: {... this.state.currentUser, upvote: filteredUpvote,},}, function () {
-            //     console.log(this.state.currentUser.upvote);
-            //     console.log(this.state.currentUser);
-            //   });
-            //   this.setState({crimeVote: this.state.crimeVote - 1});
-            //   newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum - 1};
-            //   this.setState({crimeList:newArr});
-            //   this.setState({alreadyUpVote: false});
-            //   this.setState({alreadyVote: false});
-            // }
-            // else if (this.state.alreadyDownVote) {
-            //   const filteredDownvote = this.state.currentUser.downvote.filter(s => {
-            //     return s.CRIME_ID !== crimeNum + 1;
-            //   });
-            //   this.setState({currentUser: {... this.state.currentUser, downvote: filteredDownvote,},}, function () {
-            //     console.log(this.state.currentUser.downvote);
-            //     console.log(this.state.currentUser);
-            //   });
-            //   this.setState({crimeVote: this.state.crimeVote + 1});
-            //   newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
-            //   this.setState({crimeList:newArr});
-            //   this.setState({alreadyUpVote: false});
-            //   this.setState({alreadyVote: false});
+            if (this.state.alreadyUpVote) {
+              flag = 1
+              const filteredUpvote = this.state.currentUser.upvote.filter(s => {
+                return s.eventId !== crimeNum + 1;
+              });
+              this.setState({currentUser: {... this.state.currentUser, upvote: filteredUpvote,},}, function () {
+                console.log(this.state.currentUser.upvote);
+                console.log(this.state.currentUser);
+              });
+              this.setState({crimeVote: this.state.crimeVote - 1});
+              // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum - 1};
+              // this.setState({crimeList:newArr});
+              this.setState({alreadyUpVote: false});
+              this.setState({alreadyVote: false});
+            }
+            else if (this.state.alreadyDownVote) {
+              flag = 0
+              const filteredDownvote = this.state.currentUser.downvote.filter(s => {
+                return s.eventId !== crimeNum + 1;
+              });
+              this.setState({currentUser: {... this.state.currentUser, downvote: filteredDownvote,},}, function () {
+                console.log(this.state.currentUser.downvote);
+                console.log(this.state.currentUser);
+              });
+              this.setState({crimeVote: this.state.crimeVote + 1});
+              // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
+              // this.setState({crimeList:newArr});
+              this.setState({alreadyUpVote: false});
+              this.setState({alreadyVote: false});
 
-            // }
+            }
           }
           else {
               this.setState({crimeVote: this.state.crimeVote - 1});
@@ -157,6 +154,11 @@ class HomeMap extends Component {
               this.setState({alreadyDownVote: true});
               this.setState({alreadyVote: true});
               }
+          this.props.actions.changeVote(this.state.crimeItself, dataFromChild, this.state.currentUser, flag).then((success)=> {
+            if (success === true) {
+              this.componentDidMount()
+          }
+          })
           console.log(this.state.currentUser);
       }
 

@@ -78,16 +78,73 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
 });
 app.post(`/api/${API_VERSION}/changeVote`, (req, res) => {
   const dataFromChild = req.body.dataFromChild
-  console.log(dataFromChild)
+  const currentUserId = req.body.currentUser._id
+  console.log("this is", currentUserId)
+  const votedCrime = {
+    "eventId": req.body.crime._id
+  }
   Event.findById(req.body.crime._id).then((event) => {
     if(dataFromChild > 0) {
       event.vote = event.vote + 1
+      User.findById(currentUserId).then((user)=> {
+        user.upvote.push(votedCrime)
+        console.log("found user", user.upvote)
+        user.save()
+      }).catch((error) => {
+        if (isMongoError(error)) {
+          res.status(500).send(error);
+        } else {
+          log("found error", error)
+          res.status(400).send(error);
+        }
+      })
     }
     else if (dataFromChild < 0) {
-
+        if (req.body.flag) {
+          event.vote = event.vote - 1
+          User.findById(currentUserId).then((user)=> {
+            user.upvote.pull(votedCrime)
+            console.log("found user", user.downvote)
+            user.save()
+          }).catch((error) => {
+            if (isMongoError(error)) {
+              res.status(500).send(error);
+            } else {
+              log("found error", error)
+              res.status(400).send(error);
+            }
+          })
+        }
+        else{
+          event.vote = event.vote + 1
+          User.findById(currentUserId).then((user)=> {
+            user.downvote.pull(votedCrime)
+            console.log("found user", user.upvote)
+            user.save()
+          }).catch((error) => {
+            if (isMongoError(error)) {
+              res.status(500).send(error);
+            } else {
+              log("found error", error)
+              res.status(400).send(error);
+            }
+          })
+        }
     }
     else {
       event.vote = event.vote - 1
+      User.findById(currentUserId).then((user)=> {
+        user.downvote.push(votedCrime)
+        console.log("found user", user.downvote)
+        user.save()
+      }).catch((error) => {
+        if (isMongoError(error)) {
+          res.status(500).send(error);
+        } else {
+          log("found error", error)
+          res.status(400).send(error);
+        }
+      })
     }
     event.save().then((result) =>{
       res.json({
