@@ -108,7 +108,7 @@ class HomeMap extends Component {
           }
           })
           if (dataFromChild > 0) {
-              // this.setState({crimeVote: this.state.crimeVote + 1});
+              this.setState({crimeVote: this.state.crimeVote + 1});
               // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
               // this.setState({crimeList:newArr}, function () {
               //   console.log(this.state.crimeList);
@@ -150,7 +150,7 @@ class HomeMap extends Component {
             // }
           }
           else {
-              // this.setState({crimeVote: this.state.crimeVote - 1});
+              this.setState({crimeVote: this.state.crimeVote - 1});
               // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum - 1};
               // this.setState({crimeList:newArr});
               this.state.currentUser.downvote.push(votedCrime);
