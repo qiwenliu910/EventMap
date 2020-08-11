@@ -18,7 +18,7 @@ class AccountPage extends React.Component {
       <div id="accountInfo">
         <img src={pfp} className="accountPFP"/>
         <div className="accountName">
-          {this.props.state.currentUser.username}
+          {this.props.state.currentUser.displayName}
         </div>
         <div className="accountBack"/>
         <div className="accountStats">

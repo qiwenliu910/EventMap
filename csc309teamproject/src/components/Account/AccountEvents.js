@@ -7,13 +7,13 @@ class AccountEvents extends React.Component {
     currentEventId: 0,
     event:{
       properties: {
-        CRIME_ID: 0,
-        TITLE: "",
-        ADDRESS: "",
-        ARTHOR: "",
-        DATE:"",
-        TYPE: "",
-        DESCRIPTION: ""
+        eventId: 0,
+        type: "",
+        address: "",
+        author: "",
+        date:"",
+        type: "",
+        description: ""
       },
       geometry: {
       }
