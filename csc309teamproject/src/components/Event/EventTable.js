@@ -20,7 +20,7 @@ class EventTable extends React.Component {
             maxEventDisplay: 5,
             currentPage:0,
             eventList: ret.events,
-            totalEvents:ret.totalEntries
+            totalEvents:ret.events.length
           });
         });
     }
@@ -65,7 +65,7 @@ class EventTable extends React.Component {
             {
               this.props.sort === 0 ?
                 <>
-                  {this.state.eventList.sort((a,b) => a.TITLE>b.TITLE?1:-1)
+                  {this.state.eventList.sort((a,b) => a.title>b.title?1:-1)
                     .slice(this.state.currentPage*this.state.maxEventDisplay,
                       this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay < this.state.totalEvents ?
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
@@ -80,7 +80,7 @@ class EventTable extends React.Component {
             {
               this.props.sort === 1 ?
                 <>
-                  {this.state.eventList.sort((a,b) => a.DATE<b.DATE?1:-1)
+                  {this.state.eventList.sort((a,b) => a.date<b.date?1:-1)
                     .slice(this.state.currentPage*this.state.maxEventDisplay,
                       this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay < this.state.totalEvents ?
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
@@ -95,7 +95,7 @@ class EventTable extends React.Component {
             {
               this.props.sort === 2 ?
                 <>
-                  {this.state.eventList.sort((a,b) => a.VOTE<b.VOTE?1:-1)
+                  {this.state.eventList.sort((a,b) => a.vote<b.vote?1:-1)
                     .slice(this.state.currentPage*this.state.maxEventDisplay,
                       this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay < this.state.totalEvents ?
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
@@ -110,7 +110,7 @@ class EventTable extends React.Component {
             {
               this.props.sort === 3 ?
                 <>
-                  {this.state.eventList.sort((a,b) => a.TYPE<=b.TYPE?1:-1)
+                  {this.state.eventList.sort((a,b) => a.type<=b.type?1:-1)
                     .slice(this.state.currentPage*this.state.maxEventDisplay,
                       this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay < this.state.totalEvents ?
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
