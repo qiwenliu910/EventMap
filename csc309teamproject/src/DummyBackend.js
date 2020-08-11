@@ -271,6 +271,53 @@ DummyBackend.prototype = {
     });
 
   },
+  createEvent: function (event) {
+    return new Promise((resolve) => {
+      fetch(`/api/${this.API_VERSION}/createEvent`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: event.title,
+          address: event.address,
+          author: event.author,
+          date: event.date,
+          type: event.type,
+          vote: 0,
+          severity: event.severity,
+          description: event.details,
+          coordinateX: event.coordinateX,
+          coordinateY: event.coordinateY
+        })
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json()
+          // resolve(res.json());
+        } else {
+          alert('Could not call login');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+       
+        if (json.status === true) {
+        
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
+        resolve(false);
+      });
+    });
+
+  },
   resetPassword: function(email) {
     return new Promise((resolve) => {
       this.notImplemented();

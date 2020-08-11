@@ -202,7 +202,7 @@ app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
 			vote: req.body.vote,
 			severity: req.body.severity,
 			description: req.body.description,
-			coordinates: req.body.coordinates
+      coordinates: [req.body.coordinateX,req.body.coordinateY]
 	  })
 		newEvent.save().then((result)=>{
 			res.json({

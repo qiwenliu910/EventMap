@@ -17,12 +17,16 @@ class CreateEvent extends React.Component {
                   input:'',
                   eventName: "",
                   eventType: "",
+                  eventTypeNum : null,
                   coordinateX: 0,
                   coordinateY: 0,
                   details: "",
-                  special: true,
+                  special: false,
                   eventObj: null,
-                  message: ""
+                  message: "",
+                  eventSeverity: null,
+                  eventDate: null,
+                  redirect: false
                   };
   }
 
@@ -43,6 +47,18 @@ class CreateEvent extends React.Component {
     this.setState({ eventName: e.target.value });
   };
   onChangeEventType = (e) => {
+    if (e.target.value === "Disease") {
+      this.setState({ eventTypeNum: 0})
+    }
+    else if (e.target.value === "Robbery") {
+      this.setState({ eventTypeNum: 1})
+    }
+    else if (e.target.value === "Fire") {
+      this.setState({ eventTypeNum: 2})
+    }
+    else if (e.target.value === "Assault") {
+      this.setState({ eventTypeNum: 3})
+    }
     this.setState({ eventType: e.target.value });
   };
   onChangeSpecial = (e) => {
@@ -52,8 +68,51 @@ class CreateEvent extends React.Component {
   onChangeDetails = (e) => {
     this.setState({ details: e.target.value });
   };
+  onChangeEventSeverity = (e) => {
+    this.setState({ eventSeverity: e.target.value });
+  };
+  onChangeEventDate = (e) => {
+    this.setState({ eventDate: e.target.value });
+  };
+  onSubmit = (e) => {
+    e.preventDefault();
+    // frontend validation
+  
+    let newEvent = {
+      title: this.state.eventName,
+      address: this.state.input,
+      author: this.props.state.currentUser.displayName,
+      date: this.state.eventDate,
+      severity: this.state.eventSeverity,
+      type: this.state.eventTypeNum,
+      special: this.state.special,
+      coordinateX: this.state.coordinateX,
+      coordinateY: this.state.coordinateY,
+      details:this.state.details
+    };
+    // [*] Exchanging data with external source
+    this.props.actions.createEvent(newEvent).then((success) => {
+      if (success === true) {
+        alert('New Event Created');
+        this.setState({eventName: '', redirect: true, eventType: '', eventSeverity: null, eventDate: null,coordinateX: 0,
+        coordinateY: 0, details: ""});
+     
+        this.setState({ redirect: true});
+     
+         setTimeout(() => {
+          this.setState({ redirect: true });
+        }, 3000);
+      }
+      else {
+        // this.setState({ message: ret.message });
+      }
+    });
+  }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to="/" />;
+    }
     let searchLocation;
 
     searchLocation = <PlacesAutocomplete
@@ -114,10 +173,26 @@ class CreateEvent extends React.Component {
                       </Col>
                     </Form.Row>
                   </Form.Group>
+                  <Form.Group controlId="fldEventSeverity">
+                    <Form.Label>Event Severity</Form.Label>
+                    <Form.Row>
+                      <Col>
+                        <Form.Control type="text" placeholder="Enter event severity" value={this.state.eventSeverity} onChange={this.onChangeEventSeverity}   />
+                      </Col>
+                    </Form.Row>
+                  </Form.Group>
+                  <Form.Group controlId="fldEventDate">
+                    <Form.Label>Event Date</Form.Label>
+                    <Form.Row>
+                      <Col>
+                        <Form.Control type="text" placeholder="YYYY/MM/DD " value={this.state.eventDate} onChange={this.onChangeEventDate}   />
+                      </Col>
+                    </Form.Row>
+                  </Form.Group>
                   <Form.Group controlId="fldEventType">
                     <Form.Label>Event Type</Form.Label>
                     <Form.Control as="select" value={this.state.eventType} onChange={this.onChangeEventType}>
-                      <option>Assualt</option>
+                      <option>Assault</option>
                       <option>Robbery</option>
                       <option>Disease</option>
                       <option>Fire</option>
@@ -147,7 +222,7 @@ class CreateEvent extends React.Component {
                     <Form.Control as="textarea" rows="3" value={this.state.details} onChange={this.onChangeDetails}/>
                   </Form.Group>
                   <Form.Row>
-                    <Col className="right"><Button variant="primary" type="submit" >Save</Button></Col>
+                    <Col className="right"><Button variant="primary" type="submit" onClick={this.onSubmit} >Save</Button></Col>
                   </Form.Row>
                 </Form>
               </Row>
