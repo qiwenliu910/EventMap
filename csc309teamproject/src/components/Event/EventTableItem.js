@@ -31,20 +31,20 @@ class EventTableItem extends React.Component {
   }
   onSubmitDetails = (e) => {
     e.preventDefault();
-    this.props.selectEvent(this.props.event.CRIME_ID)
+    this.props.selectEvent(this.props.event.eventId)
   }
 
   render() {
     return (
         <tr>
           <th>
-            <img src={this.eventType[this.props.event.TYPE][this.props.event.SEVERITY]}/>
+            <img src={this.eventType[this.props.event.type][this.props.event.severity]}/>
           </th><th>
-            {this.props.event.DATE}
+            {this.props.event.date}
           </th><th>
-            {this.props.event.TITLE}
+            {this.props.event.title}
           </th><th>
-            {this.props.event.VOTE}
+            {this.props.event.vote}
           </th><th>
             <Button className="tableDetails" variant="primary" type="submit" onClick={this.onSubmitDetails}>
             </Button>
