@@ -7,7 +7,7 @@ class EventItem extends React.Component {
     super(props);
     this.state = {
       event: {
-        TITLE: ""
+        title: ""
       }
     };
   }
@@ -37,7 +37,7 @@ class EventItem extends React.Component {
     return (
       <tr className="tableRow">
         <th className="tableTitle">
-            <p> {this.state.event.TITLE} </p>
+            <p> {this.state.event.title} </p>
         </th>
         <th>
           <Button className="tableButtonDetail" variant="primary" type="submit" onClick={this.onSubmitDetails}>
