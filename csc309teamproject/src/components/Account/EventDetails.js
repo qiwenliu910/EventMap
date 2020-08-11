@@ -3,13 +3,13 @@ import React from 'react';
 class EventDetails extends React.Component {
   state = {
     event: {
-      CRIME_ID: -1,
-      TITLE: "",
-      ADDRESS: "",
-      ARTHOR: "",
-      DATE: "",
-      TYPE: "",
-      DESCRIPTION: ""
+      eventId: -1,
+      title: "",
+      address: "",
+      author: "",
+      date: "",
+      type: "",
+      description: ""
     }
   }
   componentDidMount = () => {
@@ -26,18 +26,18 @@ class EventDetails extends React.Component {
     return (
       <div>
         <ul>
-          Title: {this.state.event.TITLE}
+          Title: {this.state.event.title}
         </ul><ul>
-          Address: {this.state.event.ADDRESS}
+          Address: {this.state.event.address}
         </ul><ul>
-          Date: {this.state.event.DATE}
+          Date: {this.state.event.date}
         </ul><ul>
-          Type: {this.state.event.TYPE === 0? "Disease":null}
-          {this.state.event.TYPE === 1? "Robbery":null}
-          {this.state.event.TYPE === 2? "Fire":null}
-          {this.state.event.TYPE === 3? "Assualt":null}
+          Type: {this.state.event.type === 0? "Disease":null}
+          {this.state.event.type === 1? "Robbery":null}
+          {this.state.event.type === 2? "Fire":null}
+          {this.state.event.type === 3? "Assualt":null}
         </ul><ul>
-          Description: {this.state.event.DESCRIPTION}
+          Description: {this.state.event.description}
         </ul>
       </div>
     );

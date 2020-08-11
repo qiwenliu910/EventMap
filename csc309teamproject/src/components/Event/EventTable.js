@@ -71,7 +71,7 @@ class EventTable extends React.Component {
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
                           this.state.totalEvents)
                     .map((event) => (
-                    <TableItem key={event.CRIME_ID} event={event} selectEvent={this.selectEvent}/>
+                    <TableItem key={event.eventId} event={event} selectEvent={this.selectEvent}/>
                   ))}
                 </>
                 :
@@ -86,7 +86,7 @@ class EventTable extends React.Component {
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
                           this.state.totalEvents)
                     .map((event) => (
-                    <TableItem key={event.CRIME_ID} event={event} selectEvent={this.selectEvent}/>
+                    <TableItem key={event.eventId} event={event} selectEvent={this.selectEvent}/>
                   ))}
                 </>
                 :
@@ -101,7 +101,7 @@ class EventTable extends React.Component {
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
                           this.state.totalEvents)
                     .map((event) => (
-                    <TableItem key={event.CRIME_ID} event={event} selectEvent={this.selectEvent}/>
+                    <TableItem key={event.eventId} event={event} selectEvent={this.selectEvent}/>
                   ))}
                 </>
                 :
@@ -116,7 +116,7 @@ class EventTable extends React.Component {
                           this.state.currentPage*this.state.maxEventDisplay+this.state.maxEventDisplay:
                           this.state.totalEvents)
                     .map((event) => (
-                    <TableItem key={event.CRIME_ID} event={event} selectEvent={this.selectEvent}/>
+                    <TableItem key={event.eventId} event={event} selectEvent={this.selectEvent}/>
                   ))}
                 </>
                 :
