@@ -10,7 +10,7 @@ class AccountBar extends Component {
     this.props.actions.logout();
   }
   render() {
-    const name = this.props.currentUser.username;
+    const name = this.props.currentUser.displayName;
     return (
       <h1 className="AccountBar">
         <img src={pfp} id="accountPFP" />
