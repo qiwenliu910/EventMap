@@ -58,7 +58,7 @@ DummyBackend.prototype = {
       .then((json) => {
         resolve({
           events: json.events,
-          totalEntries: json.totalEntries
+          
         });
       }).catch((error) => {
         console.log(error);
@@ -154,7 +154,7 @@ DummyBackend.prototype = {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          user: email,
+          email: email,
           password: password
         })
       })
@@ -182,6 +182,44 @@ DummyBackend.prototype = {
         resolve(false);
       });
     });
+  },
+  changeVote : function (crime, dataFromChild) {
+    return new Promise((resolve) => {
+      fetch(`/api/${this.API_VERSION}/changeVote`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          crime: crime,
+          vote: crime.vote,
+          dataFromChild:dataFromChild
+        })
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json()
+          // resolve(res.json());
+        } else {
+          alert('Could not change vote');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        if (json.status === true) {
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
+        resolve(false);
+      });
+    });
+  
   },
   createUser: function (user) {
     // return new Promise((resolve) => {

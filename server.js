@@ -76,7 +76,35 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
 		}
 	})
 });
+app.post(`/api/${API_VERSION}/changeVote`, (req, res) => {
+  const dataFromChild = req.body.dataFromChild
+  console.log(dataFromChild)
+  Event.findById(req.body.crime._id).then((event) => {
+    if(dataFromChild > 0) {
+      event.vote = event.vote + 1
+    }
+    else if (dataFromChild < 0) {
 
+    }
+    else {
+      event.vote = event.vote - 1
+    }
+    event.save().then((result) =>{
+      res.json({
+				result: result,
+				status: true,
+		    event: event
+			})
+    })
+    .catch((error) => {
+				log(error) // log server error to the console, not to the client.
+				res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+    }) 
+  }).catch((err) => {
+		log(err) // log server error to the console, not to the client.
+		res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+  })
+});
 app.post(`/api/${API_VERSION}/createUser`, (req, res) => {
 	User.estimatedDocumentCount().then((userCount) => {
 		const newUser = new User({
