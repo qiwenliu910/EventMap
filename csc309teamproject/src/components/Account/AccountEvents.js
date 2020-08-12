@@ -48,8 +48,8 @@ class AccountEvents extends React.Component {
                   Delete
               </th>
             </tr>
-            {this.props.state.currentUser.events.map((eventNum) => (
-              <EventItem key={eventNum} eventNum={eventNum} selectEvent={selectEvent} actions={this.props.actions} />
+            {this.props.state.currentUser.events.map((eventId) => (
+              <EventItem key={eventId} eventNum={eventId} selectEvent={selectEvent} actions={this.props.actions} />
             ))}
           </tbody>
         </table>
