@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {     
+    this.state = {
         currFilter: this.props.state.filter
     }
   }
@@ -17,7 +17,7 @@ class Header extends Component {
   }
 
   render() {
-    const isLoggedIn = (this.props.state.currentUser.id !== -1);
+    const isLoggedIn = (this.props.state.currentUser._id !== -1);
 
     let filterStr;
     { if(this.state.currFilter === 0){

@@ -1,11 +1,6 @@
 /* Event mongoose model */
 const mongoose = require('mongoose')
 const EventSchema = new mongoose.Schema({
-	eventId: {
-		type: Number,
-		required: true,
-		// default: 1
-	},
 	title: {
 		type: String,
 		required: true,
@@ -27,7 +22,6 @@ const EventSchema = new mongoose.Schema({
 	date: {
 		type: String,
 		required: true,
-
 	},
 	type: {
 		type: Number,
@@ -55,20 +49,20 @@ const EventSchema = new mongoose.Schema({
 		required: true,
 	}
 })
-EventSchema.statics.findByEventId = function(eventId) {
-	const Event = this // binds this to the Event model
-
-	// First find the event by their eventId
-	return Event.findOne({ eventId: eventId }).then((e) => {
-		if (!e) {
-			return Promise.reject("No match")  // a rejected promise
-		}
-		// if the user exists, make sure their password is correct
-		return new Promise((resolve, reject) => {
-			resolve(e)
-		})
-	})
-}
+// EventSchema.statics.findByEventId = function(eventId) {
+// 	const Event = this // binds this to the Event model
+//
+// 	// First find the event by their eventId
+// 	return Event.findOne({ eventId: eventId }).then((e) => {
+// 		if (!e) {
+// 			return Promise.reject("No match")  // a rejected promise
+// 		}
+// 		// if the user exists, make sure their password is correct
+// 		return new Promise((resolve, reject) => {
+// 			resolve(e)
+// 		})
+// 	})
+// }
 
 const Event = mongoose.model('Event', EventSchema)
 

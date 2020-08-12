@@ -31,7 +31,7 @@ class EventTableItem extends React.Component {
   }
   onSubmitDetails = (e) => {
     e.preventDefault();
-    this.props.selectEvent(this.props.event.eventId)
+    this.props.selectEvent(this.props.event._id)
   }
 
   render() {

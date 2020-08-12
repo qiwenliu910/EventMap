@@ -8,11 +8,6 @@ const bcrypt = require('bcryptjs')
 // Making a Mongoose model a little differently: a Mongoose Schema
 // Allows us to add additional functionality.
 const UserSchema = new mongoose.Schema({
-	id:{
-		type: Number,
-		required: true,
-		unique: true,
-	},
 	email: {
 		type: String,
 		required: true,
@@ -96,20 +91,20 @@ UserSchema.statics.findByEmailPassword = function(email, password) {
 	})
 }
 
-UserSchema.statics.findByUserId = function(userId) {
-	const User = this // binds this to the Event model
-
-	// First find the event by their eventId
-	return User.findOne({ id: userId }).then((u) => {
-		if (!u) {
-			return Promise.reject("No match")  // a rejected promise
-		}
-		// if the user exists, make sure their password is correct
-		return new Promise((resolve, reject) => {
-			resolve(u)
-		})
-	})
-}
+// UserSchema.statics.findByUserId = function(userId) {
+// 	const User = this // binds this to the Event model
+//
+// 	// First find the event by their eventId
+// 	return User.findOne({ id: userId }).then((u) => {
+// 		if (!u) {
+// 			return Promise.reject("No match")  // a rejected promise
+// 		}
+// 		// if the user exists, make sure their password is correct
+// 		return new Promise((resolve, reject) => {
+// 			resolve(u)
+// 		})
+// 	})
+// }
 
 // make a model using the User schema
 const User = mongoose.model('User', UserSchema)

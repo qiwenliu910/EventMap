@@ -22,7 +22,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentUser: {
-        id: -1,
+        _id: -1,
         username: "default",
         password: "default",
         admin: false,

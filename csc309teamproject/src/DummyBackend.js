@@ -14,7 +14,7 @@ function DummyBackend(app) {
 DummyBackend.prototype = {
   API_VERSION: 'v1',
   logout: function () {
-    
+
     return new Promise((resolve) => {
       fetch(`/api/${this.API_VERSION}/logout`,
       {
@@ -25,7 +25,7 @@ DummyBackend.prototype = {
       })
       .then((res) => {
         if (res.status === 200) {
-          this.app.setState({ currentUser: { id: -1, username: "" } });
+          this.app.setState({ currentUser: { _id: -1, displayName: "" } });
           resolve();
         } else {
           resolve();
@@ -58,7 +58,7 @@ DummyBackend.prototype = {
       .then((json) => {
         resolve({
           events: json.events,
-          
+
         });
       }).catch((error) => {
         console.log(error);
@@ -221,7 +221,7 @@ DummyBackend.prototype = {
         resolve(false);
       });
     });
-  
+
   },
   createUser: function (user) {
     // return new Promise((resolve) => {
@@ -303,9 +303,9 @@ DummyBackend.prototype = {
         }
       })
       .then((json) => {
-       
+
         if (json.status === true) {
-        
+
           resolve(true);
         }
         else {

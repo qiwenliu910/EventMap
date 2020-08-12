@@ -156,68 +156,108 @@ app.post(`/api/${API_VERSION}/changeVote`, (req, res) => {
     .catch((error) => {
 				log(error) // log server error to the console, not to the client.
 				res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-    }) 
+    })
   }).catch((err) => {
 		log(err) // log server error to the console, not to the client.
 		res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
   })
 });
 app.post(`/api/${API_VERSION}/createUser`, (req, res) => {
-	User.estimatedDocumentCount().then((userCount) => {
-		const newUser = new User({
-			id: userCount,
-	    email: req.body.email,
-	    displayName: req.body.displayName,
-	    password:req.body.password,
-	    admin:false,
-	    events:[],
-	    upvote:[],
-	    downvote:[],
-	  })
-		newUser.save().then((result)=>{
-			res.json({
-				result: result,
-				status: true,
-		    user: newUser
-			})
-		}).catch((error) => {
-				log(error) // log server error to the console, not to the client.
-				res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-		})
-  }).catch(err => {
-		log(error) // log server error to the console, not to the client.
-		res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+	const newUser = new User({
+    email: req.body.email,
+    displayName: req.body.displayName,
+    password:req.body.password,
+    admin:false,
+    events:[],
+    upvote:[],
+    downvote:[],
   })
+	newUser.save().then((result)=>{
+		res.json({
+			result: result,
+			status: true,
+	    user: newUser
+		})
+	}).catch((error) => {
+			log(error) // log server error to the console, not to the client.
+			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+	})
+	// User.estimatedDocumentCount().then((userCount) => {
+	// 	const newUser = new User({
+	// 		id: userCount,
+	//     email: req.body.email,
+	//     displayName: req.body.displayName,
+	//     password:req.body.password,
+	//     admin:false,
+	//     events:[],
+	//     upvote:[],
+	//     downvote:[],
+	//   })
+	// 	newUser.save().then((result)=>{
+	// 		res.json({
+	// 			result: result,
+	// 			status: true,
+	// 	    user: newUser
+	// 		})
+	// 	}).catch((error) => {
+	// 			log(error) // log server error to the console, not to the client.
+	// 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+	// 	})
+  // }).catch(err => {
+	// 	log(error) // log server error to the console, not to the client.
+	// 	res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+  // })
 });
 
 app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
-	Event.estimatedDocumentCount().then((eventCount) => {
-		const newEvent = new Event({
-			eventId: eventCount,
-			title: req.body.title,
-			address: req.body.address,
-			author: req.body.author,
-			date: req.body.date,
-			type: req.body.type,
-			vote: req.body.vote,
-			severity: req.body.severity,
-			description: req.body.description,
-      coordinates: [req.body.coordinateY,req.body.coordinateX]
-	  })
-		newEvent.save().then((result)=>{
-			res.json({
-				result: result,
-				status: true,
-		    event: newEvent
-			})
-		}).catch((error) => {
-				log(error) // log server error to the console, not to the client.
-				res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-		})
-  }).catch(err => {
-		log(error) // log server error to the console, not to the client.
-		res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+	const newEvent = new Event({
+		title: req.body.title,
+		address: req.body.address,
+		author: req.body.author,
+		date: req.body.date,
+		type: req.body.type,
+		vote: req.body.vote,
+		severity: req.body.severity,
+		description: req.body.description,
+    coordinates: [req.body.coordinateY,req.body.coordinateX]
   })
+	newEvent.save().then((result)=>{
+		res.json({
+			result: result,
+			status: true,
+	    event: newEvent
+		})
+	}).catch((error) => {
+			log(error) // log server error to the console, not to the client.
+			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+	})
+	// Event.estimatedDocumentCount().then((eventCount) => {
+	// 	const newEvent = new Event({
+	// 		eventId: eventCount,
+	// 		title: req.body.title,
+	// 		address: req.body.address,
+	// 		author: req.body.author,
+	// 		date: req.body.date,
+	// 		type: req.body.type,
+	// 		vote: req.body.vote,
+	// 		severity: req.body.severity,
+	// 		description: req.body.description,
+  //     coordinates: [req.body.coordinateY,req.body.coordinateX]
+	//   })
+	// 	newEvent.save().then((result)=>{
+	// 		res.json({
+	// 			result: result,
+	// 			status: true,
+	// 	    event: newEvent
+	// 		})
+	// 	}).catch((error) => {
+	// 			log(error) // log server error to the console, not to the client.
+	// 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+	// 	})
+  // }).catch(err => {
+	// 	log(error) // log server error to the console, not to the client.
+	// 	res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+  // })
 });
 
 app.get(`/api/${API_VERSION}/logout`, (req, res) => {
@@ -235,7 +275,11 @@ app.get(`/api/${API_VERSION}/logout`, (req, res) => {
 
 app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
   const eventId = req.params.id
-	Event.findByEventId(eventId).then((e) => {
+	if (!ObjectID.isValid(eventId)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+	Event.findOne({_id: eventId}).then((e) => {
 		res.json({
 			result: true,
 			event: e
@@ -251,7 +295,6 @@ app.get(`/api/${API_VERSION}/events/:id`, (req, res) => {
 	})
 });
 app.get(`/api/${API_VERSION}/events`, (req, res) => {
-  const eventId = req.params.id
 	let skip = 0;
   let take = 0;
   try {
@@ -282,8 +325,12 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
     res.status(500).send('Internal Server Error');
     return;
   }
-  const userId = req.params.id
-	User.findByUserId(userId).then((u) => {
+	const userId = req.params.id
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+	User.findOne({_id: userId}).then((u) => {
 		res.json({
 			result: true,
 			event: u
@@ -304,7 +351,6 @@ app.get(`/api/${API_VERSION}/users`, (req, res) => {
     res.status(500).send('Internal Server Error');
     return;
   }
-	const userId = req.params.id
 	let skip = 0;
 	let take = 0;
 	try {
