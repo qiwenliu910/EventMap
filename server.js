@@ -222,6 +222,19 @@ app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
     coordinates: [req.body.coordinateY,req.body.coordinateX]
   })
 	newEvent.save().then((result)=>{
+		User.findOneAndUpdate({_id:req.body.author},{$push:{events:[result._id]}},
+			function(err, result) {
+		    if (err) {
+		      console.log(err);
+		    } else {
+		      console.log(result);
+		    }
+  })
+
+		// User.update({_id: ObjectID(req.body.author)},{$addToSet:{events:[result._id]}})
+		// User.findOne({_id: req.body.author}).then((u) => {
+		// 	u.update({ _id: 5 },{$push:{events:{[result._id]}}})
+		// })
 		res.json({
 			result: result,
 			status: true,

@@ -45,7 +45,7 @@ class CreateEvent extends React.Component {
     const latLng = await getLatLng(results[0]);
     this.setState({coordinateX: latLng.lat});
     this.setState({coordinateY: latLng.lng});
-  
+
   };
 
   onChangeEventName = (e) => {
@@ -69,7 +69,7 @@ class CreateEvent extends React.Component {
   onChangeSpecial = (e) => {
     this.setState({ special: e.target.value === 'true' });
   };
-  
+
   onChangeDetails = (e) => {
     this.setState({ details: e.target.value });
   };
@@ -138,7 +138,7 @@ class CreateEvent extends React.Component {
     let newEvent = {
       title: this.state.eventName,
       address: this.state.input,
-      author: this.props.state.currentUser.displayName,
+      author: this.props.state.currentUser._id,
       date: this.state.eventDate,
       severity: this.state.eventSeverity,
       type: this.state.eventTypeNum,
@@ -153,9 +153,9 @@ class CreateEvent extends React.Component {
         alert('New Event Created');
         this.setState({eventName: '', redirect: true, eventType: '', eventSeverity: null, eventDate: null,coordinateX: 0,
         coordinateY: 0, details: ""});
-     
+
         this.setState({ redirect: true});
-     
+
          setTimeout(() => {
           this.setState({ redirect: true });
         }, 3000);
