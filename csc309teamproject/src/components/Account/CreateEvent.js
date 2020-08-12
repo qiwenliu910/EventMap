@@ -9,7 +9,7 @@ import Sidebar from '../Admin/Sidebar'
 
 import { Form, Button, Alert } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom';
-
+const datetime = require('date-and-time')
 class CreateEvent extends React.Component {
   constructor(props) {
     super(props);
@@ -114,20 +114,28 @@ class CreateEvent extends React.Component {
       valid = false;
     }
     if (this.state.eventDate !== null) {
+      const inputDate = new Date (this.state.eventDate)
+      const todayDate = new Date ()
+      console.log(inputDate)
+      console.log(todayDate)
+      if (!(inputDate <= todayDate) || inputDate === "invalid") {
+        this.setState({ eventDateWarning: "Please enter a valid date" });
+        valid = false;
+      }
       if (this.state.eventDate.length !== 10) {
         this.setState({ eventDateWarning: "Please enter a valid date" });
         valid = false;
       }
       if(this.state.eventDate.length === 10 ) {
-        if(this.state.eventDate.slice(0, 4) >2020) {
+        if(this.state.eventDate.slice(0, 4) > todayDate.getFullYear()) {
           this.setState({ eventDateWarning: "Please enter a valid date" });
           valid = false;
         }
-        if(this.state.eventDate.slice(5, 7) > 12 ) {
+        if(this.state.eventDate.slice(5, 7) > 12 ||this.state.eventDate.slice(5, 7) < 1 ) {
           this.setState({ eventDateWarning: "Please enter a valid date" });
           valid = false;
         }
-        if(this.state.eventDate.slice(-2) < 0 ) {
+        if(this.state.eventDate.slice(-2) > 31 ||this.state.eventDate.slice(-2) < 1 ) {
           this.setState({ eventDateWarning: "Please enter a valid date" });
           valid = false;
         }
