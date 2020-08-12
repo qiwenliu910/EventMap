@@ -81,7 +81,7 @@ app.post(`/api/${API_VERSION}/changeVote`, (req, res) => {
   const currentUserId = req.body.currentUser._id
   console.log("this is", currentUserId)
   const votedCrime = {
-    "eventId": req.body.crime._id
+    "_id": req.body.crime._id
   }
   Event.findById(req.body.crime._id).then((event) => {
     if(dataFromChild > 0) {

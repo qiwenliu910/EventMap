@@ -15,7 +15,7 @@ class CrimeDisplay extends Component {
         let upvote;
         let downvote;
         let cancel;
-        if (this.props.currentUserId > -1 ) {
+        if (this.props.currentUserId !== -1 ) {
             upvote = <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(1)} size="sm">Upvote</Button>
             downvote = <Button variant="outline-primary" disabled={this.props.alreadyVote} onClick={() => this.sendData(0)} size="sm">Downvote</Button>
             cancel = <Button variant="outline-primary" disabled={!(this.props.alreadyVote)} onClick={() => this.sendData(-1)} size="sm">Cancel</Button>

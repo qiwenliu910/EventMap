@@ -52,7 +52,7 @@ class HomeMap extends Component {
         }
       }
       static getDerivedStateFromProps(props, state) {
-        if (props.state.currentUser.id !== state.currentUser.id) {
+        if (props.state.currentUser._id !== state.currentUser._id) {
           return {
             currentUser: props.state.currentUser,
           };
@@ -66,7 +66,7 @@ class HomeMap extends Component {
           });
       }
       dispalyCrime = (crime) => {
-          this.setState({selectedCrime: crime.eventId,
+          this.setState({selectedCrime: crime._id,
                         crimeItself:crime,
                         crimeTitle: crime.title,
                         crimeArthor: crime.author,
@@ -79,14 +79,13 @@ class HomeMap extends Component {
                         alreadyUpVote: false,
                         alreadyDownVote: false
         })
-        if (this.state.currentUser.id > -1) {
+        if (this.state.currentUser._id !== -1) {
           console.log(this.state.currentUser.upvote)
-          if (this.state.currentUser.upvote.some(item => crime.eventId === item.eventId)) {
-            console.log("found")
+          if (this.state.currentUser.upvote.some(item => crime._id.str === item._id.str)) {
             this.setState({alreadyUpVote: true});
             this.setState({alreadyVote: true});
           }
-          if (this.state.currentUser.downvote.some(item => crime.eventId === item.eventId)) {
+          if (this.state.currentUser.downvote.some(item => crime._id.str === item._id.str)) {
             this.setState({alreadyDownVote: true});
             this.setState({alreadyVote: true});
           }
@@ -99,7 +98,7 @@ class HomeMap extends Component {
           const newArr = [...this.state.crimeList];
 
           const votedCrime = {
-            "eventId": crimeNum + 1
+            "_id": this.state.selectedCrime
           }
           let flag = null 
           if (dataFromChild > 0) {
@@ -117,7 +116,7 @@ class HomeMap extends Component {
             if (this.state.alreadyUpVote) {
               flag = 1
               const filteredUpvote = this.state.currentUser.upvote.filter(s => {
-                return s.eventId !== crimeNum + 1;
+                return s._id !== this.state.selectedCrime;
               });
               this.setState({currentUser: {... this.state.currentUser, upvote: filteredUpvote,},}, function () {
                 console.log(this.state.currentUser.upvote);
@@ -132,7 +131,7 @@ class HomeMap extends Component {
             else if (this.state.alreadyDownVote) {
               flag = 0
               const filteredDownvote = this.state.currentUser.downvote.filter(s => {
-                return s.eventId !== crimeNum + 1;
+                return s._id !== this.state.selectedCrime;
               });
               this.setState({currentUser: {... this.state.currentUser, downvote: filteredDownvote,},}, function () {
                 console.log(this.state.currentUser.downvote);
@@ -173,7 +172,7 @@ class HomeMap extends Component {
             >
             {this.state.crimeList.map((crime) => { // List of all crimes
               if((this.state.filter === crime.type) || (this.state.filter === null)) {
-                return <Marker key={crime.eventId}
+                return <Marker key={crime._id}
                         position={{
                         lat: crime.coordinates[1],
                         lng: crime.coordinates[0]
@@ -196,7 +195,7 @@ class HomeMap extends Component {
                             type={this.state.type}
                             alreadyVote={this.state.alreadyVote}
                             callbackFromParent = {this.myCallback}
-                            currentUserId = {this.state.currentUser.id}
+                            currentUserId = {this.state.currentUser._id}
                             >
 
                 </CrimeDisplay>
