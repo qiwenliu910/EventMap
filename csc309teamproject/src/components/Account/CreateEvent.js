@@ -17,7 +17,7 @@ class CreateEvent extends React.Component {
                   input:'',
                   eventName: "",
                   eventType: "",
-                  eventTypeNum : null,
+                  eventTypeNum : 3,
                   coordinateX: 0,
                   coordinateY: 0,
                   details: "",
@@ -26,7 +26,12 @@ class CreateEvent extends React.Component {
                   message: "",
                   eventSeverity: null,
                   eventDate: null,
-                  redirect: false
+                  redirect: false,
+                  eventNameWarning: "",
+                  eventSeverityWarning: "",
+                  eventDateWarning:"",
+                  eventLocationWarning:"",
+                  eventDetailWarning: ""
                   };
   }
 
@@ -74,10 +79,62 @@ class CreateEvent extends React.Component {
   onChangeEventDate = (e) => {
     this.setState({ eventDate: e.target.value });
   };
+  clearWarnings = () => {
+    this.setState({
+      eventNameWarning: "",
+      eventSeverityWarning: "",
+      eventDateWarning:"",
+      eventLocationWarning:"",
+      eventDetailWarning: ""
+    });
+  }
   onSubmit = (e) => {
     e.preventDefault();
     // frontend validation
-  
+    this.clearWarnings();
+    let valid = true;
+    if (this.state.eventName.trim() === "") {
+      this.setState({ eventNameWarning: "Please enter a valid event name" });
+      valid = false;
+    }
+    if (this.state.input.trim() === "") {
+      this.setState({ eventLocationWarning: "Please enter a valid address" });
+      valid = false;
+    }
+    if (this.state.details.trim() === "") {
+      this.setState({ eventDetailWarning: "Please enter a valid detail" });
+      valid = false;
+    }
+    if (this.state.eventSeverity !== "0" && this.state.eventSeverity !== "1" && this.state.eventSeverity !== "2" && this.state.eventSeverity !== "3") {
+      this.setState({ eventSeverityWarning: "Please enter a valid severity" });
+      valid = false;
+    }
+    if(this.state.eventDate === null) {
+      this.setState({ eventDateWarning: "Please enter a valid date" });
+      valid = false;
+    }
+    if (this.state.eventDate !== null) {
+      if (this.state.eventDate.length !== 10) {
+        this.setState({ eventDateWarning: "Please enter a valid date" });
+        valid = false;
+      }
+      if(this.state.eventDate.length === 10 ) {
+        if(this.state.eventDate.slice(0, 4) >2020) {
+          this.setState({ eventDateWarning: "Please enter a valid date" });
+          valid = false;
+        }
+        if(this.state.eventDate.slice(5, 7) > 12 ) {
+          this.setState({ eventDateWarning: "Please enter a valid date" });
+          valid = false;
+        }
+        if(this.state.eventDate.slice(-2) < 0 ) {
+          this.setState({ eventDateWarning: "Please enter a valid date" });
+          valid = false;
+        }
+      }
+    }
+    if (valid === false)
+      return;
     let newEvent = {
       title: this.state.eventName,
       address: this.state.input,
@@ -160,6 +217,12 @@ class CreateEvent extends React.Component {
                     <Form.Row>
                       <Col>
                         <Form.Control type="text" placeholder="Enter event name" value={this.state.eventName} onChange={this.onChangeEventName}   />
+                        {
+                          this.state.eventNameWarning !== "" ?
+                            <Form.Text className="text-danger">{this.state.eventNameWarning}</Form.Text>
+                            :
+                            null
+                        }
                       </Col>
                       <Col>
                         <Form.Check
@@ -178,6 +241,12 @@ class CreateEvent extends React.Component {
                     <Form.Row>
                       <Col>
                         <Form.Control type="text" placeholder="Enter event severity" value={this.state.eventSeverity} onChange={this.onChangeEventSeverity}   />
+                        {
+                          this.state.eventSeverityWarning !== "" ?
+                            <Form.Text className="text-danger">{this.state.eventSeverityWarning}</Form.Text>
+                            :
+                            null
+                        }
                       </Col>
                     </Form.Row>
                   </Form.Group>
@@ -186,6 +255,12 @@ class CreateEvent extends React.Component {
                     <Form.Row>
                       <Col>
                         <Form.Control type="text" placeholder="YYYY/MM/DD " value={this.state.eventDate} onChange={this.onChangeEventDate}   />
+                        {
+                          this.state.eventDateWarning !== "" ?
+                            <Form.Text className="text-danger">{this.state.eventDateWarning}</Form.Text>
+                            :
+                            null
+                        }
                       </Col>
                     </Form.Row>
                   </Form.Group>
@@ -202,6 +277,12 @@ class CreateEvent extends React.Component {
                     <Form.Label>Event Location</Form.Label>
                     {searchLocation}
                     <Form.Control type="text" value={this.state.input} readOnly/>
+                    {
+                        this.state.eventLocationWarning !== "" ?
+                          <Form.Text className="text-danger">{this.state.eventLocationWarning}</Form.Text>
+                          :
+                          null
+                      }
                   </Form.Group>
                   <Form.Row>
                   <Col>
@@ -220,6 +301,12 @@ class CreateEvent extends React.Component {
                   <Form.Group controlId="fldEventDetails">
                     <Form.Label>Event Details</Form.Label>
                     <Form.Control as="textarea" rows="3" value={this.state.details} onChange={this.onChangeDetails}/>
+                    {
+                        this.state.eventDetailWarning !== "" ?
+                          <Form.Text className="text-danger">{this.state.eventDetailWarning}</Form.Text>
+                          :
+                          null
+                      }
                   </Form.Group>
                   <Form.Row>
                     <Col className="right"><Button variant="primary" type="submit" onClick={this.onSubmit} >Save</Button></Col>
