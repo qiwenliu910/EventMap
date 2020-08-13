@@ -379,7 +379,7 @@ DummyBackend.prototype = {
       })
       .then((json) => {
         if (json.status === true) {
-          
+
           resolve(true);
         }
         else {
@@ -434,8 +434,39 @@ DummyBackend.prototype = {
   },
   updateUser: function (user) {
     return new Promise((resolve) => {
-      this.notImplemented();
-      resolve(false);
+      fetch(`/api/${this.API_VERSION}/users/`+user._id,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: user
+        })
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json();
+        } else {
+          alert('Could not call get event');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        if (json.status === true) {
+          console.log(json.user)
+          this.app.setState({currentUser:json.user})
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
+        resolve(null);
+      });
     });
   },
   deleteUser: function (userId) {
