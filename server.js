@@ -201,9 +201,7 @@ app.post(`/api/${API_VERSION}/createUser`, (req, res) => {
   })
 	newUser.save().then((result)=>{
 		res.json({
-			result: result,
-			status: true,
-	    user: newUser
+			success: true
 		})
 	}).catch((error) => {
 			log(error) // log server error to the console, not to the client.
@@ -385,7 +383,11 @@ app.post(`/api/${API_VERSION}/users`, (req, res) => {
     const user = new User({
         email: req.body.email,
         displayName: req.body.displayName,
-        password: req.body.password
+				password: req.body.password,
+				admin: false,
+				events: [],
+				upvote: [],
+				downvote: []
     });
     user.save().then((result) => {
         res.send({

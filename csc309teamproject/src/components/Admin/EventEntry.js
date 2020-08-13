@@ -4,9 +4,9 @@ import EventEntryAction from './EventEntryAction'
 class EventEntry extends Component {
 
   render() {
-    const eventId = this.props.event.CRIME_ID;
-    const eventName = this.props.event.TITLE;
-    const eventUser = this.props.event.ARTHOR;
+    const eventId = this.props.event._id;
+    const eventName = this.props.event.title;
+    const eventUser = this.props.event.author;
     return (
       <tr>
         <td>{eventId}</td>

@@ -108,10 +108,7 @@ DummyBackend.prototype = {
         }
       })
       .then((json) => {
-        resolve({
-          events: json.events,
-
-        });
+        resolve(json);
       }).catch((error) => {
         console.log(error);
         resolve(null);
@@ -277,42 +274,21 @@ DummyBackend.prototype = {
 
   },
   createUser: function (user) {
-    return new Promise((resolve) => {
-      fetch(`/api/${this.API_VERSION}/createUser`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: user.email,
-          displayName: user.displayName,
-          password: user.password
-        })
+    return new Promise(resolve => {
+      this.post("createUser", {
+        email: user.email,
+        displayName: user.displayName,
+        password: user.password
       })
-      .then((res) => {
-        if (res.status === 200) {
-          // return a promise that resolves with the JSON body
-          return res.json()
-          // resolve(res.json());
-        } else {
-          alert('Could not call login');
-          resolve(false);
-        }
+      .then(json => {
+        resolve(json);
       })
-      .then((json) => {
-        console.log(json);
-        console.log(userData)
-        if (json.result === true) {
-        this.app.setState({ currentUser: json.user });
-          resolve(true);
-        }
-        else {
-          resolve(false);
-        }
-      }).catch((error) => {
-        console.log(error);
-        resolve(false);
+      .catch(error => {
+        this.log(error);
+        resolve({
+          success: false,
+          message: "webservice error"
+        });
       });
     });
   },
