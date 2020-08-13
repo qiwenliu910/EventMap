@@ -13,6 +13,58 @@ function DummyBackend(app) {
 
 DummyBackend.prototype = {
   API_VERSION: 'v1',
+  log: function (msg) {
+    console.log(msg);
+  },
+  api: function (method) {
+    return `/api/${this.API_VERSION}/${method}`;
+  },
+  get: function (method) {
+    return fetch(this.api(method),
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          this.log(`API Error "${method}"(${res.status})`);
+          return res.json();
+        }
+      });
+  },
+  post: function (method, body) {
+    return fetch(this.api(method),
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          this.log(`API Error "${method}"(${res.status})`);
+          return res.json();
+        }
+      });
+  },
+  readCookie: function () {
+    this.get("check-session")
+    .then(json => {
+        if (json.result === true && json.currentUser) {
+            this.app.setState({ currentUser: json.currentUser });
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+  },
   logout: function () {
 
     return new Promise((resolve) => {

@@ -50,6 +50,23 @@ app.use(session({
     }
 }));
 
+app.get(`/api/${API_VERSION}/check-session`, (req, res) => {
+	if (req.session.user) {
+			res.send({
+				result: true,
+				currentUser: {
+					id: req.session.user,
+					displayName: req.session.displayName,
+					admin: req.session.isAdmin
+				} 
+			});
+	} else {
+			res.status(401).send({
+				result: false
+			});
+	}
+});
+
 app.post(`/api/${API_VERSION}/login`, (req, res) => {
 	const email = req.body.email
 	const password = req.body.password
@@ -60,17 +77,28 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
 		  });
 		}
 		else{
+			req.session.user = user._id;
 			req.session.email = user.email;
+			req.session.isAdmin = user.admin;
+			req.session.displayName = user.displayName;
 			res.json({
 				result: true,
 				user: user
 			});
 		}
-	}).catch((error) => {
+	},
+	() => {
+		// Reject
+		res.json({
+			result: false
+		});
+	}
+	).catch((error) => {
+		log(error)
 		if (isMongoError(error)) {
 			res.status(500).send(error);
 		} else {
-			log(error)
+			
 			res.status(400).send(error);
 		}
 	})
@@ -343,7 +371,7 @@ app.get(`/api/${API_VERSION}/users`, (req, res) => {
 			usersSlice = users.slice(skip, skip + take);
 		}
 		else {
-			usersSlice = events;
+			usersSlice = users;
 		}
 		res.json({
 			events: usersSlice,

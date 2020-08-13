@@ -34,6 +34,7 @@ class App extends React.Component {
     };
 
     this.actions = new Backend(this);
+    this.actions.readCookie();
   }
 
   myCallback = (dataFromChild) => {
