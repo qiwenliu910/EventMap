@@ -60,7 +60,6 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
 		  });
 		}
 		else{
-			req.session.user = user.user;
 			req.session.email = user.email;
 			res.json({
 				result: true,
@@ -182,31 +181,6 @@ app.post(`/api/${API_VERSION}/createUser`, (req, res) => {
 			log(error) // log server error to the console, not to the client.
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 	})
-	// User.estimatedDocumentCount().then((userCount) => {
-	// 	const newUser = new User({
-	// 		id: userCount,
-	//     email: req.body.email,
-	//     displayName: req.body.displayName,
-	//     password:req.body.password,
-	//     admin:false,
-	//     events:[],
-	//     upvote:[],
-	//     downvote:[],
-	//   })
-	// 	newUser.save().then((result)=>{
-	// 		res.json({
-	// 			result: result,
-	// 			status: true,
-	// 	    user: newUser
-	// 		})
-	// 	}).catch((error) => {
-	// 			log(error) // log server error to the console, not to the client.
-	// 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-	// 	})
-  // }).catch(err => {
-	// 	log(error) // log server error to the console, not to the client.
-	// 	res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-  // })
 });
 
 app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
@@ -229,12 +203,7 @@ app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
 		    } else {
 		      console.log(result);
 		    }
-  })
-
-		// User.update({_id: ObjectID(req.body.author)},{$addToSet:{events:[result._id]}})
-		// User.findOne({_id: req.body.author}).then((u) => {
-		// 	u.update({ _id: 5 },{$push:{events:{[result._id]}}})
-		// })
+	  })
 		res.json({
 			result: result,
 			status: true,
@@ -244,33 +213,27 @@ app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
 			log(error) // log server error to the console, not to the client.
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 	})
-	// Event.estimatedDocumentCount().then((eventCount) => {
-	// 	const newEvent = new Event({
-	// 		eventId: eventCount,
-	// 		title: req.body.title,
-	// 		address: req.body.address,
-	// 		author: req.body.author,
-	// 		date: req.body.date,
-	// 		type: req.body.type,
-	// 		vote: req.body.vote,
-	// 		severity: req.body.severity,
-	// 		description: req.body.description,
-  //     coordinates: [req.body.coordinateY,req.body.coordinateX]
-	//   })
-	// 	newEvent.save().then((result)=>{
-	// 		res.json({
-	// 			result: result,
-	// 			status: true,
-	// 	    event: newEvent
-	// 		})
-	// 	}).catch((error) => {
-	// 			log(error) // log server error to the console, not to the client.
-	// 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-	// 	})
-  // }).catch(err => {
-	// 	log(error) // log server error to the console, not to the client.
-	// 	res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-  // })
+});
+
+app.delete(`/api/${API_VERSION}/deleteEvent/:id`, (req, res) => {
+	const eventId = req.params.id
+	// Validate id
+	if (!ObjectID.isValid(eventId)) {
+		res.status(404).send('Resource not found')
+		return;
+	}
+	// Delete a student by their id
+	Student.findOneAndDelete({_id: eventId}).then((event) => {
+		if (!event) {
+			res.status(404).send()
+		} else {
+			res.send(event)
+		}
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send() // server error, could not delete.
+	})
 });
 
 app.get(`/api/${API_VERSION}/logout`, (req, res) => {

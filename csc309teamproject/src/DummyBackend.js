@@ -68,6 +68,7 @@ DummyBackend.prototype = {
   },
   getEvent: function (eventId) {
     return new Promise((resolve) => {
+      console.log(this.app.state)
       console.log(eventId)
       fetch(`/api/${this.API_VERSION}/events/`+eventId,
       {
@@ -171,7 +172,7 @@ DummyBackend.prototype = {
       .then((json) => {
         console.log(json);
         if (json.result === true) {
-        this.app.setState({ currentUser: json.user });
+          this.app.setState({ currentUser: json.user });
           resolve(true);
         }
         else {
@@ -224,13 +225,6 @@ DummyBackend.prototype = {
 
   },
   createUser: function (user) {
-    // return new Promise((resolve) => {
-    //   this.notImplemented();
-    //   resolve({
-    //     success: false,
-    //     message: "Function not implemented"
-    //   });
-    // });
     return new Promise((resolve) => {
       fetch(`/api/${this.API_VERSION}/createUser`,
       {
@@ -269,7 +263,6 @@ DummyBackend.prototype = {
         resolve(false);
       });
     });
-
   },
   createEvent: function (event) {
     return new Promise((resolve) => {
@@ -298,14 +291,22 @@ DummyBackend.prototype = {
           return res.json()
           // resolve(res.json());
         } else {
-          alert('Could not call login');
+          alert('Could not call post event');
           resolve(false);
         }
       })
       .then((json) => {
-
         if (json.status === true) {
-
+          this.app.setState({currentUser:{
+            _id: this.app.state.currentUser._id,
+            email: this.app.state.currentUser.email,
+            displayName: this.app.state.currentUser.displayName,
+            password: this.app.state.currentUser.password,
+            admin: this.app.state.currentUser.admin,
+            events: [ ...this.app.state.currentUser.events,json.event._id],
+            upvote: this.app.state.currentUser.upvote,
+            downvote: this.app.state.currentUser.downvote
+          }})
           resolve(true);
         }
         else {
@@ -316,7 +317,6 @@ DummyBackend.prototype = {
         resolve(false);
       });
     });
-
   },
   resetPassword: function(email) {
     return new Promise((resolve) => {
@@ -341,8 +341,43 @@ DummyBackend.prototype = {
   },
   deleteEvent: function (eventId) {
     return new Promise((resolve) => {
-      this.notImplemented();
-      resolve(false);
+      fetch(`/api/${this.API_VERSION}/deleteEvent/`+eventId,
+      {
+        method: 'DELETE'
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          // this.app.setState({ currentUser:{events: this.app.state.currentUser.events.filter((e)=> e._id != eventId)}})
+          console.log(this.app.state)
+          return res.json()
+          // resolve(res.json());
+        } else {
+          alert('Could not call delete event');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        if (json.status === true) {
+          this.app.setState({currentUser:{
+            _id: this.app.state.currentUser._id,
+            email: this.app.state.currentUser.email,
+            displayName: this.app.state.currentUser.displayName,
+            password: this.app.state.currentUser.password,
+            admin: this.app.state.currentUser.admin,
+            events: this.app.state.currentUser.events.filter((e)=> e._id != eventId),
+            upvote: this.app.state.currentUser.upvote,
+            downvote: this.app.state.currentUser.downvote
+          }})
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
+        resolve(false);
+      });
     });
   },
   updateUser: function (user) {
