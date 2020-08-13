@@ -61,9 +61,9 @@ body{
   margin-top: 50px;
   margin-left: 100px;
   margin-right: 100px;
-  background-color: #5F9EA0;
+  background-color: #404040;
   border: 2px solid black;
-  border-radius: 25px;
+  color: #FFFFFF;
 }
 
 #eventHeader{
@@ -78,19 +78,21 @@ body{
   margin-top: 50px;
   margin-left: 50px;
   margin-right: 50px;
+  margin-bottom: 50px;
   min: 500px;
   padding: 10px;
-  border-radius: 25px;
-  background-color: #F0FFFF;
+  color: #FFFFFF;
+  background-color: #696969;
+
 }
 
 #eventDetails{
   margin-top: 50px;
   margin-left: 50px;
-  margin-right: 100px;
-  background-color: #E0FFFF;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  background-color: #696969;
   padding:20px;
-  border-radius: 25px;
 }
 
 #eventItem{

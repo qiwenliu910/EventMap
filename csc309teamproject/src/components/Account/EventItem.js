@@ -19,12 +19,12 @@ class EventItem extends React.Component {
   }
   onSubmitEdit = (e) => {
     e.preventDefault();
-    this.props.selectEvent(this.props.eventNum)
     this.props.buttonClick(2)
   }
   onSubmitDelete = (e) => {
     e.preventDefault();
-    this.props.selectEvent(this.props.eventNum)
+    this.props.actions.deleteEvent(this.props.eventNum)
+    this.props.buttonClick(3)
   }
 
   componentDidMount = () => {

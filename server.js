@@ -58,7 +58,7 @@ app.get(`/api/${API_VERSION}/check-session`, (req, res) => {
 					id: req.session.user,
 					displayName: req.session.displayName,
 					admin: req.session.isAdmin
-				} 
+				}
 			});
 	} else {
 			res.status(401).send({
@@ -98,7 +98,7 @@ app.post(`/api/${API_VERSION}/login`, (req, res) => {
 		if (isMongoError(error)) {
 			res.status(500).send(error);
 		} else {
-			
+
 			res.status(400).send(error);
 		}
 	})
@@ -248,12 +248,25 @@ app.delete(`/api/${API_VERSION}/deleteEvent/:id`, (req, res) => {
 		res.status(404).send('Resource not found')
 		return;
 	}
-	// Delete a student by their id
-	Student.findOneAndDelete({_id: eventId}).then((event) => {
+	// Delete an event by their id
+	Event.findOne({_id: eventId}).then((e) => {
+		User.findOneAndUpdate({_id:e.author},{$pull:{events:e._id}},
+			function(err, result) {
+		    if (err) {
+		      console.log(err);
+		    } else {
+		      console.log(result);
+		    }
+	  })
+	})
+	Event.findOneAndDelete({_id: eventId}).then((event) => {
 		if (!event) {
 			res.status(404).send()
 		} else {
-			res.send(event)
+			res.json({
+				event: event,
+				status: true
+			})
 		}
 	})
 	.catch((error) => {
