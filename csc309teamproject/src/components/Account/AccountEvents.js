@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import EventItem from "./EventItem"
 import EventDetails from "./EventDetails"
+import EventEdit from './EventEdit'
+import { Link, Redirect } from 'react-router-dom';
 import "./AccountPage.css"
 class AccountEvents extends React.Component {
   state = {
@@ -26,7 +28,17 @@ class AccountEvents extends React.Component {
     const selectEvent = (eventNum) =>{
         this.setState({currentEventId: eventNum})
       }
-
+    const buttonClick = (button) =>{
+      this.setState({buttonPressed: button})
+     
+    }
+    let display;
+    if (this.state.buttonPressed === 2) {
+      display = <div><div id="eventHeader">Edit:</div><div id="eventDetails"><EventEdit key={this.state.currentEventId} currentEvent= {this.state.currentEventId} actions={this.props.actions} /> </div></div>    
+    }
+    else if (this.state.buttonPressed === 1){
+      display = <div><div id="eventHeader">Details:</div><div id="eventDetails"><EventDetails key={this.state.currentEventId} currentEvent= {this.state.currentEventId} actions={this.props.actions} /></div></div>
+    }
     return (
       <div id="eventDisplay">
         <div id="eventHeader">
@@ -49,15 +61,19 @@ class AccountEvents extends React.Component {
               </th>
             </tr>
             {this.props.state.currentUser.events.map((eventId) => (
-              <EventItem key={eventId} eventNum={eventId} selectEvent={selectEvent} actions={this.props.actions} />
+              <EventItem key={eventId} eventNum={eventId} buttonClick={buttonClick}selectEvent={selectEvent} actions={this.props.actions} />
             ))}
           </tbody>
         </table>
-        <div id="eventHeader">
+
+        {/* <div id="eventHeader">
           Details:
         </div>
         <div id="eventDetails">
           <EventDetails key={this.state.currentEventId} currentEvent= {this.state.currentEventId} actions={this.props.actions} />
+        </div> */}
+        <div>
+          {display}
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap'
 import "./AccountPage.css"
-
+import { Link, Redirect } from 'react-router-dom';
 class EventItem extends React.Component {
   constructor(props) {
     super(props);
@@ -15,10 +15,12 @@ class EventItem extends React.Component {
   onSubmitDetails = (e) => {
     e.preventDefault();
     this.props.selectEvent(this.props.eventNum)
+    this.props.buttonClick(1)
   }
   onSubmitEdit = (e) => {
     e.preventDefault();
     this.props.selectEvent(this.props.eventNum)
+    this.props.buttonClick(2)
   }
   onSubmitDelete = (e) => {
     e.preventDefault();
