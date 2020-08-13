@@ -240,7 +240,40 @@ app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 	})
 });
-
+app.patch(`/api/${API_VERSION}/updateEvent/:id`, (req, res) => {
+  const eventId = req.params.id
+  if (!ObjectID.isValid(eventId)) {
+		res.status(404).send('Resource not found')
+		return;
+  }
+  Event.findById(eventId).then((event)=> {
+    if(!event) {
+      res.status(404).send("Resource not found")
+    } else {
+      event.title = req.body.title
+      event.address = req.body.address
+      event.date = req.body.date
+      event.severity = req.body.severity
+      event.type = req.body.type
+      event.description = req.body.description
+      event.coordinates = [req.body.coordinateY,req.body.coordinateX]
+      event.save().then((result) =>{
+        res.json({
+          result: result,
+          status: true,
+          event: event
+        })
+      })
+      .catch((error) => {
+          log(error) // log server error to the console, not to the client.
+          res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+      })
+    }
+  }).catch((error)=> {
+    log(error)
+    res.status(500).send("Internal server error")
+  })
+})
 app.delete(`/api/${API_VERSION}/deleteEvent/:id`, (req, res) => {
 	const eventId = req.params.id
 	// Validate id

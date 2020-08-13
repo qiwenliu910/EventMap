@@ -355,16 +355,57 @@ DummyBackend.prototype = {
       });
     });
   },
-  updateEvent: function (event) {
+  updateEvent: function (event, eventId) {
+    // return new Promise((resolve) => {
+    //   this.notImplemented();
+    //   for (let i = 0; i < this.data.events.length; i++) {
+    //     if (parseInt(this.data.events[i].CRIME_ID) === parseInt(event.CRIME_ID)) {
+    //       this.data.events[i] = event;
+    //       resolve(true);
+    //     }
+    //   }
+    //   resolve(false);
+    // });
     return new Promise((resolve) => {
-      this.notImplemented();
-      for (let i = 0; i < this.data.events.length; i++) {
-        if (parseInt(this.data.events[i].CRIME_ID) === parseInt(event.CRIME_ID)) {
-          this.data.events[i] = event;
+      fetch(`/api/${this.API_VERSION}/updateEvent/`+eventId,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: event.title,
+          address: event.address,
+          date: event.date,
+          type: event.type,
+          severity: event.severity,
+          description: event.details,
+          coordinateX: event.coordinateX,
+          coordinateY: event.coordinateY
+        })
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json()
+          // resolve(res.json());
+        } else {
+          alert('Could not call update event');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        if (json.status === true) {
+          
           resolve(true);
         }
-      }
-      resolve(false);
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
+        resolve(false);
+      });
     });
   },
   deleteEvent: function (eventId) {

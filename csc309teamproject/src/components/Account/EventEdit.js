@@ -125,8 +125,10 @@ class EventEdit extends React.Component {
       valid = false;
     }
     if (this.state.eventSeverity !== "0" && this.state.eventSeverity !== "1" && this.state.eventSeverity !== "2" && this.state.eventSeverity !== "3") {
-      this.setState({ eventSeverityWarning: "Please enter a valid severity" });
-      valid = false;
+        if (this.state.eventSeverity !== 0 && this.state.eventSeverity !== 1 && this.state.eventSeverity !== 2 && this.state.eventSeverity !== 3) {
+            this.setState({ eventSeverityWarning: "Please enter a valid severity" });
+            valid = false;
+        }
     }
     if(this.state.eventDate === null) {
       this.setState({ eventDateWarning: "Please enter a valid date" });
@@ -165,26 +167,21 @@ class EventEdit extends React.Component {
     let newEvent = {
       title: this.state.eventName,
       address: this.state.input,
-      author: this.props.state.currentUser._id,
       date: this.state.eventDate,
       severity: this.state.eventSeverity,
       type: this.state.eventTypeNum,
-      special: this.state.special,
       coordinateX: this.state.coordinateX,
       coordinateY: this.state.coordinateY,
       details:this.state.details
     };
+    console.log(newEvent)
     // [*] Exchanging data with external source
-    this.props.actions.createEvent(newEvent).then((success) => {
+    this.props.actions.updateEvent(newEvent, this.state.eventItself._id).then((success) => {
       if (success === true) {
-        alert('New Event Created');
-        this.setState({eventName: '', redirect: true, eventType: '', eventSeverity: null, eventDate: null,coordinateX: 0,
-        coordinateY: 0, details: ""});
-
-        this.setState({ redirect: true});
+        alert('Event Updated');
 
          setTimeout(() => {
-          this.setState({ redirect: true });
+        //   this.setState({ redirect: true });
         }, 3000);
       }
       else {
@@ -213,8 +210,8 @@ class EventEdit extends React.Component {
               ? 'suggestion-item--active'
               : 'suggestion-item';
             const style = suggestion.active
-              ? { backgroundColor: '#e1e1e1', cursor: 'default' }
-              : { backgroundColor: '#ffffff', cursor: 'default' };
+              ? { backgroundColor: '#615d5d', cursor: 'default' }
+              : { backgroundColor: '#bdb7b7', cursor: 'default' };
             return (
               <div
                 {...getSuggestionItemProps(suggestion, {
