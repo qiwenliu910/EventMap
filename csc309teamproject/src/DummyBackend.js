@@ -143,29 +143,12 @@ DummyBackend.prototype = {
   },
   getUsers: function (skip, take) {
     return new Promise((resolve) => {
-      fetch(`/api/${this.API_VERSION}/users?skip=${skip}&take=${take}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      this.get(`users?skip=${skip}&take=${take}`)
+      .then(json => {
+        resolve(json);
       })
-      .then((res) => {
-        if (res.status === 200) {
-          // return a promise that resolves with the JSON body
-          return res.json();
-        } else {
-          alert('Could not call get events');
-          resolve(false);
-        }
-      })
-      .then((json) => {
-        resolve({
-          users: json.users,
-          totalEntries: json.totalEntries
-        });
-      }).catch((error) => {
-        console.log(error);
+      .catch(error => {
+        this.log(error);
         resolve(null);
       });
     });
