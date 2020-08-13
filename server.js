@@ -418,7 +418,7 @@ app.get(`/api/${API_VERSION}/users`, (req, res) => {
 			usersSlice = users;
 		}
 		res.json({
-			events: usersSlice,
+			users: usersSlice,
 			totalEntries: usersSlice.length
 		});
 	})
