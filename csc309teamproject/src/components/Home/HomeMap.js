@@ -80,20 +80,59 @@ class HomeMap extends Component {
                         alreadyDownVote: false
         })
         if (this.state.currentUser._id !== -1) {
-          console.log(this.state.currentUser.upvote)
-          if (this.state.currentUser.upvote.some(item => crime._id.str === item._id.str)) {
+
+          let upvotePosition = -1;
+          for (let index = 0; index < this.state.currentUser.upvote.length; index++) {
+            if(this.state.currentUser.upvote[index]._id === crime._id) {
+              upvotePosition = index
+            }
+          }
+          console.log(upvotePosition)
+          if (upvotePosition >= 0) {
             this.setState({alreadyUpVote: true});
             this.setState({alreadyVote: true});
           }
-          if (this.state.currentUser.downvote.some(item => crime._id.str === item._id.str)) {
-            this.setState({alreadyDownVote: true});
+
+          let downvotePosition = -1;
+          for (let index = 0; index < this.state.currentUser.downvote.length; index++) {
+            if(this.state.currentUser.downvote[index]._id === crime._id) {
+              downvotePosition = index
+            }
+          }
+          console.log(downvotePosition)
+          if (downvotePosition >= 0) {
+            this.setState({alreadyDownvote: true});
             this.setState({alreadyVote: true});
           }
-          if(this.state.currentUser.events.some(item => crime._id.str === item.str)) {
+          
+          let eventsPosition = -1;
+          for (let index = 0; index < this.state.currentUser.events.length; index++) {
+            if(this.state.currentUser.events[index]._id === crime._id) {
+              eventsPosition = index
+            }
+          }
+          console.log(eventsPosition)
+          if (eventsPosition >= 0) {
             this.setState({alreadyUpVote:false})
             this.setState({alreadyDownVote: false})
             this.setState({alreadyVote:true})
           }
+          // if (this.state.currentUser.upvote.some(item => crime._id.str === item._id.str)) {
+          //   console.log("upvote")
+          //   this.setState({alreadyUpVote: true});
+          //   this.setState({alreadyVote: true});
+          // }
+          // if (this.state.currentUser.downvote.some(item => crime._id.str === item._id.str)) {
+          //   console.log("downvote")
+          //   this.setState({alreadyDownVote: true});
+          //   this.setState({alreadyVote: true});
+          // }
+          // if(this.state.currentUser.events.some(item => crime._id.str === item.str)) {
+          //   console.log("self")
+          //   this.setState({alreadyUpVote:false})
+          //   this.setState({alreadyDownVote: false})
+          //   this.setState({alreadyVote:true})
+          // }
         };
 
       }
