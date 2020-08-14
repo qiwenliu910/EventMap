@@ -15,6 +15,7 @@ class AccountSettings extends React.Component {
       profilePictures : [pfp,pfp2,pfp3],
       displayNameVal: "",
       displayNameWarning:"",
+      deleteAccountAlert:false,
       message:""
     }
   }
@@ -46,19 +47,25 @@ class AccountSettings extends React.Component {
       }
     });
   }
+  onDeleteAccountClick = (e) =>{
+    this.setState({ deleteAccountAlert: true });
+  }
+  onDeleteAccountNo = (e) =>{
+    this.setState({ deleteAccountAlert: false });
+  }
   onDeactivateAccountSubmit = (e) => {
     e.preventDefault();
     this.props.state.currentUser.events.map((event)=> {
-      this.props.actions.deleteEvent(event)   
-    
+      this.props.actions.deleteEvent(event)
+
     })
     this.props.state.currentUser.upvote.map((event)=> {
       this.props.actions.changeVote(event._id, 0, this.props.state.currentUser, null)
-      
+
     })
     this.props.state.currentUser.downvote.map((event)=> {
       this.props.actions.changeVote(event._id, 1, this.props.state.currentUser, null)
-     
+
     })
     this.props.actions.deleteUser(this.props.state.currentUser._id)
     console.log(this.props)
@@ -149,11 +156,28 @@ class AccountSettings extends React.Component {
                   <Col md={{ span: 6, offset: 0 }}>
                     <h3>Deactivate Account</h3>
                     <hr></hr>
-                    <Button variant="primary" type="submit"onClick={this.onDeactivateAccountSubmit}>
+                    <Button variant="primary" type="submit"onClick={this.onDeleteAccountClick}>
                       Deactivate Account
                     </Button>
                   </Col>
                 </Row>
+                {
+                  this.state.deleteAccountAlert ?
+                    <>
+                      <Row>
+                        <h2>This action will delete all user info (including the user's events)</h2>
+                        <h3>Are you sure?</h3>
+                        <Button variant="danger" type="submit" onClick={this.onDeactivateAccountSubmit}>
+                          YES
+                        </Button>
+                        <Button variant="primary" type="submit" onClick={this.onDeleteAccountNo}>
+                          NO
+                        </Button>
+                      </Row>
+                    </>
+                    :
+                    null
+                }
               </main>
             </Container>
           )}/>
