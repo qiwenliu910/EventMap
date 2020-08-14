@@ -440,6 +440,32 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
 	User.findOne({_id: userId}).then((u) => {
 		res.json({
 			result: true,
+			event: u
+		})
+	})
+	.catch((error) => {
+		if (isMongoError(error)) {
+			res.status(500).send('Internal Server Error');
+		} else {
+			log(error)
+			res.status(400).send(error);
+		}
+	})
+});
+
+app.get(`/api/${API_VERSION}/userDisplayName/:id`, (req, res) => {
+  if (!req.session.user) {
+    res.status(500).send('Internal Server Error');
+    return;
+  }
+	const userId = req.params.id
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;  // so that we don't run the rest of the handler.
+	}
+	User.findOne({_id: userId}).then((u) => {
+		res.json({
+			result: true,
 			user: u
 		})
 	})

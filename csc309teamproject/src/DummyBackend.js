@@ -153,6 +153,30 @@ DummyBackend.prototype = {
       });
     });
   },
+  getDisplayName: function (userId) {
+    return new Promise((resolve) => {
+      fetch(`/api/${this.API_VERSION}/userDisplayName/`+userId,
+      {
+        method: 'GET',
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          return res.json();
+        } else {
+          alert('Could not find displayName');
+          resolve(null);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        resolve(json.user);
+      }).catch((error) => {
+        console.log(error);
+        resolve(null);
+      });
+    });
+  },
   getUser: function (userId) {
     return new Promise((resolve) => {
       fetch(`/api/${this.API_VERSION}/users/`+userId,
