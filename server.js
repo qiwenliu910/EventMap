@@ -454,10 +454,10 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
 });
 
 app.get(`/api/${API_VERSION}/userDisplayName/:id`, (req, res) => {
-  if (!req.session.user) {
-    res.status(500).send('Internal Server Error');
-    return;
-  }
+  // if (!req.session.user) {
+  //   res.status(500).send('Internal Server Error');
+  //   return;
+  // }
 	const userId = req.params.id
 	if (!ObjectID.isValid(userId)) {
 		res.status(404).send()
