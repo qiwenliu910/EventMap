@@ -66,10 +66,14 @@ class HomeMap extends Component {
           });
       }
       dispalyCrime = (crime) => {
+        this.props.actions.getUser(crime.author).then((ret)=> {
+          console.log(ret)
+          this.setState({crimeArthor: ret.displayName})
+        })
           this.setState({selectedCrime: crime._id,
                         crimeItself:crime,
                         crimeTitle: crime.title,
-                        crimeArthor: crime.author,
+                        // crimeArthor: crime.author,
                         crimeDate: crime.date,
                         crimeDescription:crime.description,
                         crimeVote:crime.vote,

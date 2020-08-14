@@ -440,7 +440,7 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
 	User.findOne({_id: userId}).then((u) => {
 		res.json({
 			result: true,
-			event: u
+			user: u
 		})
 	})
 	.catch((error) => {
