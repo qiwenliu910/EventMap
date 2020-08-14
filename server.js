@@ -108,9 +108,9 @@ app.post(`/api/${API_VERSION}/changeVote`, (req, res) => {
   const currentUserId = req.body.currentUser._id
   console.log("this is", currentUserId)
   const votedCrime = {
-    "_id": req.body.crime._id
+    "_id": req.body.crimeId
   }
-  Event.findById(req.body.crime._id).then((event) => {
+  Event.findById(req.body.crimeId).then((event) => {
     if(dataFromChild > 0) {
       event.vote = event.vote + 1
       User.findById(currentUserId).then((user)=> {
@@ -189,6 +189,40 @@ app.post(`/api/${API_VERSION}/changeVote`, (req, res) => {
 		res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
   })
 });
+app.delete(`/api/${API_VERSION}/deleteUser/:id`, (req, res)=> {
+  const userId = req.params.id
+	// Validate id
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send('Resource not found')
+		return;
+  }
+  User.findById(userId).then((user)=> {
+    // const upvoteList = user.upvote
+    // const downvoteList = user.downvote
+    // upvoteList.map((upvoteEvent) => {
+    //   upvoteEvent.vote = upvoteEvent.vote -1;
+    //   upvoteEvent.save()
+    // })
+    // downvoteList.map((downvoteEvent) => {
+    //   downvoteEvent.vote = downvoteEvent.vote +1;
+    //   downvoteEvent.save()
+    // })
+    User.findOneAndDelete({_id: userId}).then((user) => {
+      if (!user) {
+        res.status(404).send()
+      } else {
+        res.json({
+          user: user,
+          status: true
+        })
+      }
+    })
+    .catch((error) => {
+      log(error)
+      res.status(500).send() // server error, could not delete.
+    })
+  })
+})
 app.post(`/api/${API_VERSION}/createUser`, (req, res) => {
 	const newUser = new User({
     email: req.body.email,

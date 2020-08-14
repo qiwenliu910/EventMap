@@ -46,7 +46,24 @@ class AccountSettings extends React.Component {
       }
     });
   }
-
+  onDeactivateAccountSubmit = (e) => {
+    e.preventDefault();
+    this.props.state.currentUser.events.map((event)=> {
+      this.props.actions.deleteEvent(event)   
+    
+    })
+    this.props.state.currentUser.upvote.map((event)=> {
+      this.props.actions.changeVote(event._id, 0, this.props.state.currentUser, null)
+      
+    })
+    this.props.state.currentUser.downvote.map((event)=> {
+      this.props.actions.changeVote(event._id, 1, this.props.state.currentUser, null)
+     
+    })
+    this.props.actions.deleteUser(this.props.state.currentUser._id)
+    console.log(this.props)
+    console.log(this.state)
+  }
   render() {
     const selectEvent = (eventNum) =>{
         console.log(eventNum)
@@ -132,7 +149,7 @@ class AccountSettings extends React.Component {
                   <Col md={{ span: 6, offset: 0 }}>
                     <h3>Deactivate Account</h3>
                     <hr></hr>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit"onClick={this.onDeactivateAccountSubmit}>
                       Deactivate Account
                     </Button>
                   </Col>

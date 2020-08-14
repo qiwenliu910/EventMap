@@ -216,7 +216,7 @@ DummyBackend.prototype = {
       });
     });
   },
-  changeVote : function (crime, dataFromChild, currentUser, flag) {
+  changeVote : function (crimeId, dataFromChild, currentUser, flag) {
     return new Promise((resolve) => {
       fetch(`/api/${this.API_VERSION}/changeVote`,
       {
@@ -225,8 +225,7 @@ DummyBackend.prototype = {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          crime: crime,
-          vote: crime.vote,
+          crimeId: crimeId,
           dataFromChild:dataFromChild,
           currentUser:currentUser,
           flag: flag
@@ -470,9 +469,48 @@ DummyBackend.prototype = {
     });
   },
   deleteUser: function (userId) {
+    // return new Promise((resolve) => {
+    //   this.notImplemented();
+    //   resolve(false);
+    // });
     return new Promise((resolve) => {
-      this.notImplemented();
-      resolve(false);
+      fetch(`/api/${this.API_VERSION}/deleteUser/`+userId,
+      {
+        method: 'DELETE'
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // return a promise that resolves with the JSON body
+          // this.app.setState({ currentUser:{events: this.app.state.currentUser.events.filter((e)=> e._id != eventId)}})
+          console.log(this.app.state)
+          return res.json()
+          // resolve(res.json());
+        } else {
+          alert('Could not call delete event');
+          resolve(false);
+        }
+      })
+      .then((json) => {
+        if (json.status === true) {
+          this.app.setState({currentUser: {
+            _id: -1,
+            username: "default",
+            password: "default",
+            admin: false,
+            events: [],
+            upvote: [],
+            downvote: []
+          },})
+          
+          resolve(true);
+        }
+        else {
+          resolve(false);
+        }
+      }).catch((error) => {
+        console.log(error);
+        resolve(false);
+      });
     });
   },
   notImplemented: function () {

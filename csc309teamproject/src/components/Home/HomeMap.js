@@ -89,6 +89,11 @@ class HomeMap extends Component {
             this.setState({alreadyDownVote: true});
             this.setState({alreadyVote: true});
           }
+          if(this.state.currentUser.events.some(item => crime._id.str === item.str)) {
+            this.setState({alreadyUpVote:false})
+            this.setState({alreadyDownVote: false})
+            this.setState({alreadyVote:true})
+          }
         };
 
       }
@@ -153,7 +158,7 @@ class HomeMap extends Component {
               this.setState({alreadyDownVote: true});
               this.setState({alreadyVote: true});
               }
-          this.props.actions.changeVote(this.state.crimeItself, dataFromChild, this.state.currentUser, flag).then((success)=> {
+          this.props.actions.changeVote(this.state.crimeItself._id, dataFromChild, this.state.currentUser, flag).then((success)=> {
             if (success === true) {
               this.componentDidMount()
           }
