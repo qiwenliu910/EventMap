@@ -3,16 +3,16 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import Sidebar from "./SettingsSidebar"
 import SettingsPFP from "./SettingsPFP"
-import pfp from "../../images/pfp.png"
-import pfp2 from "../../images/pfp2.png"
-import pfp3 from "../../images/pfp3.png"
+// import pfp from "../../images/pfp.png"
+// import pfp2 from "../../images/pfp2.png"
+// import pfp3 from "../../images/pfp3.png"
 
 import "./AccountPage.css"
 class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profilePictures : [pfp,pfp2,pfp3],
+      // profilePictures : [pfp,pfp2,pfp3],
       displayNameVal: "",
       displayNameWarning:"",
       deleteAccountAlert:false,
@@ -74,7 +74,7 @@ class AccountSettings extends React.Component {
   render() {
     const selectEvent = (eventNum) =>{
         console.log(eventNum)
-        this.setState({currentEvent: eventNum, profilePictures : [pfp,pfp2,pfp3]})
+        this.setState({currentEvent: eventNum})
       }
 
     return (
@@ -137,14 +137,6 @@ class AccountSettings extends React.Component {
                     </Button>
                   </Form>
                 </Col>
-              </Row>
-              <Row>
-                <h3>Change Profile Picture</h3>
-              </Row>
-              <Row>
-                  {this.state.profilePictures.map((pfp) => (
-                    <SettingsPFP pfp={pfp}/>
-                  ))}
               </Row>
             </main>
             </Container>

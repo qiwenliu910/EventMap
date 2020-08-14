@@ -17,9 +17,10 @@
   width: 650px;
   height:690px;
   padding: 10px;
-  border-radius: 25px;
-  background-color: #F0FFFF;
+  background-color: #333333;
+  color:#FFFFFF;
   float: left;
+  border: 5px solid white;
 }
 .tablePageButton{
   margin-left: 220px;
@@ -33,13 +34,13 @@
 
 .eventDetails{
   margin-left: 700px;
-  margin-top: 20px;
   margin-right: 50px;
   min-width: 400px;
   min-height: 400px;
   padding: 30px;
-  border-radius: 25px;
-  background-color: #F0FFFF;
+  color:#FFFFFF;
+  background-color: #333333;
+  border: 5px solid white;
 }
 
 table, th, td {
