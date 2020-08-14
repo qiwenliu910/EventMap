@@ -111,7 +111,7 @@ class HomeMap extends Component {
           
           let eventsPosition = -1;
           for (let index = 0; index < this.state.currentUser.events.length; index++) {
-            if(this.state.currentUser.events[index]._id === crime._id) {
+            if(this.state.currentUser.events[index] === crime._id) {
               eventsPosition = index
             }
           }
