@@ -34,6 +34,10 @@ class EventDetails extends React.Component {
         </ul><ul>
           Date: {this.state.event.date}
         </ul><ul>
+          Severity: {this.state.event.severity}
+        </ul><ul>
+          Vote: {this.state.event.vote}
+        </ul><ul>
           Type: {this.state.event.type === 0? "Disease":null}
           {this.state.event.type === 1? "Robbery":null}
           {this.state.event.type === 2? "Fire":null}

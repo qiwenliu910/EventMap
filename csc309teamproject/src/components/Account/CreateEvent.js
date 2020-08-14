@@ -244,7 +244,7 @@ class CreateEvent extends React.Component {
                       </Col>
                     </Form.Row>
                   </Form.Group>
-                  <Form.Group controlId="fldEventSeverity">
+                  {/* <Form.Group controlId="fldEventSeverity">
                     <Form.Label>Event Severity</Form.Label>
                     <Form.Row>
                       <Col>
@@ -257,6 +257,16 @@ class CreateEvent extends React.Component {
                         }
                       </Col>
                     </Form.Row>
+                  </Form.Group> */}
+
+                   <Form.Group controlId="fldEventSeverity">
+                    <Form.Label>Event Severity</Form.Label>
+                    <Form.Control as="select" value={this.state.eventSeverity} onChange={this.onChangeEventSeverity}>
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </Form.Control>
                   </Form.Group>
                   <Form.Group controlId="fldEventDate">
                     <Form.Label>Event Date</Form.Label>

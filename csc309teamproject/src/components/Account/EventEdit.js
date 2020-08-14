@@ -57,13 +57,25 @@ class EventEdit extends React.Component {
         this.setState({eventItself: e,
                     input:e.address,
                     eventName:e.title,
-                    eventType:e.type,
+                    eventTypeNum:e.type,
                     eventSeverity:e.severity,
                     eventDate:e.date,
                     details:e.description,
                     coordinateY:e.coordinates[0],
                     coordinateX:e.coordinates[1],
         });
+        if (this.state.eventTypeNum === 0) {
+            this.setState({eventType:"Disease"})
+        }
+        else if (this.state.eventTypeNum === 1) {
+            this.setState({eventType:"Robbery"})
+        }
+        else if (this.state.eventTypeNum === 2) {
+            this.setState({eventType:"Fire"})
+        }
+        else if (this.state.eventTypeNum === 3) {
+            this.setState({eventType:"Assault"})
+        }
         console.log(this.state.eventItself)
     });
   }
@@ -260,7 +272,7 @@ class EventEdit extends React.Component {
                       </Col>
                     </Form.Row>
                   </Form.Group>
-                  <Form.Group controlId="fldEventSeverity">
+                  {/* <Form.Group controlId="fldEventSeverity">
                     <Form.Label>Event Severity</Form.Label>
                     <Form.Row>
                       <Col>
@@ -273,6 +285,15 @@ class EventEdit extends React.Component {
                         }
                       </Col>
                     </Form.Row>
+                  </Form.Group> */}
+                  <Form.Group controlId="fldEventSeverity">
+                    <Form.Label>Event Severity</Form.Label>
+                    <Form.Control as="select" value={this.state.eventSeverity} onChange={this.onChangeEventSeverity}>
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </Form.Control>
                   </Form.Group>
                   <Form.Group controlId="fldEventDate">
                     <Form.Label>Event Date</Form.Label>
