@@ -282,7 +282,32 @@ app.delete(`/api/${API_VERSION}/deleteEvent/:id`, (req, res) => {
 		return;
 	}
 	// Delete an event by their id
-	Event.findOne({_id: eventId}).then((e) => {
+	let ind = -1;
+	Event.findById(eventId).then((e) => {
+		User.find().then((users)=>{
+			users.map((user)=>{
+				for(let index = 0;index < user.upvote.length;index++){
+					if(user.upvote[index]._id === eventId){
+						ind = index
+					}
+				}
+				if(ind >= 0){
+					user.upvote.splice(ind, 1)
+				}
+				ind = -1;
+				for(let index = 0;index < user.downvote.length;index++){
+					if(user.downvote[index]._id === eventId){
+						ind = index
+					}
+				}
+				if(ind >= 0){
+					user.downvote.splice(ind, 1)
+				}
+				console.log("banana")
+				console.log(user)
+				user.save()
+			})
+		})
 		User.findOneAndUpdate({_id:e.author},{$pull:{events:e._id}},
 			function(err, result) {
 		    if (err) {
