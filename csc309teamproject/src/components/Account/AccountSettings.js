@@ -12,12 +12,59 @@ class AccountSettings extends React.Component {
       displayNameVal: "",
       displayNameWarning:"",
       deleteAccountAlert:false,
+      currentPassword: "",
+      newPassword: "",
+      repeatNewPassword: "",
       message:""
     }
   }
 
   onDisplayNameChange = (e) =>{
     this.setState({ displayNameVal: e.target.value });
+  }
+
+  onCurrentPasswordChange = (e) =>{
+    this.setState({ currentPassword: e.target.value });
+  }
+
+  onNewPasswordChange = (e) =>{
+    this.setState({ newPassword: e.target.value });
+  }
+
+  onRepeatNewPasswordChange = (e) =>{
+    this.setState({ repeatNewPassword: e.target.value });
+  }
+
+  onChangePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.currentPassword === "") {
+      this.setState({ message: "The current password cannot be empty" });
+      return;
+    }
+    if (this.state.newPassword === "") {
+      this.setState({ message: "The new password cannot be empty" });
+      return;
+    }
+    if (this.state.repeatNewPassword !== this.state.newPassword) {
+      this.setState({ message: "The new password and repeat new password must match" });
+      return;
+    }
+    let updatedUser = {};
+    updatedUser.password = this.state.newPassword;
+    updatedUser.currentPassword = this.state.currentPassword;
+    this.props.actions.updateUser(updatedUser, this.props.state.currentUser._id).then(result => {
+      if (result.success === true) {
+        this.setState({ 
+          message: "Your password has been updated",
+          currentPassword: "",
+          newPassword: "",
+          repeatNewPassword: "",
+        });
+      }
+      else {
+        this.setState({ message: "Failed updating your password" });
+      }
+    });
   }
 
   onDisplayNameSubmit = (e) => {
@@ -30,12 +77,11 @@ class AccountSettings extends React.Component {
     }
     if (valid === false)
       return;
-    let updatedUser = this.props.state.currentUser
+    let updatedUser = {};
     updatedUser.displayName = this.state.displayNameVal
     // [*] Exchanging data with external source
-    this.props.actions.updateUser(updatedUser).then((ret) => {
-      console.log(ret)
-      if (ret === true) {
+    this.props.actions.updateUser(updatedUser, this.props.state.currentUser._id).then((ret) => {
+      if (ret.success === true) {
         this.setState({ message: "Your account has been successfully updated." });
       }
       else {
@@ -84,15 +130,33 @@ class AccountSettings extends React.Component {
               <main>
                 <Row>
                   <Col md={{ span: 6, offset: 0 }}>
-                    <h3>Forgot password</h3>
+                    <h3>Change password</h3>
                     <hr></hr>
+                    {
+                    this.state.message !== '' ?
+                      <>
+                        <Row>
+                          <Alert className="wide" variant='warning'>{this.state.message}</Alert>
+                        </Row>
+                      </>
+                      :
+                      null
+                  }
                     <Form>
-                      <Form.Group controlId="fldEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                      <Form.Group controlId="fldCurrentPassword">
+                        <Form.Label>Current Password</Form.Label>
+                        <Form.Control type="password" placeholder="Current Password" value={this.state.currentPassword} onChange={this.onCurrentPasswordChange} />
                       </Form.Group>
-                      <Button variant="primary" type="submit">
-                        Reset password
+                      <Form.Group controlId="fldNewPassword">
+                        <Form.Label>New Password</Form.Label>
+                        <Form.Control type="password" placeholder="New Password" value={this.state.newPassword} onChange={this.onNewPasswordChange} />
+                      </Form.Group>
+                      <Form.Group controlId="fldRepeatNewPassword">
+                        <Form.Label>Repeat New Password</Form.Label>
+                        <Form.Control type="password" placeholder="Repeat New Password" value={this.state.repeatNewPassword} onChange={this.onRepeatNewPasswordChange} />
+                      </Form.Group>
+                      <Button variant="primary" type="submit" onClick={this.onChangePasswordSubmit}>
+                        Change password
                       </Button>
                     </Form>
                   </Col>
