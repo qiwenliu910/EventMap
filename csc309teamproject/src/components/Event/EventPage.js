@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap'
+import React from 'react';
+import { Button } from 'react-bootstrap'
 import EventTable from "./EventTable"
 import EventDetails from "../Account/EventDetails"
 import "./EventPage.css"

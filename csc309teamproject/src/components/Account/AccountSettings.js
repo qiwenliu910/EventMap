@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import { Route } from 'react-router-dom';
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import Sidebar from "./SettingsSidebar"
-import SettingsPFP from "./SettingsPFP"
 
 
 import "./AccountPage.css"
@@ -69,11 +68,10 @@ class AccountSettings extends React.Component {
     console.log(this.state)
   }
   render() {
-    const selectEvent = (eventNum) =>{
-        console.log(eventNum)
-        this.setState({currentEvent: eventNum})
-      }
-
+    // const selectEvent = (eventNum) =>{
+    //     console.log(eventNum)
+    //     this.setState({currentEvent: eventNum})
+    //   }
     return (
       <div id="settings">
         <h1 className="settingsTitle">Settings</h1>

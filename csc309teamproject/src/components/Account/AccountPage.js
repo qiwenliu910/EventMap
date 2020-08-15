@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import EventItem from "./EventItem"
-import EventDetails from "./EventDetails"
+import React from 'react';
 import "./AccountPage.css"
 
 class AccountPage extends React.Component {
@@ -8,11 +6,6 @@ class AccountPage extends React.Component {
   }
 
   render() {
-    const selectEvent = (eventNum) =>{
-        console.log(eventNum)
-        this.setState({currentEvent: eventNum})
-      }
-
     return (
       <div id="accountInfo">
         <div className="accountInfoTitle"><h1>Account Info</h1></div>

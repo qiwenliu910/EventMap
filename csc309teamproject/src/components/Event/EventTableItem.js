@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap'
+import React from 'react';
+import { Button } from 'react-bootstrap'
 import "./EventPage.css"
 import diseaseGreen from "../../images/disease-green.png"
 import diseaseYellow from "../../images/disease-yellow.png"
@@ -18,7 +18,6 @@ import assualtYellow from "../../images/assualt-yellow.png"
 import assualtOrange from "../../images/assualt-orange.png"
 import assualtRed from "../../images/assualt-red.png"
 
-import healthGreen from "../../images/health-green.png"
 
 class EventTableItem extends React.Component {
   constructor(props) {
@@ -38,7 +37,7 @@ class EventTableItem extends React.Component {
     return (
         <tr>
           <th>
-            <img src={this.eventType[this.props.event.type][this.props.event.severity]}/>
+            <img src={this.eventType[this.props.event.type][this.props.event.severity]} alt="eventType"/>
           </th><th>
             {this.props.event.date}
           </th><th>

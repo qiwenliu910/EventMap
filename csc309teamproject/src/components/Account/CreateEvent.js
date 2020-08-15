@@ -5,11 +5,9 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
 import { Container, Col, Row } from 'react-bootstrap'
-import Sidebar from '../Admin/Sidebar'
 
-import { Form, Button, Alert } from 'react-bootstrap'
-import { Link, Redirect } from 'react-router-dom';
-const datetime = require('date-and-time')
+import { Form, Button } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom';
 class CreateEvent extends React.Component {
   constructor(props) {
     super(props);

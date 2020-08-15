@@ -14,7 +14,7 @@ class EventDetails extends React.Component {
   }
   componentDidMount = () => {
   // [*] Exchanging data with external source
-    if(this.props.currentEvent != 0){
+    if(this.props.currentEvent !== 0){
       this.props.actions.getEvent(this.props.currentEvent).then((event) =>{
         if (event !== null) {
           this.setState({ event: event });

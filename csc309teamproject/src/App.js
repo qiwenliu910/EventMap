@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/view/Home';
@@ -13,7 +13,7 @@ import Login from './components/view/Login';
 import Account from './components/view/Account';
 import CreateAccount from './components/view/CreateAccount';
 import ResetPassword from './components/view/ResetPassword';
-import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Backend from "./DummyBackend"
 
