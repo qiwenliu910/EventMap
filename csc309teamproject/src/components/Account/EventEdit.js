@@ -20,6 +20,7 @@ class EventEdit extends React.Component {
                   coordinateY: 0,
                   details: "",
                   special: false,
+                  specialString: '',
                   eventObj: null,
                   message: "",
                   eventSeverity: null,
@@ -61,6 +62,8 @@ class EventEdit extends React.Component {
                     details:e.description,
                     coordinateY:e.coordinates[0],
                     coordinateX:e.coordinates[1],
+                    special:e.special
+
         });
         if (this.state.eventTypeNum === 0) {
             this.setState({eventType:"Disease"})
@@ -73,6 +76,12 @@ class EventEdit extends React.Component {
         }
         else if (this.state.eventTypeNum === 3) {
             this.setState({eventType:"Assault"})
+        }
+        if (this.state.special) {
+            this.setState({specialString: "Special"})
+        }
+        else if (!this.state.special) {
+            this.setState({specialString:"Normal"})
         }
         console.log(this.state.eventItself)
     });
@@ -96,7 +105,16 @@ class EventEdit extends React.Component {
     this.setState({ eventType: e.target.value });
   };
   onChangeSpecial = (e) => {
-    this.setState({ special: e.target.value === 'true' });
+    if (e.target.value === "Special") {
+        this.setState({specialString:"Special"})
+        this.setState({special:true})
+        
+      }
+      else if (e.target.value === "Normal") {
+        this.setState({specialString: "Normal"})
+        this.setState({ special:false})
+      }
+    // this.setState({ special: e.target.value === 'true' });
   };
 
   onChangeDetails = (e) => {
@@ -182,7 +200,8 @@ class EventEdit extends React.Component {
       type: this.state.eventTypeNum,
       coordinateX: this.state.coordinateX,
       coordinateY: this.state.coordinateY,
-      details:this.state.details
+      details:this.state.details,
+      special:this.state.special
     };
     console.log(newEvent)
     // [*] Exchanging data with external source
@@ -258,16 +277,18 @@ class EventEdit extends React.Component {
                             null
                         }
                       </Col>
-                      <Col>
-                        <Form.Check
-                          type="checkbox"
-                          id="autoSizingCheck"
-                          className="mb-2"
-                          label="Special Event"
-                          checked={this.state.special}
-                          onChange={this.onChangeSpecial}
-                        />
-                      </Col>
+                    {/* {this.props.state.currentUser.admin?
+                    <Col>
+                    <Form.Check
+                        type="checkbox"
+                        id="autoSizingCheck"
+                        className="mb-2"
+                        label="Special Event"
+                        checked={this.state.special}
+                        onChange={this.onChangeSpecial}
+                    />
+                    </Col>
+                    : null} */}
                     </Form.Row>
                   </Form.Group>
                   {/* <Form.Group controlId="fldEventSeverity">
@@ -284,6 +305,15 @@ class EventEdit extends React.Component {
                       </Col>
                     </Form.Row>
                   </Form.Group> */}
+                  { this.props.state.currentUser.admin ?
+                 <Form.Group controlId="fldEventSpecial">
+                    <Form.Label>Event Special</Form.Label>
+                    <Form.Control as="select" value={this.state.specialString} onChange={this.onChangeSpecial}>
+                      <option>Normal</option>
+                      <option>Special</option>
+                    </Form.Control>
+                  </Form.Group>
+                  : null}
                   <Form.Group controlId="fldEventSeverity">
                     <Form.Label>Event Severity</Form.Label>
                     <Form.Control as="select" value={this.state.eventSeverity} onChange={this.onChangeEventSeverity}>

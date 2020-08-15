@@ -33,7 +33,7 @@ class AccountEvents extends React.Component {
     }
     let display;
     if (this.state.buttonPressed === 2) {
-      display = <div><div id="eventHeader">Edit:</div><div id="eventDetails"><EventEdit key={this.state.currentEventId} currentEvent= {this.state.currentEventId} actions={this.props.actions} /> </div></div>
+      display = <div><div id="eventHeader">Edit:</div><div id="eventDetails"><EventEdit state = {this.props.state} key={this.state.currentEventId} currentEvent= {this.state.currentEventId} actions={this.props.actions} /> </div></div>
     }
     else if (this.state.buttonPressed === 1){
       display = <div><div id="eventHeader">Details:</div><div id="eventDetails"><EventDetails key={this.state.currentEventId} currentEvent= {this.state.currentEventId} actions={this.props.actions} /></div></div>

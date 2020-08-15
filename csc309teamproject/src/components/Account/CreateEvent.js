@@ -19,7 +19,8 @@ class CreateEvent extends React.Component {
                   coordinateX: 0,
                   coordinateY: 0,
                   details: "",
-                  special: false,
+                  specialBool: false,
+                  special: "",
                   eventObj: null,
                   message: "",
                   eventSeverity: null,
@@ -65,7 +66,18 @@ class CreateEvent extends React.Component {
     this.setState({ eventType: e.target.value });
   };
   onChangeSpecial = (e) => {
-    this.setState({ special: e.target.value === 'true' });
+    if (e.target.value === "Special") {
+      this.setState({special:"Special"})
+      this.setState({specialBool:true})
+      
+    }
+    else if (e.target.value === "Normal") {
+      this.setState({special: "Normal"})
+      this.setState({ specialBool:false})
+    }
+    // this.setState({ special: e.target.value === 'true' });
+    console.log(this.state.special)
+    console.log(this.state.specialBool)
   };
 
   onChangeDetails = (e) => {
@@ -148,7 +160,7 @@ class CreateEvent extends React.Component {
       date: this.state.eventDate,
       severity: this.state.eventSeverity,
       type: this.state.eventTypeNum,
-      special: this.state.special,
+      special: this.state.specialBool,
       coordinateX: this.state.coordinateX,
       coordinateY: this.state.coordinateY,
       details:this.state.details
@@ -230,16 +242,18 @@ class CreateEvent extends React.Component {
                             null
                         }
                       </Col>
-                      <Col>
-                        <Form.Check
-                          type="checkbox"
-                          id="autoSizingCheck"
-                          className="mb-2"
-                          label="Special Event"
-                          checked={this.state.special}
-                          onChange={this.onChangeSpecial}
-                        />
-                      </Col>
+                      {/* {this.props.state.currentUser.admin?
+                    <Col>
+                    <Form.Check
+                        type="checkbox"
+                        id="autoSizingCheck"
+                        className="mb-2"
+                        label="Special Event"
+                        checked={this.state.special}
+                        onChange={this.onChangeSpecial}
+                    />
+                    </Col>
+                    : null} */}
                     </Form.Row>
                   </Form.Group>
                   {/* <Form.Group controlId="fldEventSeverity">
@@ -257,6 +271,15 @@ class CreateEvent extends React.Component {
                     </Form.Row>
                   </Form.Group> */}
 
+                 { this.props.state.currentUser.admin ?
+                 <Form.Group controlId="fldEventSpecial">
+                    <Form.Label>Event Special</Form.Label>
+                    <Form.Control as="select" value={this.state.special} onChange={this.onChangeSpecial}>
+                      <option>Normal</option>
+                      <option>Special</option>
+                    </Form.Control>
+                  </Form.Group>
+                  : null}
                    <Form.Group controlId="fldEventSeverity">
                     <Form.Label>Event Severity</Form.Label>
                     <Form.Control as="select" value={this.state.eventSeverity} onChange={this.onChangeEventSeverity}>

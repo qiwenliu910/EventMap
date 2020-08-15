@@ -28,6 +28,9 @@ class EventDetails extends React.Component {
     return (
       <div>
         <ul>
+          {this.state.event.special?"This is an important event.": null}
+        </ul>
+        <ul>
           Title: {this.state.event.title}
         </ul><ul>
           Address: {this.state.event.address}
