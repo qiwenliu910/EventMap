@@ -3,16 +3,13 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import Sidebar from "./SettingsSidebar"
 import SettingsPFP from "./SettingsPFP"
-// import pfp from "../../images/pfp.png"
-// import pfp2 from "../../images/pfp2.png"
-// import pfp3 from "../../images/pfp3.png"
+
 
 import "./AccountPage.css"
 class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // profilePictures : [pfp,pfp2,pfp3],
       displayNameVal: "",
       displayNameWarning:"",
       deleteAccountAlert:false,

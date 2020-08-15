@@ -13,7 +13,7 @@ import Login from './components/view/Login';
 import Account from './components/view/Account';
 import CreateAccount from './components/view/CreateAccount';
 import ResetPassword from './components/view/ResetPassword';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Backend from "./DummyBackend"
 
@@ -49,8 +49,10 @@ class App extends React.Component {
               { /* Each Route below shows a different component depending on the exact path in the URL  */ }
               <Route exact path='/' render={() =>
                               (<Home state={this.state} actions={this.actions} />)}/>
-              <Route path='/account' render={() =>
-                              (<Account state={this.state} actions={this.actions} />)}/>
+              {
+                this.state.currentUser._id !== -1 && <Route path='/account' render={() =>
+                                (<Account state={this.state} actions={this.actions} />)}/>
+              }
               <Route exact path='/about' render={() =>
                               (<About state={this.state}/>)}/>
               <Route exact path='/events' render={() =>

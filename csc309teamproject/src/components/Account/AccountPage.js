@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import EventItem from "./EventItem"
 import EventDetails from "./EventDetails"
 import "./AccountPage.css"
-// import pfp from "../../images/pfp.png"
 
 class AccountPage extends React.Component {
   state = {
