@@ -10,7 +10,6 @@ class AdminUserDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
       displayName: "",
       email: "",
       password: "",
@@ -25,9 +24,6 @@ class AdminUserDetails extends React.Component {
     this.loadUser(this.props.userId);
   }
 
-  onChangeUserName = (e) => {
-    this.setState({ userName: e.target.value });
-  }
   onChangeEmail = (e) => {
     this.setState({ email: e.target.value });
   }
@@ -43,11 +39,15 @@ class AdminUserDetails extends React.Component {
   onSave = (e) => {
     e.preventDefault();
     let user = {
-      ...this.state.userObj
+      displayName: this.state.displayName,
+      admin: this.state.admin
     };
+    if (this.state.password !== '') {
+      user.password = this.state.password
+    }
     // [*] Exchanging data with external source
-    this.props.actions.updateUser(user).then((success) => {
-      if (success) {
+    this.props.actions.updateUser(user, this.props.userId).then(result => {
+      if (result.success) {
         this.setState({ message: "This user has been updated successfully" });
       }
       else {
@@ -70,12 +70,10 @@ class AdminUserDetails extends React.Component {
   }
 
   loadUser(userId) {
-    // [*] Exchanging data with external source
     this.props.actions.getUser(userId).then((user) => {
-
+  
       if (user !== null) {
         this.setState({
-          userName: user.username,
           displayName: user.displayName,
           email: user.email,
           password: "",
@@ -118,11 +116,11 @@ class AdminUserDetails extends React.Component {
               <Row><h3>Edit User</h3></Row>
               <Row>
                 <Form>
-                  <Form.Group controlId="fldUserName">
-                    <Form.Label>User Name</Form.Label>
+                <Form.Group controlId="fldEmail">
+                    <Form.Label>Email</Form.Label>
                     <Form.Row>
                       <Col>
-                        <Form.Control type="text" placeholder="Enter user name" value={this.state.userName} onChange={this.onChangeUserName} />
+                        <Form.Control type="email" placeholder="Enter user email" value={this.state.email} onChange={this.onChangeEmail} />
                       </Col>
                       <Col>
                         <Form.Check
@@ -144,20 +142,13 @@ class AdminUserDetails extends React.Component {
                       </Col>
                     </Form.Row>
                   </Form.Group>
-                  <Form.Group controlId="fldEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Row>
-                      <Col>
-                        <Form.Control type="email" placeholder="Enter user email" value={this.state.email} onChange={this.onChangeEmail} />
-                      </Col>
-                    </Form.Row>
-                  </Form.Group>
+                  
                   <Form.Group controlId="fldPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Row>
                       <Col>
                         <Form.Control type="password" placeholder="Enter password" value={this.state.password} onChange={this.onChangePassword} />
-                        <Form.Text className="text-muted">Leave this bland if you do not want to change password</Form.Text>
+                        <Form.Text className="text-muted">Leave this blank if you do not want to change password</Form.Text>
                       </Col>
                     </Form.Row>
                   </Form.Group>

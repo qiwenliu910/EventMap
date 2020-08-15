@@ -549,6 +549,9 @@ app.patch(`/api/${API_VERSION}/users/:id`, (req, res) => {
 		if (typeof req.body.password !== 'undefined') {
 			user.password = req.body.password;
 		}
+		if (typeof req.body.admin !== 'undefined') {
+			user.admin = req.body.admin;
+		}
 		user.save().then(() => {
 			res.send({ success: true });
 		}).catch(e => {

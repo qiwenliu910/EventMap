@@ -37,9 +37,15 @@ DummyBackend.prototype = {
       });
   },
   post: function (method, body) {
+    return this.request("POST", method, body);
+  },
+  patch: function (method, body) {
+    return this.request("PATCH", method, body);
+  },
+  request: function (requestMethod, method, body) {
     return fetch(this.api(method),
       {
-        method: 'POST',
+        method: requestMethod,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -179,26 +185,15 @@ DummyBackend.prototype = {
   },
   getUser: function (userId) {
     return new Promise((resolve) => {
-      fetch(`/api/${this.API_VERSION}/users/`+userId,
-      {
-        method: 'GET',
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          // return a promise that resolves with the JSON body
-          return res.json();
-        } else {
-          alert('Could not call login');
-          resolve(null);
-        }
-      })
-      .then((json) => {
-        console.log(json);
+      this.get(`users/${userId}`)
+      .then(json => {
         resolve(json.user);
-      }).catch((error) => {
-        console.log(error);
+      })
+      .catch(error => {
+        this.log(error);
         resolve(null);
       });
+
     });
   },
   authenticateUser: function (email, password) {
@@ -455,40 +450,17 @@ DummyBackend.prototype = {
       });
     });
   },
-  updateUser: function (user) {
+  updateUser: function (user, userId) {
     return new Promise((resolve) => {
-      fetch(`/api/${this.API_VERSION}/users/`+user._id,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user: user
-        })
+      this.patch(`users/${userId}`, user)
+      .then(json => {
+        resolve(json);
       })
-      .then((res) => {
-        if (res.status === 200) {
-          // return a promise that resolves with the JSON body
-          return res.json();
-        } else {
-          alert('Could not call get event');
-          resolve(false);
-        }
-      })
-      .then((json) => {
-        console.log(json);
-        if (json.status === true) {
-          console.log(json.user)
-          this.app.setState({currentUser:json.user})
-          resolve(true);
-        }
-        else {
-          resolve(false);
-        }
-      }).catch((error) => {
-        console.log(error);
-        resolve(null);
+      .catch(error => {
+        this.log(error);
+        resolve({
+          success: false
+        });
       });
     });
   },
