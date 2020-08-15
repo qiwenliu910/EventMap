@@ -47,6 +47,10 @@ const EventSchema = new mongoose.Schema({
 	coordinates: {
 		type: Array,
 		required: true,
+	},
+	special: {
+		type: Boolean,
+		required: false,
 	}
 })
 // EventSchema.statics.findByEventId = function(eventId) {

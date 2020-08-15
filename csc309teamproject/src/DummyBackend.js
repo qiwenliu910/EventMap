@@ -311,7 +311,8 @@ DummyBackend.prototype = {
           severity: event.severity,
           description: event.details,
           coordinateX: event.coordinateX,
-          coordinateY: event.coordinateY
+          coordinateY: event.coordinateY,
+          special: event.special
         })
       })
       .then((res) => {
@@ -382,7 +383,8 @@ DummyBackend.prototype = {
           severity: event.severity,
           description: event.details,
           coordinateX: event.coordinateX,
-          coordinateY: event.coordinateY
+          coordinateY: event.coordinateY,
+          special: event.special
         })
       })
       .then((res) => {

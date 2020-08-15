@@ -254,7 +254,8 @@ app.post(`/api/${API_VERSION}/createEvent`, (req, res) => {
 		vote: req.body.vote,
 		severity: req.body.severity,
 		description: req.body.description,
-    coordinates: [req.body.coordinateY,req.body.coordinateX]
+    coordinates: [req.body.coordinateY,req.body.coordinateX],
+		special: req.body.special
   })
 	newEvent.save().then((result)=>{
 		User.findOneAndUpdate({_id:req.body.author},{$push:{events:[result._id]}},
@@ -292,6 +293,7 @@ app.patch(`/api/${API_VERSION}/updateEvent/:id`, (req, res) => {
       event.type = req.body.type
       event.description = req.body.description
       event.coordinates = [req.body.coordinateY,req.body.coordinateX]
+			event.special = req.body.special
       event.save().then((result) =>{
         res.json({
           result: result,
@@ -601,7 +603,7 @@ app.patch(`/api/${API_VERSION}/users/:id`, (req, res) => {
 	.catch(error => {
 		res.status(401).json({ success: false });
 	});
-	
+
 });
 
 /*** Webpage routes below **********************************/
