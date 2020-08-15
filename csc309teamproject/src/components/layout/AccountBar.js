@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown'
 import pfp from "../../images/pfp.png"
 import "./Layout.css"
-import { Route, BrowserRouter, Link } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 
 
 class AccountBar extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css'
 
-import { Form, Button, Row, Alert } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom';
 
 class LoginInput extends Component {

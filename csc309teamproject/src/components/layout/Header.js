@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import AccountBar from './AccountBar';
 import "./Layout.css"
 import { Nav, Navbar, Button, NavDropdown } from 'react-bootstrap'
-import { Route, BrowserRouter, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class Header extends Component {
     const isLoggedIn = (this.props.state.currentUser._id !== -1);
 
     let filterStr;
-    { if(this.state.currFilter === 0){
+     if(this.state.currFilter === 0){
       filterStr = "Disease";
       }
       else if(this.state.currFilter === 1) {
@@ -35,7 +34,7 @@ class Header extends Component {
       else  {
         filterStr = "Filter";
        }
-  }
+  
 
   let filter = <NavDropdown className="headerDropdown" title={filterStr} id="basic-nav-dropdown" >
   <NavDropdown.Item  as="button" value='Disease' onClick={() => this.sendData(0)} >Disease</NavDropdown.Item>
