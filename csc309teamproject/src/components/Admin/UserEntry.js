@@ -4,8 +4,8 @@ import UserEntryAction from './UserEntryAction'
 class UserEntry extends Component {
 
   render() {
-    const userId = this.props.user.id;
-    const userName = this.props.user.username;
+    const userId = this.props.user._id;
+    const userName = this.props.user.displayName;
     return (
       <tr>
         <td>{userId}</td>
