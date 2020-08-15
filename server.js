@@ -56,6 +56,7 @@ app.get(`/api/${API_VERSION}/check-session`, (req, res) => {
 				result: true,
 				currentUser: {
 					id: req.session.user,
+					_id: req.session.user,
 					displayName: req.session.displayName,
 					admin: req.session.isAdmin
 				}

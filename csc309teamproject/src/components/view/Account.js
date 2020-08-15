@@ -16,7 +16,7 @@ class Account extends React.Component {
         <Route exact path='/account/events' render={() =>
                         (<AccountEvents state={this.props.state} actions={this.props.actions}/>)}/>
         <Route exact path='/account/info' render={() =>
-                        (<AccountPage state={this.props.state}/>)}/>
+                        (<AccountPage state={this.props.state} actions={this.props.actions}/>)}/>
         <Route exact path='/account/eventcreate' render={() =>
                         (<CreateEvent state={this.props.state} actions={this.props.actions}/>)}/>
         <Route path='/account/settings' render={() =>
