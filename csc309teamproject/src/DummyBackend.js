@@ -123,8 +123,8 @@ DummyBackend.prototype = {
   },
   getEvent: function (eventId) {
     return new Promise((resolve) => {
-      console.log(this.app.state)
-      console.log(eventId)
+      // console.log(this.app.state)
+      // console.log(eventId)
       fetch(`/api/${this.API_VERSION}/events/`+eventId,
       {
         method: 'GET'
@@ -139,7 +139,7 @@ DummyBackend.prototype = {
         }
       })
       .then((json) => {
-        console.log(json);
+        // console.log(json);
         resolve(json.event);
       }).catch((error) => {
         console.log(error);
@@ -175,7 +175,7 @@ DummyBackend.prototype = {
         }
       })
       .then((json) => {
-        console.log(json);
+        // console.log(json);
         resolve(json.user);
       }).catch((error) => {
         console.log(error);
@@ -221,7 +221,7 @@ DummyBackend.prototype = {
         }
       })
       .then((json) => {
-        console.log(json);
+        // console.log(json);
         if (json.result === true) {
           this.app.setState({ currentUser: json.user });
           resolve(true);
@@ -419,7 +419,7 @@ DummyBackend.prototype = {
         if (res.status === 200) {
           // return a promise that resolves with the JSON body
           // this.app.setState({ currentUser:{events: this.app.state.currentUser.events.filter((e)=> e._id != eventId)}})
-          console.log(this.app.state)
+          // console.log(this.app.state)
           return res.json()
           // resolve(res.json());
         } else {
@@ -478,7 +478,7 @@ DummyBackend.prototype = {
         if (res.status === 200) {
           // return a promise that resolves with the JSON body
           // this.app.setState({ currentUser:{events: this.app.state.currentUser.events.filter((e)=> e._id != eventId)}})
-          console.log(this.app.state)
+          // console.log(this.app.state)
           return res.json()
           // resolve(res.json());
         } else {
@@ -511,7 +511,7 @@ DummyBackend.prototype = {
   },
   notImplemented: function () {
     const msg = "This function involves data update and is not implemented in phase 1";
-    console.log(msg);
+    // console.log(msg);
   }
 };
 

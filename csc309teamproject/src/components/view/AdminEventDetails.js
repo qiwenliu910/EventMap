@@ -67,7 +67,7 @@ class AdminEventDetails extends React.Component {
       coordinateX: this.state.coordinateX,
       coordinateY: this.state.coordinateY
     };
-    console.log(event);
+    // console.log(event);
     // [*] Exchanging data with external source
     this.props.actions.updateEvent(event, this.props.eventId).then((success) => {
       if (success) {

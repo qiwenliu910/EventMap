@@ -65,7 +65,7 @@ class HomeMap extends Component {
       }
       dispalyCrime = (crime) => {
         this.props.actions.getDisplayName(crime.author).then((ret)=> {
-          console.log(ret)
+          // console.log(ret)
           this.setState({crimeArthor: ret.displayName})
         })
           this.setState({selectedCrime: crime._id,
@@ -89,7 +89,7 @@ class HomeMap extends Component {
               upvotePosition = index
             }
           }
-          console.log(upvotePosition)
+          // console.log(upvotePosition)
           if (upvotePosition >= 0) {
             this.setState({alreadyUpVote: true});
             this.setState({alreadyVote: true});
@@ -101,7 +101,7 @@ class HomeMap extends Component {
               downvotePosition = index
             }
           }
-          console.log(downvotePosition)
+          // console.log(downvotePosition)
           if (downvotePosition >= 0) {
             this.setState({alreadyDownvote: true});
             this.setState({alreadyVote: true});
@@ -113,7 +113,7 @@ class HomeMap extends Component {
               eventsPosition = index
             }
           }
-          console.log(eventsPosition)
+          // console.log(eventsPosition)
           if (eventsPosition >= 0) {
             this.setState({alreadyUpVote:false})
             this.setState({alreadyDownVote: false})
@@ -204,7 +204,7 @@ class HomeMap extends Component {
               this.componentDidMount()
           }
           })
-          console.log(this.state.currentUser);
+          // console.log(this.state.currentUser);
       }
 
 
