@@ -91,6 +91,27 @@ UserSchema.statics.findByEmailPassword = function(email, password) {
 	})
 }
 
+UserSchema.statics.findByIdPassword = function(id, password) {
+	const User = this // binds this to the User model
+
+	// First find the user by their id
+	return User.findOne({ _id: id }).then((user) => {
+		if (!user) {
+			return Promise.reject("No match")  // a rejected promise
+		}
+		// if the user exists, make sure their password is correct
+		return new Promise((resolve, reject) => {
+			bcrypt.compare(password, user.password, (err, result) => {
+				if (result) {
+					resolve(user)
+				} else {
+					reject()
+				}
+			})
+		})
+	})
+}
+
 // UserSchema.statics.findByUserId = function(userId) {
 // 	const User = this // binds this to the Event model
 //

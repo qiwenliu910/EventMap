@@ -538,23 +538,56 @@ app.patch(`/api/${API_VERSION}/users/:id`, (req, res) => {
 		res.status(404).send()
 		return;  // so that we don't run the rest of the handler.
 	}
-	User.findById(userId).then(user => {
-		if (user === null) {
-			res.status(404).json({ success: false });
-			return;
+
+	User.findById(req.session.user)
+	.then(currentUser => {
+		const changePassword = (typeof req.body.password !== 'undefined');
+		const changeAdmin = (typeof req.body.admin !== 'undefined');
+		let userQueryPromise = null;
+		if (currentUser.admin === true) {
+			// User is admin, can access all users
+			userQueryPromise = User.findById(userId);
 		}
-		if (typeof req.body.displayName !== 'undefined') {
-			user.displayName = req.body.displayName;
+		else if (changeAdmin === false && ObjectID(userId).equals(req.session.user)) {
+			// User is a normal user, can only access itself.
+			if (changePassword) {
+				userQueryPromise = User.findByIdPassword(userId, req.body.currentPassword);
+			}
+			else {
+				userQueryPromise = User.findById(userId);
+			}
 		}
-		if (typeof req.body.password !== 'undefined') {
-			user.password = req.body.password;
+		else {
+			// Access denied
+			res.status(401).json({ success: false });
 		}
-		if (typeof req.body.admin !== 'undefined') {
-			user.admin = req.body.admin;
-		}
-		user.save().then(() => {
-			res.send({ success: true });
-		}).catch(e => {
+		userQueryPromise.then(user => {
+			if (user === null) {
+				res.status(404).json({ success: false });
+				return;
+			}
+			if (typeof req.body.displayName !== 'undefined') {
+				user.displayName = req.body.displayName;
+			}
+			if (changePassword) {
+				user.password = req.body.password;
+			}
+			if (changeAdmin) {
+				user.admin = req.body.admin;
+			}
+			user.save().then(() => {
+				res.send({ success: true });
+			}).catch(e => {
+				log(e);
+				if (isMongoError(e)) {
+					res.status(500).json({ success: false, message: 'Internal Server Error' });
+				}
+				else {
+					res.status(400).send({ success: false, message: 'Bad Request' });
+				}
+			});
+		})
+		.catch(e => {
 			log(e);
 			if (isMongoError(e)) {
 				res.status(500).json({ success: false, message: 'Internal Server Error' });
@@ -564,15 +597,10 @@ app.patch(`/api/${API_VERSION}/users/:id`, (req, res) => {
 			}
 		});
 	})
-	.catch(e => {
-		log(e);
-		if (isMongoError(e)) {
-			res.status(500).json({ success: false, message: 'Internal Server Error' });
-		}
-		else {
-			res.status(400).send({ success: false, message: 'Bad Request' });
-		}
+	.catch(error => {
+		res.status(401).json({ success: false });
 	});
+	
 });
 
 /*** Webpage routes below **********************************/
