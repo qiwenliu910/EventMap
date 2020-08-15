@@ -436,7 +436,7 @@ app.get(`/api/${API_VERSION}/users/:id`, (req, res) => {
 	User.findOne({_id: userId}).then((u) => {
 		res.json({
 			result: true,
-			event: u
+			user: u
 		})
 	})
 	.catch((error) => {
@@ -538,21 +538,38 @@ app.patch(`/api/${API_VERSION}/users/:id`, (req, res) => {
 		res.status(404).send()
 		return;  // so that we don't run the rest of the handler.
 	}
-	User.findOneAndReplace({_id: userId},req.body.user).then((updatedUser) => {
-		res.json({
-			result: true,
-			user: req.body.user,
-			status: true,
-		})
-	})
-	.catch((error) => {
-		if (isMongoError(error)) {
-			res.status(500).send('Internal Server Error');
-		} else {
-			log(error)
-			res.status(400).send(error);
+	User.findById(userId).then(user => {
+		if (user === null) {
+			res.status(404).json({ success: false });
+			return;
 		}
+		if (typeof req.body.displayName !== 'undefined') {
+			user.displayName = req.body.displayName;
+		}
+		if (typeof req.body.password !== 'undefined') {
+			user.password = req.body.password;
+		}
+		user.save().then(() => {
+			res.send({ success: true });
+		}).catch(e => {
+			log(e);
+			if (isMongoError(e)) {
+				res.status(500).json({ success: false, message: 'Internal Server Error' });
+			}
+			else {
+				res.status(400).send({ success: false, message: 'Bad Request' });
+			}
+		});
 	})
+	.catch(e => {
+		log(e);
+		if (isMongoError(e)) {
+			res.status(500).json({ success: false, message: 'Internal Server Error' });
+		}
+		else {
+			res.status(400).send({ success: false, message: 'Bad Request' });
+		}
+	});
 });
 
 /*** Webpage routes below **********************************/
