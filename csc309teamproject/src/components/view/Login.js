@@ -1,12 +1,11 @@
 import React from 'react';
 import "./styles.css";
-import { Container, Form, Button, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap'
 import LoginInput from '../loginComponents/LoginInput'
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     return (
       <Container>

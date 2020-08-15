@@ -3,7 +3,7 @@ import { Container, Col, Row } from 'react-bootstrap'
 import Sidebar from '../Admin/Sidebar'
 
 import { Form, Button, Alert } from 'react-bootstrap'
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 class AdminUserDetails extends React.Component {

@@ -1,11 +1,10 @@
 import React, {Component } from 'react';
 import {Card, Button} from 'react-bootstrap'
-import { Route } from 'react-router-dom';
 import "./styles.css";
 class CrimeDisplay extends Component {
-    constructor(props) {
-        super(props);
-      }
+    // constructor(props) {
+    //     super(props);
+    //   }
 
     sendData = (data) => {
         this.props.callbackFromParent(data);

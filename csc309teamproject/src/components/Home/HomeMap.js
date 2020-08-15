@@ -20,8 +20,6 @@ import assualtYellow from "../../images/assualt-yellow.png"
 import assualtOrange from "../../images/assualt-orange.png"
 import assualtRed from "../../images/assualt-red.png"
 
-import healthGreen from "../../images/health-green.png"
-
 class HomeMap extends Component {
     constructor(props) {
         super(props);
@@ -141,9 +139,9 @@ class HomeMap extends Component {
 
       }
       myCallback = (dataFromChild) => {
-          const crimeNum = this.state.selectedCrime - 1;
-          const voteNum = this.state.crimeVote;
-          const newArr = [...this.state.crimeList];
+          // const crimeNum = this.state.selectedCrime - 1;
+          // const voteNum = this.state.crimeVote;
+          // const newArr = [...this.state.crimeList];
 
           const votedCrime = {
             "_id": this.state.selectedCrime
@@ -167,8 +165,8 @@ class HomeMap extends Component {
                 return s._id !== this.state.selectedCrime;
               });
               this.setState({currentUser: {... this.state.currentUser, upvote: filteredUpvote,},}, function () {
-                console.log(this.state.currentUser.upvote);
-                console.log(this.state.currentUser);
+                // console.log(this.state.currentUser.upvote);
+                // console.log(this.state.currentUser);
               });
               this.setState({crimeVote: this.state.crimeVote - 1});
               // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum - 1};
@@ -182,8 +180,8 @@ class HomeMap extends Component {
                 return s._id !== this.state.selectedCrime;
               });
               this.setState({currentUser: {... this.state.currentUser, downvote: filteredDownvote,},}, function () {
-                console.log(this.state.currentUser.downvote);
-                console.log(this.state.currentUser);
+                // console.log(this.state.currentUser.downvote);
+                // console.log(this.state.currentUser);
               });
               this.setState({crimeVote: this.state.crimeVote + 1});
               // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
@@ -229,7 +227,7 @@ class HomeMap extends Component {
                         onClick={() => this.dispalyCrime(crime)}
                         />
               }
-
+              return;
              })
 
     }

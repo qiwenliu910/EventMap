@@ -1,15 +1,14 @@
 import React from 'react';
-import { Container } from 'react-bootstrap'
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 import AccountPage from '../Account/AccountPage'
 import AccountEvents from '../Account/AccountEvents'
 import AccountSettings from '../Account/AccountSettings'
 import CreateEvent from '../Account/CreateEvent'
 
 class Account extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     return (
       <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */ }

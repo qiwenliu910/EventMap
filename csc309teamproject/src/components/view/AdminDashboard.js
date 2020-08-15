@@ -2,9 +2,9 @@ import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap'
 import Sidebar from '../Admin/Sidebar'
 class AdminDashboard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (
