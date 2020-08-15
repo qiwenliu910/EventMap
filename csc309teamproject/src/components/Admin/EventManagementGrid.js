@@ -3,10 +3,10 @@ import { Table } from 'react-bootstrap'
 import EventEntry from './EventEntry'
 
 class EventManagementGrid extends Component {
-  constructor(props) {
-    super(props);
-
-  }
+  // constructor(props) {
+  //   super(props);
+  //
+  // }
   render() {
     return (
       <Table striped bordered hover>

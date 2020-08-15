@@ -3,9 +3,9 @@ import { Button } from 'react-bootstrap'
 
 
 class PageNav extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     const prevDisabled = (this.props.currentPage === 1);
     const nextDisabled = (this.props.currentPage === this.props.totalPages);

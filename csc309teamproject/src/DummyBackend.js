@@ -435,7 +435,7 @@ DummyBackend.prototype = {
             displayName: this.app.state.currentUser.displayName,
             password: this.app.state.currentUser.password,
             admin: this.app.state.currentUser.admin,
-            events: this.app.state.currentUser.events.filter((e)=> e != eventId),
+            events: this.app.state.currentUser.events.filter((e)=> e !== eventId),
             upvote: this.app.state.currentUser.upvote,
             downvote: this.app.state.currentUser.downvote
           }})
@@ -497,7 +497,7 @@ DummyBackend.prototype = {
             upvote: [],
             downvote: []
           },})
-          
+
           resolve(true);
         }
         else {

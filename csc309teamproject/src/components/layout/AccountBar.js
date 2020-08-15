@@ -13,7 +13,7 @@ class AccountBar extends Component {
     const name = this.props.currentUser.displayName;
     return (
       <h1 className="AccountBar">
-        <img src={pfp} id="accountPFP" />
+        <img src={pfp} id="accountPFP" alt="accountPFP"/>
         <p className="name">{name}
         </p>
         <Dropdown alignRight className="dropdown">
