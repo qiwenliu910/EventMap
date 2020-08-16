@@ -54,9 +54,6 @@ class LoginInput extends Component {
           <Form.Group controlId="fldPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.onChangePassword} />
-            <Form.Text className="text-muted">
-              <Link to="/resetpassword">Forgot password</Link>
-            </Form.Text>
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.onSubmit}>
             Sign in
