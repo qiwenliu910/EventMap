@@ -20,7 +20,7 @@ To start the web app
 Essentially out web app is now powered by a real backend with a database. We added the view for creating events in this release along with many undisclosed page content details that were not in Phase 1. 
 Based on the feedback of our Phase 1, we unified the UI theme across our website to ensure consistensy and at the same time kept our creative customization on top of the bland Bootstrap library.<br>
 
-
+Demo Site: https://whispering-thicket-29549.herokuapp.com/
 
 ## Recommended testing procedures
 This section explains a recommended route to go through all sections of our web app.
