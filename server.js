@@ -613,8 +613,12 @@ app.use(express.static(__dirname + "/csc309teamproject/build"));
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {
     // check for page routes that we expect in the frontend to provide correct status code.
-    const goodPageRoutes = ["/", "/login", "/dashboard"];
-    if (!goodPageRoutes.includes(req.url)) {
+		const goodPageRoutes = ["/", "/account", "/about", "/events", "/admin/dashboard", 
+		"/admin/users", "/admin/events", "/login", "/createaccount", "/resetpassword",
+		"/account/settings/resetpass", "/account/settings/profile", "/account/settings/deactivate", "/account/events",
+		"/account/info", "/account/eventcreate", "/account/settings"];
+		console.log(req.url);
+    if (!goodPageRoutes.includes(req.url) && !req.url.startsWith("/admin/user/") && !req.url.startsWith("/admin/event/")) {
         // if url not in expected page routes, set status to 404.
         res.status(404);
     }
