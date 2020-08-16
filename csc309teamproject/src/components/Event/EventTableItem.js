@@ -18,6 +18,10 @@ import assualtYellow from "../../images/assualt-yellow.png"
 import assualtOrange from "../../images/assualt-orange.png"
 import assualtRed from "../../images/assualt-red.png"
 
+import specialDisease from "../../images/disease-special.png"
+import specialRobbery from "../../images/robbery-special.png"
+import specialFire from "../../images/fire-special.png"
+import specialAssualt from "../../images/assualt-special.png"
 
 class EventTableItem extends React.Component {
   constructor(props) {
@@ -26,6 +30,7 @@ class EventTableItem extends React.Component {
     this.robberyLevel = [robberyGreen, robberyYellow, robberyOrange, robberyRed];
     this.fireLevel = [fireGreen, fireYellow, fireOrange, fireRed];
     this.assualtLevel = [assualtGreen, assualtYellow, assualtOrange, assualtRed];
+    this.specialType = [specialDisease, specialRobbery, specialFire, specialAssualt];
     this.eventType = [this.diseaseLevel, this.robberyLevel, this.fireLevel, this.assualtLevel]
   }
   onSubmitDetails = (e) => {
@@ -37,7 +42,8 @@ class EventTableItem extends React.Component {
     return (
         <tr>
           <th>
-            <img src={this.eventType[this.props.event.type][this.props.event.severity]} alt="eventType"/>
+            <img src={this.props.event.special === true?this.specialType[this.props.event.type]:
+              this.eventType[this.props.event.type][this.props.event.severity]} alt="eventType"/>
           </th><th>
             {this.props.event.date}
           </th><th>

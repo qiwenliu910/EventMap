@@ -20,6 +20,11 @@ import assualtYellow from "../../images/assualt-yellow.png"
 import assualtOrange from "../../images/assualt-orange.png"
 import assualtRed from "../../images/assualt-red.png"
 
+import specialDisease from "../../images/disease-special.png"
+import specialRobbery from "../../images/robbery-special.png"
+import specialFire from "../../images/fire-special.png"
+import specialAssualt from "../../images/assualt-special.png"
+
 class HomeMap extends Component {
     constructor(props) {
         super(props);
@@ -28,6 +33,7 @@ class HomeMap extends Component {
         this.robberyLevel = [robberyGreen, robberyYellow, robberyOrange, robberyRed];
         this.fireLevel = [fireGreen, fireYellow, fireOrange, fireRed];
         this.assualtLevel = [assualtGreen, assualtYellow, assualtOrange, assualtRed];
+        this.specialType = [specialDisease, specialRobbery, specialFire, specialAssualt];
         this.eventType = [this.diseaseLevel, this.robberyLevel, this.fireLevel, this.assualtLevel]
         //d=0,r=1,f=2,a=3
         this.state = {
@@ -38,6 +44,7 @@ class HomeMap extends Component {
             crimeVote: 0,
             severity: 0,
             type:0,
+            special: false,
             selectedCrime: false,
             crimeItself: null,
             alreadyVote: true,
@@ -77,6 +84,7 @@ class HomeMap extends Component {
                         crimeVote:crime.vote,
                         severity:crime.severity,
                         type: crime.type,
+                        special: crime.special,
                         alreadyVote: false,
                         alreadyUpVote: false,
                         alreadyDownVote: false
@@ -106,7 +114,7 @@ class HomeMap extends Component {
             this.setState({alreadyDownvote: true});
             this.setState({alreadyVote: true});
           }
-          
+
           let eventsPosition = -1;
           for (let index = 0; index < this.state.currentUser.events.length; index++) {
             if(this.state.currentUser.events[index] === crime._id) {
@@ -146,7 +154,7 @@ class HomeMap extends Component {
           const votedCrime = {
             "_id": this.state.selectedCrime
           }
-          let flag = null 
+          let flag = null
           if (dataFromChild > 0) {
               this.setState({crimeVote: this.state.crimeVote + 1});
               // newArr[crimeNum] = {...newArr[crimeNum], VOTE: voteNum + 1};
@@ -223,7 +231,8 @@ class HomeMap extends Component {
                         lat: crime.coordinates[1],
                         lng: crime.coordinates[0]
                         }}
-                        icon={{url: this.eventType[crime.type][crime.severity],  scaledSize: new this.props.google.maps.Size(40, 35)}}
+                        icon={crime.special === true?{url: this.specialType[crime.type],  scaledSize: new this.props.google.maps.Size(40, 35)}:
+                        {url: this.eventType[crime.type][crime.severity],  scaledSize: new this.props.google.maps.Size(40, 35)}}
                         onClick={() => this.dispalyCrime(crime)}
                         />
               }
