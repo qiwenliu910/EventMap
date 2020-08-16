@@ -23,7 +23,7 @@ class CreateEvent extends React.Component {
                   special: "",
                   eventObj: null,
                   message: "",
-                  eventSeverity: null,
+                  eventSeverity: "0",
                   eventDate: null,
                   redirect: false,
                   eventNameWarning: "",
