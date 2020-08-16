@@ -30,7 +30,6 @@ class EventItem extends React.Component {
   componentDidMount = () => {
     // [*] Exchanging data with external source
     this.props.actions.getEvent(this.props.eventNum).then((e) => {
-      console.log(e)
       if (e !== null)
         this.setState({event: e});
     });

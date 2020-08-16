@@ -41,7 +41,6 @@ class App extends React.Component {
     this.setState({filter: dataFromChild});
   }
   render(){
-    console.log(this.state.currentUser);
     return (
           <BrowserRouter key={this.state.filter}>
             <Header state={this.state} actions={this.actions} callbackFromParent = {this.myCallback}/>
