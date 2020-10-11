@@ -1,4 +1,12 @@
-# team24
+# EventMap
+
+This is a project for CSC309.
+
+It is a website for public safety under the recent global pandemic and protests.
+
+It supports users to sign up and post dangerous events on a map to alert other users of dangers that have occurred in the area.
+
+It is constructed by ReactJS, google Map API, ExpressJS for client server interaction, MongoDB as database.
 
 ## Installation and testing
 In the project directory "csc309teamproject", you can run:
